@@ -43,14 +43,14 @@ How to store in the db for future retrieval? We can keep track of what is dynami
 # AGENT TESTS
 **Test one the memory agent**
 
-![alt text](image.png)
+![Memory agent, questions done through the prompt](static/memoryAgentQuestions.png)
 
 Question: why is it creating that context for the second answer and not for the first one? 
 In the first question I'm telling him my name, then I give some other information. When storing into memory (second step), it remembers my name and additional informations. Why?
 
 **What does it keep inside?**  
 
-![alt text](image-1.png)  
+![Memory agent, how the memory is managed](static/memoryAgentMemoryHandling.png)  
 
 
 **Web search**  
@@ -59,5 +59,16 @@ Web search agents is implemented in LangGraph's tutorial using Tavily, which is 
 1. Duckduckgo, already used in the previous research (free);
 2. Tavily, easy but needs to be payed.
 
+**Memory saver**  
 
+MemorySaver stores information on RAM. It stores something like: 
+[
+    {"role": "user", "content": "Ciao, cosa sai su LangGraph?"},
+    {"role": "assistant", "content": "LangGraph è un framework per creare agenti AI."},
+    {"role": "user", "content": "Come lo posso usare per la memoria?"}
+]
+and associates it to a thread_id. When the conversation gets back from a previous node, it passes to the model the entire list of prompts, in a way that it is simulating the fact that it remembers information. Obviously, the context window is a problem: if the number of prompts is too high, the number of tokens offered by the model are not enough.  
+
+
+In a paper called MemGPT ([MemGPT](https://arxiv.org/abs/2310.08560)) the problem is solved introducing memory handling as it is done in modern operating systems, with a storage that manages past informations through pagination and retrieval to update the actual context of the LLM to perform inference. This is automatically managed by the LLM that knows functions to be called in order to move data to the storage and to access it. The code of the paper is available [here](https://github.com/letta-ai/letta). In the meanwhile, MemGPT became a software ([Letta](https://docs.letta.com/api-reference/overview), open source but it requires a key for a certain usage, not a viable option), so the code is quite huge to be examined and understood. However, on LangGraph there's an implementation that is inspired by MemGPT [here](https://python.langchain.com/docs/versions/migrating_memory/long_term_memory_agent/).
 
