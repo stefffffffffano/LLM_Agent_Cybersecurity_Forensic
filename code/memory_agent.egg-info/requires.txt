@@ -1,0 +1,12 @@
+langgraph<0.3.0,>=0.2.34
+langchain-openai>=0.2.1
+langchain-anthropic>=0.2.1
+langchain>=0.3.8
+langchain-core>=0.3.8
+python-dotenv>=1.0.1
+langgraph-sdk>=0.1.32
+
+[dev]
+mypy>=1.11.1
+ruff>=0.6.1
+pytest-asyncio

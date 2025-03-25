@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: memory-agent
+Version: 0.0.1
+Summary: An agent with a tool to save long-term memory.
+Author-email: William Fu-Hinthorn <13333726+hinthornw@users.noreply.github.com>
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: langgraph<0.3.0,>=0.2.34
+Requires-Dist: langchain-openai>=0.2.1
+Requires-Dist: langchain-anthropic>=0.2.1
+Requires-Dist: langchain>=0.3.8
+Requires-Dist: langchain-core>=0.3.8
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: langgraph-sdk>=0.1.32
+Provides-Extra: dev
+Requires-Dist: mypy>=1.11.1; extra == "dev"
+Requires-Dist: ruff>=0.6.1; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
