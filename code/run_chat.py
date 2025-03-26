@@ -1,3 +1,10 @@
+
+from src.memory_agent import graph
+print(graph)
+
+
+
+"""
 import asyncio
 import os
 from dotenv import load_dotenv
@@ -56,3 +63,4 @@ async def chat():
 
 if __name__ == "__main__":
     asyncio.run(chat())
+"""

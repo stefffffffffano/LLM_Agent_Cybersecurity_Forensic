@@ -20,7 +20,7 @@ llm = init_chat_model()
 
 
 
-
+"""
 from functools import partial
 
 
@@ -36,6 +36,7 @@ def create_graph(store):
     graph = builder.compile()
     graph.name = "MemoryAgent"
     return graph
+"""
 
 
 async def call_model(state: State, config: RunnableConfig, *, store: BaseStore) -> dict:
@@ -67,12 +68,13 @@ async def call_model(state: State, config: RunnableConfig, *, store: BaseStore) 
             fifo_messages_to_be_included+=1
     
     # Semantic search in the db, retrieve 10 messages that are relevant with respect to the context
-    #Memories are already ordered based on similarity score
-    #memories = await store.asearch(
-        #("memories"),
-        #query=str([m.content for m in state.messages[-3:]]),
-        #limit=10,
-    #)
+    #Memories are already ordered based on similarity score-> the error is in the next 21 lines
+    memories = await store.asearch(
+        ("memories"),
+        query=str([m.content for m in state.messages[-3:]]),
+        limit=10,
+    )
+
     memories=None
     if(memories):
         for mem in memories:
@@ -105,7 +107,7 @@ async def call_model(state: State, config: RunnableConfig, *, store: BaseStore) 
     # "bind_tools" gives the LLM the JSON schema for all tools in the list so it knows how
     # to use them.
     msg = await llm.bind_tools([tools.upsert_memory]).ainvoke(
-        [{"role": "system", "content": sys}, *state.messages[0:fifo_messages_to_be_included]],
+        [{"role": "system", "content": sys}, *state.messages[-fifo_messages_to_be_included:]],
         {"configurable": utils.split_model_and_provider(configurable.model)},
     )
     return {"messages": [msg]}
@@ -146,22 +148,22 @@ def route_message(state: State):
 
 
 # Create the graph + all nodes
-#builder = StateGraph(State, config_schema=configuration.Configuration)
+builder = StateGraph(State, config_schema=configuration.Configuration)
 
 # Define the flow of the memory extraction process
-#builder.add_node(call_model)
-#builder.add_edge("__start__", "call_model")
-#builder.add_node(store_memory)
-#builder.add_conditional_edges("call_model", route_message, ["store_memory", END])
+builder.add_node(call_model)
+builder.add_edge("__start__", "call_model")
+builder.add_node(store_memory)
+builder.add_conditional_edges("call_model", route_message, ["store_memory", END])
 # Right now, we're returning control to the user after storing a memory
 # Depending on the model, you may want to route back to the model
 # to let it first store memories, then generate a response
-#builder.add_edge("store_memory", "call_model")
-#graph = builder.compile()
-#graph.name = "MemoryAgent"
+builder.add_edge("store_memory", "call_model")
+graph = builder.compile()
+graph.name = "MemoryAgent"
 
 
-__all__ = ["create_graph"]
+__all__ = ["graph"]
 
 """
 Stefano è uno studente di 23 anni di ingegneria informatica al politecnico di Torino, sta lavorando a una tesi su AI agents per valutarne il funzionamento in cybersecurity forensic"""

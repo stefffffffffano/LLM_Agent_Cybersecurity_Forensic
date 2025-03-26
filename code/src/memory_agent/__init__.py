@@ -1,5 +1,5 @@
 """Enrichment for a pre-defined schema."""
 
-from memory_agent.graph import create_graph
+from memory_agent.graph import graph
 
-__all__ = ["create_graph"]
+__all__ = ["graph"]

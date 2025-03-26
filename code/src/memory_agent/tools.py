@@ -7,8 +7,6 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import InjectedToolArg
 from langgraph.store.base import BaseStore
 
-from memory_agent.configuration import Configuration
-
 
 async def upsert_memory(
     content: str,
