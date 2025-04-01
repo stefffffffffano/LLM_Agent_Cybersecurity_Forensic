@@ -1,5 +1,3 @@
-"""Define the shared values."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,8 +13,3 @@ class State:
 
     messages: Annotated[list[AnyMessage], add_messages]
     """The messages in the conversation."""
-
-
-__all__ = [
-    "State",
-]
