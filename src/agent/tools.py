@@ -5,9 +5,6 @@ from typing import Annotated, Optional
 from pydantic import BaseModel
 import uuid
 
-embed_model = init_embeddings("openai:text-embedding-3-small")
-
-
 # Pydantic schema for arguments
 
 class UpsertMemoryArgs(BaseModel):
@@ -25,7 +22,6 @@ async def upsert_memory_func(
 ) -> str:
     mem_id = memory_id or str(uuid.uuid4())
     embedding_text = content
-
 
     await store.aput(
         "memories",
