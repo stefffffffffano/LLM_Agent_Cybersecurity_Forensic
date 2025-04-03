@@ -2,23 +2,28 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.store.base import BaseStore
 
-from .nodes import store_memory, route_message,call_model
-from .state import State  
+from agent.nodes import tools, route_message,call_model
+from agent.state import State  
 
 def build_graph(store: BaseStore) -> StateGraph:
+    """
+    Build the state graph for the agent. This function creates a directed graph with nodes and edges.
+    The graph consists of two main nodes: call_model and tools.
+    """
+    
     memory = MemorySaver()
     builder = StateGraph(State)
 
     builder.add_node("call_model", call_model)
-    builder.add_node("store_memory", store_memory)
+    builder.add_node("tools", tools)
 
     builder.add_conditional_edges(
         "call_model",
         route_message,
-        {"store_memory": "store_memory", END: END},
+        {"tools": "tools", END: END},
     )
 
-    builder.add_edge("store_memory", "call_model")
+    builder.add_edge("tools", "call_model")
     builder.add_edge(START, "call_model")
 
     return builder.compile(checkpointer=memory, store=store)
