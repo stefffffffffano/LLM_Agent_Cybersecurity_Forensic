@@ -1,4 +1,5 @@
 from typing import Any
+from openai import BadRequestError 
 
 from langgraph.store.base import BaseStore
 from langchain.chat_models import init_chat_model
@@ -7,10 +8,12 @@ from langchain_core.callbacks import BaseCallbackHandler
 
 from agent.utils import count_tokens, split_model_and_provider
 from agent.tools.memory import upsert_memory
-from agent.tools.cve import web_quick_search
+from agent.tools.browser import web_quick_search
+from agent.tools.log_reader import file_reader
+from agent.tools.pcap import frameDataExtractor,ListFrames
+from agent.tools.report import finalAnswerFormatter
 from agent.state import State
 from agent.configuration import Configuration
-
 
 
 class PromptDebugHandler(BaseCallbackHandler):
@@ -38,12 +41,14 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     configurable = Configuration.from_runnable_config(config)
     MAX_FIFO_TOKENS = configurable.max_fifo_tokens
     MAX_WORKING_CONTEXT_TOKENS = configurable.max_working_context_tokens
-    
+
     assert store is not None, "Store not injected!"
+
+    # FIFO messages (limited by token budget)
+    pcap_content = ListFrames().run(state.pcap_path)
+    MAX_FIFO_TOKENS -= count_tokens(pcap_content) #Subtract the tokens used by the pcap content
     fifo_token_counter = 0
     fifo_messages_to_be_included = 0
-
-    # FIFO messages (from beginning)
     for m in state.messages:
         fifo_token_counter += count_tokens(m)
         if fifo_token_counter < MAX_FIFO_TOKENS:
@@ -51,10 +56,13 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         else:
             break
 
-    # Semantic search: last 3 user/assistant messages as base
+    fifo_messages = state.messages[-fifo_messages_to_be_included:]
+
+    # Semantic memory (working context)
     recent_messages = state.messages[-3:]
     search_query = " ".join([m.content for m in recent_messages if hasattr(m, "content")])
     results = await store.asearch("memories", query=search_query, limit=10)
+
     working_context_token_counter = 0
     working_context = []
     for mem in results:
@@ -67,39 +75,47 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
             working_context_token_counter += tok
         else:
             break
-
+    newline='\n'
     if working_context:
-        working_context_str = "\n".join(working_context)
-        working_context_prompt = f"""
+        memories_str = f"""
         You are provided with contextual memories retrieved from past interactions.
-        Use them if they are relevant.
+        Use them if they are relevant. Their relevance with respect to the current context is given by the score.
 
         <memories>
-        {working_context_str}
+        {newline.join(working_context)}
         </memories>
         """
     else:
-        working_context_prompt = ""
+        memories_str = ""
+    
+    # FIFO as string->messages are counted to give a context of the flow to the LLM 
+    queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
+    queue_str = "\n".join(queue_lines)
 
+    
 
+    # Final prompt
     system_prompt = configurable.system_prompt.format(
-        user_info=working_context_prompt
+        pcap_content=pcap_content,
+        memories=memories_str,
+        queue=queue_str
     )
 
-    # Initialize the language model to be used for memory extraction
-    llm = init_chat_model(**split_model_and_provider(configurable.model))
-
-    
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,frameDataExtractor,finalAnswerFormatter])#,file_reader
+    #When it's the last iteration, concatenate a message saying that it has to provide an 
+    #answer
+    if state.steps <= 1:
+        system_prompt += "\n\nYou have to provide an answer, it's the last iteration available."
+    messages = [{"role": "system", "content": system_prompt}]
+    try:
+        msg = await llm_with_tools.ainvoke(messages, config=debug_config)
+    except BadRequestError as e:
+        print(f"Error: {e}")
+        msg = {"role": "assistant", "content": f"Error: {e}"}
     
-    llm_with_tools = llm.bind_tools([upsert_memory,web_quick_search])
 
-    messages = [{"role": "system", "content": system_prompt}, *state.messages[-fifo_messages_to_be_included:]]
-
-    msg = await llm_with_tools.ainvoke(messages, config=debug_config)
-
-    return {"messages": [msg]}
-
-
-
-__all__ = ["call_model"]
+    return {"messages": [msg],
+            "steps": state.steps - 1,
+            }

@@ -17,7 +17,7 @@ async def upsert_memory_func(
     context: str,
     memory_id: Optional[str] = None,
     *,
-    store: Annotated[BaseStore, InjectedToolArg], #This is not shown to the LLM
+    store: BaseStore, 
 ) -> str:
     mem_id = memory_id or str(uuid.uuid4())
     embedding_text = content
@@ -33,7 +33,11 @@ async def upsert_memory_func(
 upsert_memory = Tool(
     name="upsert_memory",
     description="""Upsert a memory in the database.
-
+        If you find something relevant to remember, you can store it in the memory.
+        The messages are contained in a queue of limited length, thus, it is important you
+        remember details (be specific) of the task you are facing and of what is returned 
+        by other tools.
+        
         If a memory conflicts with an existing one, then just UPDATE the
         existing one by passing in memory_id - don't create two memories
         that are the same. If the user corrects a memory, UPDATE it.

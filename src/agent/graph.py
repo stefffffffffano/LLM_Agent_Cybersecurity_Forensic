@@ -2,6 +2,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.store.base import BaseStore
 
+
 from agent.nodes import tools, route_message,call_model
 from agent.state import State  
 
@@ -20,10 +21,19 @@ def build_graph(store: BaseStore) -> StateGraph:
     builder.add_conditional_edges(
         "call_model",
         route_message,
-        {"tools": "tools", END: END},
+        {"tools": "tools", END: END,"call_model": "call_model"},
     )
 
-    builder.add_edge("tools", "call_model")
+    #Added this conditional edge in a way that the agent checks if done
+    
+    builder.add_conditional_edges(
+    "tools",
+    route_message,
+    {"call_model": "call_model", END: END}
+    )
+
+
+    #builder.add_edge("tools", "call_model")
     builder.add_edge(START, "call_model")
 
     return builder.compile(checkpointer=memory, store=store)
