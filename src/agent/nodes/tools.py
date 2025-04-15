@@ -24,6 +24,7 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
     """
     tool_calls = state.messages[-1].tool_calls
     done = False
+
     if not tool_calls:
         raise ValueError("No tool calls found.")
 
@@ -121,7 +122,7 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         results.extend([
             {
                 "role": "tool",
-                "content": f"Formatted final answer: {content}",
+                "content": f"{content}",
                 "tool_call_id": tc["id"],
             }
             for tc, content in zip(final_answer_calls, formatted_answers)

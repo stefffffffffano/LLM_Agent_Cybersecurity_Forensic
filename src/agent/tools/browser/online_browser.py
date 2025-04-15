@@ -199,10 +199,11 @@ class Context_generator:
             raise ValueError(f"query_strategy ({self.query_strategy}) not implemented")
         
         print('Query to embed:', query_to_embedd)
-        prompt = WWW_SCRAPER_PROMPT.format(question=query)
-        messages = [HumanMessage(content=prompt)]
+        #prompt = WWW_SCRAPER_PROMPT.format(question=query)
+        #messages = [HumanMessage(content=prompt)]
         #Tends to lose the context when doing this way
-        search_query = self.llm.invoke(messages).content
+        #search_query = self.llm.invoke(messages).content
+        search_query = query_to_embedd
         print('Search query:', search_query)
         
         documents = self.get_web_search_results(search_query)
@@ -254,13 +255,13 @@ def web_quick_search_func(
 #Tool used for binding
 web_quick_search = Tool(
     name="web_quick_search",
-    description="""Perform a quick web search using a retrieval-augmented generation (RAG) approach.
+    description="""Perform a quick web search.
     Use this tool to find the latest information on a specific topic if they are not in your memory nor \
     in your training knowledge.
     You can call this tool only once per step, avoid multiple calls to this tool in the same step.
     Args:
         query: The search query. For example:
-            "What are the latest advances in quantum computing?"
+            "CVEs associated with couchDB?"
     """,
     args_schema=WebQuickSearchArgs,
     func=web_quick_search_func

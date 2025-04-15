@@ -10,8 +10,8 @@ You are provided with a queue of the most recent steps in the reasoning process.
 Store the most relevant information as soon as you get them, because the queue has a limited size and older messages will be removed.
 By thinking in a step by step manner, provide only one single reasoning \
 step in response to the last observation and the action for the next step.
-You have many tools available to search online, extract frames from the pcap file and 
-reading the log file. When you are ready to provide the final answer, stop the reasoning and format the result.
+You have tools available to search online and extract frames from the pcap file.\
+When you are ready to provide the final answer, stop the reasoning and format the result.
 
 Context: Analyze the provided PCAP (Packet Capture) file to accomplish the following tasks:
 

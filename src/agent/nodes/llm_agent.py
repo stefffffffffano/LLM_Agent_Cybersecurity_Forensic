@@ -106,16 +106,19 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,frameDataExtractor,finalAnswerFormatter])#,file_reader
     #When it's the last iteration, concatenate a message saying that it has to provide an 
     #answer
-    if state.steps <= 1:
-        system_prompt += "\n\nYou have to provide an answer, it's the last iteration available."
+    if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
+        system_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
     messages = [{"role": "system", "content": system_prompt}]
+    length_exceeded = False
     try:
         msg = await llm_with_tools.ainvoke(messages, config=debug_config)
     except BadRequestError as e:
+        length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
     
 
     return {"messages": [msg],
             "steps": state.steps - 1,
+            "done": length_exceeded,
             }

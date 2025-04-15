@@ -50,7 +50,7 @@ def load_data():
     Returns:
         list: collection of tasks
     """
-    with open('data/tasks/data.json', 'r') as file:
+    with open('data/tasks/data.json', 'r') as file: 
         games = json.loads(file.read())
     return games['tasks']
 
@@ -102,7 +102,7 @@ async def run_forensic_example(
     answer = state["messages"][-1]
     print(f"\n\n\n\n\n\n\nAnswer: {answer}\n\n\n\n\n\n\n")
     done = state["done"]
-    return (done,answer.content)
+    return (done,answer.content, state["steps"])
 
 
 async def main():
@@ -125,13 +125,13 @@ async def main():
         expected_answer.append(game["vulnerable"])
         expected_answer.append(game["success"])
 
-        (done,answer) = await run_forensic_example(
+        (done,answer,steps) = await run_forensic_example(
             graph=graph,
             pcap_path=paths["pcap_path"],
             log_path=paths["log_path"],
         )
         with open("result.txt", "a", encoding="utf-8") as f:
-                f.write(f"[Task {i+1}]\n{answer}\n\n")
+                f.write(f"[Task {i+1}]\n{answer}\n\nNumber of steps: {50-steps}\n\n")
         if(done):
             #If done, update statistics, otherwise no
             answers = []
