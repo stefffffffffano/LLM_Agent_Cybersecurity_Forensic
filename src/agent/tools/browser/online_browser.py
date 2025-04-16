@@ -15,6 +15,8 @@ from langchain_core.messages import HumanMessage
 from typing import Annotated
 
 
+#TODO: add a timeout when calling openAI's API to create the embeddings
+
 class WebQuickSearch(BaseModel):
     """Run a quick online search given a query"""
     query: str = Field(...)

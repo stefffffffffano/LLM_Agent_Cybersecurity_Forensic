@@ -29,7 +29,7 @@ def finalAnswerFormatter_func(
 finalAnswerFormatter = Tool(
     name="final_answer_formatter",
     description="""Format the final answer when you want to provide it as a solution to the proposed question.
-    Call this tool when you want to provide the final answer to the user.
+    Return one single cve and affected service (without the version,just the name).
     Args: 
         detailed_report: The detailed report of the attack.
         cve_identifier: The CVE identifier of the vulnerability.
