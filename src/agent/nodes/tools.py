@@ -8,7 +8,7 @@ from agent.utils import split_model_and_provider
 from agent.tools.memory import upsert_memory_func
 from agent.tools.browser import web_quick_search_func
 from agent.tools.log_reader import file_reader_func
-from agent.tools.pcap import frameDataExtractor_func
+from agent.tools.pcap import frameDataExtractor_func, commandExecutor_func
 from agent.tools.report import finalAnswerFormatter_func
 from agent.state import State
 from agent.configuration import Configuration
@@ -107,7 +107,22 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
             }
             for tc, content in zip(frame_extractor_calls, frame_content)
         ])
+    command_executor_calls = [tc for tc in tool_calls if tc["name"] == "command_executor"]
 
+    # Handles command execution -> the LLM passes one single argument: tshark_command
+    if command_executor_calls:
+        command_content = [
+            commandExecutor_func(**tc["args"], pcap_file=state.pcap_path)
+            for tc in command_executor_calls
+        ]
+        results.extend([
+            {
+                "role": "tool",
+                "content": f"\nResult of command {tc['args']}:  {content}",
+                "tool_call_id": tc["id"],
+            }
+            for tc, content in zip(command_executor_calls, command_content)
+        ])
 
     #Handles formatting of the final answer
     final_answer_calls = [tc for tc in tool_calls if tc["name"] == "final_answer_formatter"]

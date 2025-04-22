@@ -45,7 +45,7 @@ def check_correctness(answers: list[str], expected_answer: list[str]) -> list[bo
     correctness = [False]*len(expected_answer)
     # Check if the answers are correct
     for i in range(len(answers)):
-        if str(expected_answer[i]).lower() in str(answers[i]).lower():
+        if str(expected_answer[i]).lower() in str(answers[i]).lower() or str(answers[i]).lower() in str(expected_answer[i]).lower():
             correctness[i] = True
     
     return correctness

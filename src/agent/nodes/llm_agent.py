@@ -9,8 +9,8 @@ from langchain_core.callbacks import BaseCallbackHandler
 from agent.utils import count_tokens, split_model_and_provider
 from agent.tools.memory import upsert_memory
 from agent.tools.browser import web_quick_search
-from agent.tools.log_reader import file_reader
-from agent.tools.pcap import frameDataExtractor,ListFrames
+#from agent.tools.log_reader import file_reader
+from agent.tools.pcap import commandExecutor, generate_summary #,frameDataExtractor, ListFrames
 from agent.tools.report import finalAnswerFormatter
 from agent.state import State
 from agent.configuration import Configuration
@@ -45,7 +45,8 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     assert store is not None, "Store not injected!"
 
     # FIFO messages (limited by token budget)
-    pcap_content = ListFrames().run(state.pcap_path)
+    pcap_content = generate_summary(state.pcap_path)
+    #pcap_content = ListFrames().run(state.pcap_path)
     MAX_FIFO_TOKENS -= count_tokens(pcap_content) #Subtract the tokens used by the pcap content
     fifo_token_counter = 0
     fifo_messages_to_be_included = 0
@@ -103,7 +104,7 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
 
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
-    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,frameDataExtractor,finalAnswerFormatter])#,file_reader
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,commandExecutor,finalAnswerFormatter])#,file_reader,frameDataExtractor])
     #When it's the last iteration, concatenate a message saying that it has to provide an 
     #answer
     if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
