@@ -1,0 +1,19 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from langchain_core.messages import AnyMessage
+from langgraph.graph import add_messages
+from typing_extensions import Annotated
+
+
+@dataclass(kw_only=True)
+class State:
+    """Main graph state."""
+    messages: Annotated[list[AnyMessage], add_messages] #messages in the conversation
+    steps: int #Maximum number of steps for the autonomous agent
+    pcap_path: str #Path to the pcap file
+    task: str #Task to be performed
+    error: bool=False #Error flag
+    done: bool=False #Done flag
+    
