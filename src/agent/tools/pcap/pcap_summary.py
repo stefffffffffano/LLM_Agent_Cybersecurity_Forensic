@@ -1,5 +1,5 @@
 """
-Executes the command tshark -r <pcap_file> -q -z conv,ip on the pcap file and returns the output.
+Executes the command tshark -r <pcap_file> -q -z conv,tcp on the pcap file and returns the output.
 It is used to be placed in the prompt, it's not a tool.
 It shows a table of IP conversations, with columns like:
 
@@ -18,14 +18,14 @@ import subprocess
 
 def generate_summary(pcap_file: str) -> str:
     """
-    Execute tshark -r <pcap_file> -q -z conv,ip on the pcap file in the terminal and return the output.
+    Execute tshark -r <pcap_file> -q -z conv,tcp on the pcap file in the terminal and return the output.
     Args:
         pcap_file: the path to the pcap file.
     Returns:
         The output of the command.
     """
     try:
-        pcap_command = ['tshark', '-r', pcap_file, '-q', '-z', 'conv,ip']
+        pcap_command = ['tshark', '-r', pcap_file, '-q', '-z', 'conv,tcp']
 
         result = subprocess.run(
             pcap_command,

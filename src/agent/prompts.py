@@ -7,7 +7,7 @@ You are working towards the final task on a step by step manner.
 Instruction:
 I will give you the previous steps performed in the analyisis and the content of the context. \
 You are provided with a queue of the most recent steps in the reasoning process and a summary of the pcap file \
-given by the command tshark -r <pcap_file> -q -z conv,ip. The PCAP file is filtered on the traffic of the service of interest.
+given by the command tshark -r <pcap_file> -q -z conv,tcp. The PCAP file is filtered on the traffic of the service of interest.
 Find the version of the affected service and perform a web search on the CVEs based on the service version.
 Store the most relevant information as soon as you get them, because the queue has a limited size and older messages will be removed.
 By thinking in a step by step manner, provide only one single reasoning \
