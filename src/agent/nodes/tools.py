@@ -7,8 +7,6 @@ from langchain_core.runnables import RunnableConfig
 from agent.utils import split_model_and_provider
 from agent.tools.memory import upsert_memory_func
 from agent.tools.browser import web_quick_search_func
-from agent.tools.log_reader import file_reader_func
-from agent.tools.pcap import frameDataExtractor_func, commandExecutor_func
 from agent.tools.report import finalAnswerFormatter_func
 from agent.state import State
 from agent.configuration import Configuration
@@ -73,56 +71,7 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
                            f"{skipped_calls} additional call(s) were skipped.\n"
                            f"Skipped call(s): {skipped_calls_content}",
                 "tool_call_id": web_calls[1]["id"]  
-            })
-
-    """
-    #Handles file reading      
-    log_reader_calls = [tc for tc in tool_calls if tc["name"] == "log_reader"]
-    if len(log_reader_calls) > 1:
-        raise(ValueError('Log reading called more than once'))
-    log_reader_call = log_reader_calls[0] if log_reader_calls else None
-    if log_reader_calls:
-        file_path = state.log_path
-        file_content = file_reader_func(file_path)
-        results.extend(
-            {
-                "role": "tool",
-                "content": f"Content of the log file: {file_content}",
-                "tool_call_id": log_reader_call["id"],
-            })
-    """
-    # Handles frame data extraction -> the LLM passes one single argument: frame_number
-    frame_extractor_calls = [tc for tc in tool_calls if tc["name"] == "frame_data_extractor"]
-
-    if frame_extractor_calls:
-        frame_content = [
-            frameDataExtractor_func(**tc["args"], pcap_file=state.pcap_path)
-            for tc in frame_extractor_calls
-        ]
-        results.extend([
-            {
-                "role": "tool",
-                "content": f"Content of  {content}",
-                "tool_call_id": tc["id"],
-            }
-            for tc, content in zip(frame_extractor_calls, frame_content)
-        ])
-    command_executor_calls = [tc for tc in tool_calls if tc["name"] == "command_executor"]
-
-    # Handles command execution -> the LLM passes one single argument: tshark_command
-    if command_executor_calls:
-        command_content = [
-            commandExecutor_func(**tc["args"], pcap_file=state.pcap_path)
-            for tc in command_executor_calls
-        ]
-        results.extend([
-            {
-                "role": "tool",
-                "content": f"\nResult of command {tc['args']}:  {content}",
-                "tool_call_id": tc["id"],
-            }
-            for tc, content in zip(command_executor_calls, command_content)
-        ])
+            }) 
 
     #Handles formatting of the final answer
     final_answer_calls = [tc for tc in tool_calls if tc["name"] == "final_answer_formatter"]

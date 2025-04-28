@@ -9,8 +9,7 @@ from langchain_core.callbacks import BaseCallbackHandler
 from agent.utils import count_tokens, split_model_and_provider
 from agent.tools.memory import upsert_memory
 from agent.tools.browser import web_quick_search
-#from agent.tools.log_reader import file_reader
-from agent.tools.pcap import commandExecutor, generate_summary #,frameDataExtractor, ListFrames
+from agent.tools.pcap import generate_summary 
 from agent.tools.report import finalAnswerFormatter
 from agent.state import State
 from agent.configuration import Configuration

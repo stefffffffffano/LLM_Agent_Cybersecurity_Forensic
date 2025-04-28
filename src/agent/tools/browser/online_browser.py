@@ -15,46 +15,10 @@ from langchain_core.messages import HumanMessage
 from typing import Annotated
 
 
-#TODO: add a timeout when calling openAI's API to create the embeddings
-
-class WebQuickSearch(BaseModel):
-    """Run a quick online search given a query"""
-    query: str = Field(...)
-
-    def run(self, llm_model, query_strategy):
-        print('Original search query:', self.query)
-        try:
-            rag_model = Context_generator(llm=llm_model, 
-                                            query_strategy=query_strategy, 
-                                            n_documents_per_source=10,
-                                            verbose = True)
-            
-            response = rag_model.invoke(self.query)
-        except Exception as e:
-            response = f"An error occurred during the web search: {str(e)}"
-        return response
-
-
-
-WWW_SCRAPER_PROMPT = """Your task is to create the most effective search query to find information that answers the user's question. \
-Your query will be used to search the web using a web engine (e.g. google, duckduckgo).\
-This is the question: {question}. 
-Provide the final query without brackets.
-"""
-
-EXPANDED_QUERY_PROMPT = """You are a Language Model specialized in query expansion for Retrieval-Augmented Generation (RAG) systems. \
-Your task is to modify the provided query in order to improve information retrieval. \
-Ensure the expanded query remains precise and relevant to the original intent. Output the expanded query enclosed within <expanded_query> tags, \
-and do not include any additional text or explanation (e.g. <expanded_query>[example_query]</expanded_query>).\
-Query: {query}
-Expanded Query: 
-"""
-
 class Context_generator:
     def __init__(self, 
                  llm='gpt-4o_client', 
                  embedder='openai', 
-                 query_strategy='standard',
                  n_documents_per_source=10,
                  context_length=5,
                  verbose=False):
@@ -64,7 +28,6 @@ class Context_generator:
             self.embedder = 'openai'
         else:
             self.embedder = SentenceTransformer(embedder)
-        self.query_strategy = query_strategy
         self.n_documents_per_source = n_documents_per_source
         self.context_length = context_length
         self.verbose = verbose
@@ -83,7 +46,7 @@ class Context_generator:
             content_type = response.headers.get("Content-Type", "")
             if not content_type.startswith("text/html"):
                 if self.verbose:
-                    print(f"[SKIP] Content-Type non valido: {content_type}")
+                    print(f"[SKIP] Content-Type not valid: {content_type}")
                 return None
 
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -169,50 +132,12 @@ class Context_generator:
             ranked_chunks = ranked_chunks[:self.context_length]
         return ranked_chunks
 
-
-    def parse_query(self, answer):
-        start_tag = "<expanded_query>"
-        end_tag = "</expanded_query>"
-        start_index = answer.find(start_tag) + len(start_tag)
-        end_index = answer.find(end_tag)
-        if start_index != -1 and end_index != -1:
-            answer = answer[start_index:end_index].strip()
-        return answer
-    
-    def expand_query(self, query):
-        prompt = EXPANDED_QUERY_PROMPT.format(query=query)
-        messages = [HumanMessage(content=prompt)]
-        response = self.llm.invoke(messages)
-        expanded_query = self.parse_query(response.content)
-        if self.verbose:
-            print('Expanded query for retrieval:', expanded_query)
-        return expanded_query
-
     def invoke(self, query):
-        # Whether to use the user query or a different strategy (e.g. query expansion)
-        if self.query_strategy == 'standard':
-            query_to_embedd = query
-        elif self.query_strategy == 'expansion':
-            query_to_embedd = self.expand_query(query)
-        elif self.query_strategy == 'multi_query':
-            # TODO implement multi-query expansion
-            pass
-        else:
-            raise ValueError(f"query_strategy ({self.query_strategy}) not implemented")
-        
-        print('Query to embed:', query_to_embedd)
-        #prompt = WWW_SCRAPER_PROMPT.format(question=query)
-        #messages = [HumanMessage(content=prompt)]
-        #Tends to lose the context when doing this way
-        #search_query = self.llm.invoke(messages).content
-        search_query = query_to_embedd
-        print('Search query:', search_query)
-        
-        documents = self.get_web_search_results(search_query)
+        print('Query to embed:', query)
+        documents = self.get_web_search_results(query)
         if self.verbose:
             print('Number of web pages obtained for the given query:', len(documents))  
         
-        # Now the different documents have to be divided into smaller pieces according to the chunking strategy.
         # We also remove empty chunks
         chunks = []
         for doc in documents:
@@ -232,7 +157,7 @@ class Context_generator:
             context = 'No information found.'
         else:
             # The sorted chunks are generated by using the embedder to get the embeddings of the query and the chunks
-            context = self.embedd_and_rank_text(query_to_embedd, chunks, self.embedder)
+            context = self.embedd_and_rank_text(query, chunks, self.embedder)
             if self.verbose:
                 print('Context length:', len(context))
 
@@ -248,11 +173,17 @@ class WebQuickSearchArgs(BaseModel):
 def web_quick_search_func(
     query: str,
     *,
-    llm_model: Annotated[object, InjectedToolArg],
-    query_strategy: Annotated[str, InjectedToolArg] = "standard"
+    llm_model: Annotated[object, InjectedToolArg]
 ) -> str:
-    tool = WebQuickSearch(query=query)
-    return tool.run(llm_model=llm_model, query_strategy=query_strategy)
+    try:
+        rag_model = Context_generator(llm=llm_model, 
+                                            n_documents_per_source=10,
+                                            verbose = True)
+            
+        response = rag_model.invoke(query)
+    except Exception as e:
+        response = f"An error occurred during the web search: {str(e)}"
+    return response
 
 #Tool used for binding
 web_quick_search = Tool(
