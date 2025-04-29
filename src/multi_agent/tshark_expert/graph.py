@@ -23,7 +23,12 @@ def build_graph() -> StateGraph:
         {"tools": "tools", END: END, "tshark_expert": "tshark_expert"},
     )
 
-    builder.add_edge("tools", "tshark_expert")
+    builder.add_conditional_edges(
+        "tools",
+        route_message,
+        {"tshark_expert": "tshark_expert", END: END},
+    )
+    
     builder.add_edge(START, "tshark_expert")
 
     return builder.compile(checkpointer=memory)

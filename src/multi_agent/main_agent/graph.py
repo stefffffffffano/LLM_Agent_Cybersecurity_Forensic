@@ -3,7 +3,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.store.base import BaseStore
 
 
-from multi_agent.main_agent.nodes import tools, route_message,call_model
+from multi_agent.main_agent.nodes import tools, route_message,main_agent
 from multi_agent.common.main_agent_state import State  
 
 def build_graph(store: BaseStore) -> StateGraph:
@@ -15,13 +15,13 @@ def build_graph(store: BaseStore) -> StateGraph:
     memory = MemorySaver()
     builder = StateGraph(State)
 
-    builder.add_node("call_model", call_model)
+    builder.add_node("main_agent", main_agent)
     builder.add_node("tools", tools)
 
     builder.add_conditional_edges(
-        "call_model",
+        "main_agent",
         route_message,
-        {"tools": "tools", END: END,"call_model": "call_model"},
+        {"tools": "tools", END: END,"main_agent": "main_agent"},
     )
 
     #Added this conditional edge in a way that the agent checks if done
@@ -29,12 +29,10 @@ def build_graph(store: BaseStore) -> StateGraph:
     builder.add_conditional_edges(
     "tools",
     route_message,
-    {"call_model": "call_model", END: END}
+    {"main_agent": "main_agent", END: END}
     )
 
-
-    #builder.add_edge("tools", "call_model")
-    builder.add_edge(START, "call_model")
+    builder.add_edge(START, "main_agent")
 
     return builder.compile(checkpointer=memory, store=store)
 

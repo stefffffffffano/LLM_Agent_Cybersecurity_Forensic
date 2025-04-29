@@ -1,4 +1,5 @@
 from typing import Any
+import concurrent.futures
 from openai import BadRequestError 
 
 from langchain.chat_models import init_chat_model
@@ -10,7 +11,8 @@ from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.tshark_expert.tools.pcap import commandExecutor
 from multi_agent.tshark_expert.tools.tshark_manual import manualSearch
-from multi_agent.tshark_expert.tools.browser import web_quick_search
+from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
+from multi_agent.main_agent.tools.pcap import generate_summary
 
 class PromptDebugHandler(BaseCallbackHandler):
     """
@@ -32,27 +34,33 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     # This helps the model understand the context and temporal relevance
     steps = '\n'.join([f" {m.content}\n" for  m in state.messages])
     sys = configurable.tshark_expert_template.format(
+        pcap_content=generate_summary(state.pcap_path),
         task=state.task,
         steps=steps
     )
-    if state.steps == 1 or state.steps == 2:
+    if state.steps == 2 or state.steps == 3:
         sys += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the answer with the information you gathered so far."
     message =  [{"role": "system", "content": sys}]
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     #Define the LLM with the model and the provider, temperature=0 to reduce randomness
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0)
     #Add the tools to the LLM
-    llm = llm.bind_tools([commandExecutor, manualSearch]) #,web_quick_search
+    llm = llm.bind_tools([commandExecutor, manualSearch,finalAnswerFormatter]) 
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
     length_exceeded = False
-    done = False
+    
     try:
-        msg = llm.invoke(
-            message,
-            config=debug_config,
-        )
-        if 'task completed' in msg.content.lower():
-            done = True
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(llm.invoke, message, config=debug_config)
+            msg = future.result(timeout=10)  # 10s timeout
+
+        
+    except concurrent.futures.TimeoutError:
+        print("TimeoutError: subagent's LLM call took too long!")
+        return {"messages": [], #Empty message to avoid confusion
+                "steps": state.steps, #Step is not counted
+                "error": True,
+                }
     except BadRequestError as e:
         length_exceeded = True
         print(f"Error: {e}")
@@ -61,5 +69,4 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,
-            "done": done,
             }

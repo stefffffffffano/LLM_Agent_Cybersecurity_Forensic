@@ -42,7 +42,7 @@ class Context_generator:
 
     def extract_and_clean_content(self, url):
         try:
-            response = requests.get(url, timeout=5)  # timeout aggiunto
+            response = requests.get(url, timeout=5)  # added timeout
             content_type = response.headers.get("Content-Type", "")
             if not content_type.startswith("text/html"):
                 if self.verbose:
@@ -55,7 +55,7 @@ class Context_generator:
             text = soup.get_text()
             text = re.sub(r'\s+', ' ', text).strip()
 
-            # Filtra contenuti troppo brevi o sospetti
+            # Filter contents
             if len(text) < 50 or not self.is_text_clean(text):
                 return None
 

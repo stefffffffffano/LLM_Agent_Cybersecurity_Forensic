@@ -46,7 +46,8 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
 
     # Handle web_quick_search (only one allowed)
     web_calls = [tc for tc in tool_calls if tc["name"] == "web_quick_search"]
-    if web_calls:
+    tshark_calls = [tc for tc in tool_calls if tc["name"] == "tshark_expert"]
+    if web_calls and not tshark_calls:
         first_web_call = web_calls[0]
         configurable = Configuration.from_runnable_config(config)
         llm = init_chat_model(**split_model_and_provider(configurable.model))
@@ -94,7 +95,7 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         ])
 
     # Handle tshark_expert tool
-    tshark_calls = [tc for tc in tool_calls if tc["name"] == "tshark_expert"]
+    
     if tshark_calls:
         for call in tshark_calls:
             task_input = call["args"].get("task", "")
@@ -107,7 +108,19 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
                 "content": result_content,
                 "tool_call_id": call["id"],
             })
-
+    if(web_calls and tshark_calls):
+        #web search calls skipped, advise the agent
+        skipped_calls = len(web_calls) 
+        skipped_calls_content = '\n'.join([text["args"].get("query","unknown") for text in web_calls])
+        results.append({
+            "role": "tool",
+            "content": f"You cannot call web_quick_search and tshark_expert in the same step. "
+                       f"{skipped_calls} call(s) were skipped.\n"
+                       f"Skipped call(s): {skipped_calls_content}",
+            "tool_call_id": web_calls[0]["id"]  
+        })
+    
+        
     return {
         "messages": results,
         "steps": state.steps - 1,

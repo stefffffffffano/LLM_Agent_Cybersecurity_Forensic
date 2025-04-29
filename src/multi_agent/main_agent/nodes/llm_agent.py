@@ -1,5 +1,6 @@
 from typing import Any
 from openai import BadRequestError 
+import asyncio
 
 from langgraph.store.base import BaseStore
 from langchain.chat_models import init_chat_model
@@ -28,7 +29,7 @@ class PromptDebugHandler(BaseCallbackHandler):
 
 
 
-async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> dict:
+async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> dict:
     """
     Main graph node: calls the LLM with the current state. It manages the context window and the memory.
     Context window is divided into three sections following MEMGPT approach: system messages, working
@@ -111,8 +112,15 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         system_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
     messages = [{"role": "system", "content": system_prompt}]
     length_exceeded = False
+    
     try:
-        msg = await llm_with_tools.ainvoke(messages, config=debug_config)
+        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=10) #10s timeout
+    except asyncio.TimeoutError:
+        print("TimeoutError: LLM call took too long!")
+        return {"messages": [], #No message is added
+            "steps": state.steps, #the step is not counted
+            "done": length_exceeded,
+        }
     except BadRequestError as e:
         length_exceeded = True
         print(f"Error: {e}")
