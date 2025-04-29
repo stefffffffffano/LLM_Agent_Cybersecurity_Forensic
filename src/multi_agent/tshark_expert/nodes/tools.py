@@ -9,7 +9,7 @@ def tools(state: State) -> dict:
     """
 
     tool_calls = state.messages[-1].tool_calls
-    
+    print('\ntool_calls:', tool_calls)
     if not tool_calls:
         raise ValueError("No tool calls found.")
 

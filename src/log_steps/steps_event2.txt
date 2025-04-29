@@ -1,0 +1,75 @@
+[Task 2]
+Step 1: Based on the summary of the PCAP file, it appears that there is HTTP traffic between two IP addresses, 172.18.0.1 and 172.18.0.2, on port 80. This suggests that the service involved is likely a web server or application running on HTTP.
+
+The next step is to extract HTTP requests and their headers from the PCAP file to identify the specific service or application involved. This will help in determining if there are any specific patterns or indicators of a known vulnerability.
+
+Let's proceed with extracting HTTP requests and their headers from the PCAP file.
+
+Action: Use the "tshark_expert" to extract HTTP requests and their headers from the PCAP file.
+Step 2: Final report from the forensic expert:
+The command successfully extracted HTTP requests and their headers from the PCAP file. The output revealed multiple GET requests targeting sensitive files and directories on the server, indicating potential directory traversal attacks. Additionally, a POST request to a CGI script suggests an attempt to execute commands on the server.
+Executed command: -Y "http.request" -T fields -e http.request.method -e http.host -e http.user_agent -e http.request.uri
+
+Command output: GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/shadow
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hostname
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/group
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.bash_history
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/authorized_keys
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/syslog
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/auth.log
+GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/www/html/config.php
+POST	localhost		/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+
+Step 3: The extracted HTTP requests and headers indicate potential directory traversal attacks and an attempt to execute commands on the server via a POST request to a CGI script. This suggests a possible vulnerability related to directory traversal and remote code execution.
+
+The next step is to identify the relevant CVE associated with these types of attacks. I will perform a web search to find CVEs related to directory traversal and remote code execution vulnerabilities in web servers or CGI scripts.
+
+Action: Perform a web search for CVEs related to directory traversal and remote code execution vulnerabilities in web servers or CGI scripts.
+Step 4: 
+Step 5: Search result for query: 'CVE directory traversal remote code execution web server CGI script'
+Information 1: es outside the intended directories, potentially leading to unauthorized access to sensitive files and remote code execution if CGI scripts are enabled.Exploitation in the WildCVE-2021-41773 has been actively exploited in the wild. Attackers have been observed using this vulnerability to gain unauthorized access to sensitive files and execute arbitrary code on vulnerable systems. The exploitation typically involves sending specially crafted HTTP requests to the vulnerable server, which then maps the request
+Information 2:  Leveraging the path traversal vulnerability, attackers can bypass security checks and access files and directories in the server’s file system through the cgi-bin directory. With mod_cgi enabled, they can execute scripts on the server. Steps to exploit CVE-2021-41773 Let's start by identifying the server version using an Nmap version detection scan to verify if it matches the vulnerable version. nmap -sV <IP-address/hostname> To execute the path traversal exploit, we'll send a request to the web server in 
+Information 3: ory directive allows an attacker to read arbitrary files such as passwd from the vulnerable server file system. Remote Code Execution While CVE-2021-41773 was initially documented as Path traversal and File disclosure vulnerability additional research concluded that the vulnerability can be further exploited to conduct remote code execution when mod_cgi module is enabled on the Apache HTTP server, this allows an attacker to leverage the path traversal vulnerability and call any binary on the system using HT
+Information 4: nvironment. In response to this vulnerability, we released ApacheCGI, a machine that showcases a path traversal vulnerability in Apache HTTP Server 2.4.49 and 2.4.50 (labeled CVE-2021-41773), which allows unauthenticated attackers to read files outside of the virtual directory path bounds. Furthermore, if CGI scripts are enabled, this could allow for remote code execution on the system. Play ApacheCGI today Hack The Box provides a wide range of scenarios to keep your team’s skills sharp and up-to-date. Orga
+Information 5: README.md cve-2021-42013.pycve-2021-42013.py httpd.confhttpd.conf View all filesRepository files navigationREADMEApache 2.4.50 - Path Traversal or Remote Code Execution CVE-2021-42013.py is a python script that will help in finding Path Traversal or Remote Code Execution vulnerability in Apache 2.4.50. Vulnerable instance of Docker is provided to get your hands dirty on CVE-2021-42013 If CGI-BIN is enabled than, we can perform Remote Code Execution but not Path Traversal, so "icons" directory has been added
+Step 6: Based on the web search results, the CVE-2021-41773 is associated with directory traversal and remote code execution vulnerabilities in Apache HTTP Server. The extracted HTTP requests from the PCAP file indicate potential directory traversal attacks and an attempt to execute commands on the server via a POST request to a CGI script, which aligns with the characteristics of CVE-2021-41773.
+
+The next step is to gather evidence of malicious activities associated with CVE-2021-41773 from the PCAP file. This involves looking for signs of remote code execution attempts, such as unusual command execution or file access patterns.
+
+Let's proceed with analyzing the PCAP file for signs of remote code execution attempts.
+Step 7: Final report from the forensic expert:
+During the analysis, I focused on identifying potential remote code execution attempts by examining HTTP traffic in the PCAP file. The initial extraction of HTTP request URIs and methods revealed suspicious directory traversal attempts, such as accessing sensitive files like `/etc/passwd` and `/root/.bash_history`. Further investigation into HTTP response status codes indicated that some requests were successful, suggesting a vulnerability to directory traversal attacks. A particularly suspicious POST request to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` was identified, which could be an attempt to execute a shell command. The content of this POST request was extracted as a hexadecimal string `6563686f3b6563686f`, which was decoded to reveal the ASCII representation `echo;echo`. This indicates an attempt to execute the `echo` command on the server, which is a common technique used in remote code execution attacks to test command execution capabilities.
+Executed command: -Y "http.request.method == \"POST\" && http.request.uri contains \"/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh\"" -T fields -e http.file_data
+
+Command output: 6563686f3b6563686f
+
+Step 8: 
+Step 9: Stored memory adb88963-68f2-4f8e-973a-c5dbf17fa49f
+Step 10: Final report from the forensic expert:
+The analysis of the PCAP file for HTTP response status codes revealed a mix of 200, 403, and 404 codes. The presence of 200 status codes indicates successful requests, while 403 and 404 codes suggest that some requests were either forbidden or the resources were not found. This information can be used to assess the success of any directory traversal or remote code execution attempts.
+Executed command: -Y "http.response" -T fields -e http.response.code
+
+Command output: 200
+403
+200
+200
+200
+403
+403
+404
+404
+404
+200
+
+
+Step 11: 
+Step 12: FINAL REPORT:
+The analysis of the PCAP file revealed multiple GET requests targeting sensitive files and directories on the server, indicating potential directory traversal attacks. Additionally, a POST request to a CGI script suggests an attempt to execute commands on the server. The CVE-2021-41773 is associated with these types of attacks in Apache HTTP Server. The HTTP response status codes included 200, 403, and 404, with the presence of 200 status codes indicating successful requests. A particularly suspicious POST request to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` was identified, which could be an attempt to execute a shell command. The content of this POST request was extracted as a hexadecimal string `6563686f3b6563686f`, which was decoded to reveal the ASCII representation `echo;echo`. This indicates an attempt to execute the `echo` command on the server, which is a common technique used in remote code execution attacks to test command execution capabilities.
+REPORT SUMMARY:
+Identified CVE: CVE-2021-41773
+Affected Service: Apache HTTP Server
+Is Service Vulnerable: True
+Attack succeeded: True
+

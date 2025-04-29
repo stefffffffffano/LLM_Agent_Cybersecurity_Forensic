@@ -97,28 +97,41 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
     # Handle tshark_expert tool
     
     if tshark_calls:
-        for call in tshark_calls:
-            task_input = call["args"].get("task", "")
-            if not state.pcap_path:
+        #Just consider the first call to the tshark expert, and skip the others
+        first_tshark_call = tshark_calls[0]
+        # If there are multiple calls, inform the agent that you have skipped the others
+        task_input = first_tshark_call["args"].get("task", "")
+        if not state.pcap_path:
                 result_content = "Error: No PCAP file available for Tshark Expert analysis."
-            else:
-                result_content = tshark_expert_func(task=task_input, pcap_path=state.pcap_path)
+        else:
+            result_content = tshark_expert_func(task=task_input, pcap_path=state.pcap_path)
             results.append({
                 "role": "tool",
                 "content": result_content,
-                "tool_call_id": call["id"],
+                "tool_call_id": first_tshark_call["id"],
             })
-    if(web_calls and tshark_calls):
-        #web search calls skipped, advise the agent
-        skipped_calls = len(web_calls) 
-        skipped_calls_content = '\n'.join([text["args"].get("query","unknown") for text in web_calls])
-        results.append({
-            "role": "tool",
-            "content": f"You cannot call web_quick_search and tshark_expert in the same step. "
-                       f"{skipped_calls} call(s) were skipped.\n"
-                       f"Skipped call(s): {skipped_calls_content}",
-            "tool_call_id": web_calls[0]["id"]  
-        })
+        if(len(tshark_calls) > 1):
+            skipped_calls = len(tshark_calls) - 1
+            skipped_calls_content = '\n'.join([text["args"].get("task","unknown") for text in tshark_calls[1:]])
+            results.append({
+                "role": "tool",
+                "content": f"Only one tshark_expert call is allowed per step. "
+                        f"{skipped_calls} additional call(s) were skipped.\n"
+                        f"Skipped call(s): {skipped_calls_content}",
+                "tool_call_id": tshark_calls[1]["id"]  
+            })
+        if(web_calls and tshark_calls):
+            #web search calls skipped, advise the agent
+            skipped_calls = len(web_calls) 
+            skipped_calls_content = '\n'.join([text["args"].get("query","unknown") for text in web_calls])
+            results.append({
+                "role": "tool",
+                "content": f"You cannot call web_quick_search and tshark_expert in the same step. "
+                        f"{skipped_calls} call(s) were skipped.\n"
+                        f"Skipped call(s): {skipped_calls_content}",
+                "tool_call_id": web_calls[0]["id"]  
+            })
+    
     
         
     return {

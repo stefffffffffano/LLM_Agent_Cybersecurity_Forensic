@@ -1,12 +1,13 @@
 from typing import Any
-import concurrent.futures
-from openai import BadRequestError 
+from openai import BadRequestError
+import time
 
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks import BaseCallbackHandler
 
 from multi_agent.common.tshark_expert_state import State
+from multi_agent.common.utils import count_tokens
 from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.tshark_expert.tools.pcap import commandExecutor
@@ -43,29 +44,27 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     message =  [{"role": "system", "content": sys}]
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     #Define the LLM with the model and the provider, temperature=0 to reduce randomness
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,request_timeout=20,max_retries=3)
     #Add the tools to the LLM
     llm = llm.bind_tools([commandExecutor, manualSearch,finalAnswerFormatter]) 
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
     length_exceeded = False
-    
     try:
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(llm.invoke, message, config=debug_config)
-            msg = future.result(timeout=10)  # 10s timeout
-
-        
-    except concurrent.futures.TimeoutError:
-        print("TimeoutError: subagent's LLM call took too long!")
-        return {"messages": [], #Empty message to avoid confusion
-                "steps": state.steps, #Step is not counted
-                "error": True,
-                }
+        msg = llm.invoke(message, config=debug_config)
     except BadRequestError as e:
         length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
+    except Exception as e:
+        time.sleep(20)
+        print(f"Error: {e}")
+        print("TimeoutError: subagent's LLM call took too long!")
+        return {"messages": [], #Empty message to avoid confusion
+                "steps": state.steps, #Step is not counted
+                "error": False,
+                }
 
+    print("\n\n\n\nAfter calling the LLM")
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,

@@ -31,7 +31,7 @@ def manualSearch_func(searchString: str) -> str:
     vectorstore = FAISS.load_local(str(db_path), OpenAIEmbeddings(), allow_dangerous_deserialization=True)
 
     # Semantic search
-    results = vectorstore.similarity_search(searchString, k=3)
+    results = vectorstore.similarity_search(searchString, k=2)
 
     if results:
         combined_text = "\n\n".join([doc.page_content for doc in results])

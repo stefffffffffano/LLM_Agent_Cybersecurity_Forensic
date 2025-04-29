@@ -8,11 +8,31 @@ Instruction:
 I will give you the previous steps performed in the analyisis and the content of the context. \
 You are provided with a queue of the most recent steps in the reasoning process and a summary of the pcap file \
 given by the command tshark -r <pcap_file> -q -z conv,tcp. The PCAP file is filtered on the traffic of the service of interest.
-You can make a subagent, expert on tshark command, execute commands for you. The high level description
-should be specific in terms of what you want to do. If you want to find signs of exploit of an attack,
-you have to specify what to look for. The subagent is only an expert in correcting command, 
-you are the expert in cybersecurity forensic, so analyzing outputs of the command is up to you. Do not require
-for specific analysis related to CVEs, the subagent is not able to do that. 
+
+You have access to a specialized sub-agent, the "tshark_expert", whose role is to assist you 
+in analyzing network traffic through the execution of tshark commands.
+
+The tshark_expert is an expert only in constructing and correcting tshark commands based on your needs.  
+It cannot interpret vulnerabilities (such as CVEs) directly from their code, name, or associated service.
+
+Guidelines for using the tshark_expert:
+- Provide clear, high-level objectives in your request (e.g., "Extract HTTP requests and their headers", "Find all TCP retransmissions").
+- If the task is related to a specific CVE, you must translate the CVE impact into a network behavior or observable pattern (e.g., "Look for signs of remote code execution attempts").
+- Avoid asking the tshark_expert to identify CVEs, exploits, vulnerabilities, or application-specific logic.
+- The sub-agent expects technical goals (such as "extract fields", "filter packets matching condition X") expressed in network analysis terms.
+
+Example of a correct request:
+- "List all TCP connections that experienced resets."
+- "Extract all DNS queries to external servers."
+- "Identify HTTP POST requests larger than 1 KB."
+
+Example of an incorrect request:
+- "Detect CVE-2021-1234 exploitation."
+- "Find vulnerabilities related to Apache."
+
+Always reason about what network evidence you want to find, and ask the tshark_expert to extract or filter accordingly.
+
+
 DO NOT CALL THE WEB SEARCH TOOL AND THE TSHARK COMMAND TOOL IN THE SAME STEP. WEB SEARCH TOOL
 CALLS WILL BE IGNORED IN THAT CASE. 
 Store the most relevant information as soon as you get them, because the queue has a limited size and older messages will be removed.
@@ -55,11 +75,9 @@ Instruction:
 I will give you the previous steps performed in the analyisis and the content of the context. \
 You are provided with a queue of the most recent steps in the reasoning process and a summary of the pcap file \
 given by the command: tshark -r <pcap_file> -q -z conv,tcp. The PCAP file is filtered on the traffic of the service of interest.
-You can make a subagent, expert on tshark command, execute commands for you. The high level description
-should be specific in terms of what you want to do. If you want to find signs of exploitation of an attack,
-you have to specify what to look for. The subagent is only an expert in correcting command, 
-you are the expert in cybersecurity forensic, so analyzing outputs of the command is up to you. Do not require
-for specific analysis related to CVEs, the subagent is not able to do that. 
+You have access to a specialized sub-agent, the "tshark_expert", whose role is to assist you 
+in analyzing network traffic through the execution of tshark commands.
+
 DO NOT CALL THE WEB SEARCH TOOL AND THE TSHARK COMMAND TOOL IN THE SAME STEP. WEB SEARCH TOOL
 CALLS WILL BE IGNORED IN THAT CASE. 
 Store the most relevant information as soon as you get them, because the queue has a limited size and older messages will be removed.
@@ -77,15 +95,10 @@ Context: Analyze the provided PCAP (Packet Capture) file to accomplish the follo
 
     Guidelines:
     - Begin by thoroughly analyzing the PCAP file to extract relevant information. 
-    - Identify the service or application involved in the traffic.
-    - List CVEs related to the identified service or application by searching on the web.
-    - Use the CVE list to search for specific vulnerabilities and exploits related to the service or application in the PCAP file.
-    - Do not check only for one CVE, but for all the CVEs related to the service or application.
     - After the exploratory analysis, ensure that the CVE identification is accurate by cross-referencing details from external sources with the evidence found in the PCAP files.
     - Use the online search tool only after the exploratory analysis has been completed to verify the findings and gather additional information.
     Pay attention:
-    - Do not make conclusion on the affected service only based on the port number, verify wether the 
-    service is present in that port.
+    - Do not make conclusion on the affected service only based on the port number, verify wether the service is present in that port.
     Pcap summary: {pcap_content}
 {memories}
 Queue of steps: {queue}

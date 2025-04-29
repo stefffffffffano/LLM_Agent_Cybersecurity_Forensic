@@ -103,7 +103,7 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         queue=queue_str
     )
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=20)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,tshark_expert,finalAnswerFormatter])#,file_reader,frameDataExtractor])
     #When it's the last iteration, concatenate a message saying that it has to provide an 
@@ -114,7 +114,7 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     length_exceeded = False
     
     try:
-        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=10) #10s timeout
+        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=20) #10s timeout
     except asyncio.TimeoutError:
         print("TimeoutError: LLM call took too long!")
         return {"messages": [], #No message is added

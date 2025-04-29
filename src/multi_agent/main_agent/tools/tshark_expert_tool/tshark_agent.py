@@ -67,7 +67,11 @@ tshark_expert = Tool(
     - If the command is malformed or the output is not useful, it tries to autonomously correct or adjust the query.
     - It inspects the filtered traffic and produces a detailed summary.
     - If the analysis fails to complete after adjustments, it returns an error message.
-
+    Guidelines for using the tshark_expert:
+    - Provide clear, high-level objectives in your request (e.g., "Extract HTTP requests and their headers", "Find all TCP retransmissions").
+    - If the task is related to a specific CVE, you must translate the CVE impact into a network behavior or observable pattern (e.g., "Look for signs of remote code execution attempts").
+    - Avoid asking the tshark_expert to identify CVEs, exploits, vulnerabilities, or application-specific logic.
+    - The sub-agent expects technical goals (such as "extract fields", "filter packets matching condition X") expressed in network analysis terms.
     Notes:
     - This tool is designed for cybersecurity investigations, forensic workflows, and advanced packet analysis.
     - The input task must guide the Tshark Expert clearly, combining both intent and technical suggestions.

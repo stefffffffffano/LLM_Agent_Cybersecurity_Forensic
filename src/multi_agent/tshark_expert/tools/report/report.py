@@ -35,7 +35,7 @@ def finalAnswerFormatter_func(
     final_report = f'Final report from the forensic expert:\n'
     final_report += report
     final_report += f'\nExecuted command: {executed_command}\n'
-    final_report += f'\nAffected Service: {command_output}\n'
+    final_report += f'\nCommand output: {command_output}\n'
     return final_report
 
 finalAnswerFormatter = Tool(
@@ -50,6 +50,8 @@ finalAnswerFormatter = Tool(
         command_output: The actual output of the command as it has been obtained by executig it with the tshark command tool.
     Returns:
         The final report of the attack to be returned before ending
+    IMPORTANT:
+    EVEN WHEN THE COMMAND IS LONG, REPORT THE FULL OUTPUT RETURNED BY TSHARK AS IT IS.
     """,
     args_schema=FinalAnswerArgs,
     func=finalAnswerFormatter_func,

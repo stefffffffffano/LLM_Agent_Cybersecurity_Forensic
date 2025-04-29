@@ -22,7 +22,8 @@ By thinking step-by-step, provide only one single reasoning step in response to 
 Handling errors:
 - If no output is found for a command (even after corrections), it is acceptable to report this as the final result.
 - If the explanation from the manual is clear, do not loop on similar queries and provide the final answer.
-
+IMPORTANT:
+APPLY A FILTER ONLY AFTER YOU HAVE TRIED TO EXECUTE THE COMMAND WITHOUT IT AND THE OUTPUT WAS TOO LONG. 
 When ready to provide the final answer, call the final answer formatter tool.
 PCAP summary: {pcap_content}
 Task and (optionally) suggested command:

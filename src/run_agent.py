@@ -17,26 +17,44 @@ load_dotenv()
 
 def calculate_f1_mcc(conf_matrix):
     """
-      TN  FP
-      FN  TP
-      Given confusion matrices, compute f1 score and Matthews Correlation Coefficient (MCC).
+    Given a multi-class confusion matrix, compute macro F1-score and Matthews Correlation Coefficient (MCC).
     """
-    TN, FP = conf_matrix[0]
-    FN, TP = conf_matrix[1]
+    num_classes = conf_matrix.shape[0]
+    f1_scores = []
+    
+    for i in range(num_classes):
+        TP = conf_matrix[i, i]
+        FP = conf_matrix[:, i].sum() - TP
+        FN = conf_matrix[i, :].sum() - TP
+        # TN = sum of everything else
+        TN = conf_matrix.sum() - (TP + FP + FN)
+        
+        # Precision and recall for class i
+        precision = TP / (TP + FP) if (TP + FP) != 0 else 0
+        recall    = TP / (TP + FN) if (TP + FN) != 0 else 0
+        
+        # F1-score for class i
+        f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+        f1_scores.append(f1)
+    
+    # Macro F1 = mean of F1-scores
+    f1_macro = np.mean(f1_scores)
+    
+    # Now compute MCC for multi-class
+    t_sum = conf_matrix.sum(axis=1)  # row sums
+    p_sum = conf_matrix.sum(axis=0)  # column sums
+    n = conf_matrix.sum()
+    
+    c = np.trace(conf_matrix)  # sum of diagonal (correct predictions)
+    s = 0
+    for i in range(num_classes):
+        s += t_sum[i] * p_sum[i]
+    
+    mcc_numerator = c * n - s
+    mcc_denominator = np.sqrt((n**2 - (p_sum**2).sum()) * (n**2 - (t_sum**2).sum()))
+    mcc = mcc_numerator / mcc_denominator if mcc_denominator != 0 else 0
 
-    # Avoid division by zero
-    precision = TP / (TP + FP) if (TP + FP) != 0 else 0
-    recall    = TP / (TP + FN) if (TP + FN) != 0 else 0
-
-    # F1-score
-    f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
-
-    # MCC
-    numerator   = (TP * TN) - (FP * FN)
-    denominator = np.sqrt((TP + FP)*(TP + FN)*(TN + FP)*(TN + FN))
-    mcc = numerator / denominator if denominator != 0 else 0
-
-    return f1, mcc
+    return f1_macro, mcc
 
 def check_correctness(answers: list[str], expected_answer: list[str]) -> list[bool]:
     """
@@ -74,7 +92,7 @@ def load_data():
     Returns:
         list: collection of tasks
     """
-    with open('src/data/tasks/data.json', 'r') as file: 
+    with open('data/tasks/data.json', 'r') as file: 
         games = json.loads(file.read())
     return games['tasks']
 
@@ -91,10 +109,10 @@ def get_artifact_paths(entry: dict) -> dict:
     Given a task entry from data.json, returns string paths to the associated log and pcap files.
     """
     event_id = entry["event"]
-    event_pcap_files = [f for f in os.listdir(f'src/data/raw/eventID_{event_id}') if f.endswith('.pcap')]
+    event_pcap_files = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.pcap')]
     #Just get the first one for now
-    event_log_file = [f for f in os.listdir(f'src/data/raw/eventID_{event_id}') if f.endswith('.log')][0]
-    base_dir = f'src/data/raw/eventID_{event_id}'
+    event_log_file = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.log')][0]
+    base_dir = f'data/raw/eventID_{event_id}'
     return {
         "log_path": base_dir + "/" + event_log_file,
         "pcap_path": base_dir + "/" + event_pcap_files[0],
@@ -103,9 +121,10 @@ def get_artifact_paths(entry: dict) -> dict:
 
 async def run_forensic_example(
     graph,
+    event_id: int,
     pcap_path: str,
     log_path: str,
-    max_steps: int = 50
+    max_steps: int = 20
 ):
     #Initial state
     state = State(
@@ -124,8 +143,12 @@ async def run_forensic_example(
     )
     
     answer = state["messages"][-1]
-    print(f"\n\n\n\n\n\n\nAnswer: {answer}\n\n\n\n\n\n\n")
     done = state["done"]
+    #Print on a file the sequence of messages (steps of the agent)
+    with open(f"log_steps/steps_event{event_id}.txt", "w", encoding="utf-8") as f:
+        f.write(f"[Task {event_id}]\n")
+        for i, message in enumerate(state["messages"]):
+            f.write(f"Step {i+1}: {message.content}\n")
     return (done,answer.content, state["steps"])
 
 
@@ -137,6 +160,8 @@ async def main():
 
     with open("result.txt", "w") as f:
         f.write("")
+
+    os.makedirs("log_steps", exist_ok=True) #trace agent's steps
 
     for i, game in enumerate(pcaps):
         paths = get_artifact_paths(game)
@@ -154,13 +179,14 @@ async def main():
         is_success = game["success"]
 
         done, answer, steps = await run_forensic_example(
+            event_id=i,
             graph=graph,
             pcap_path=paths["pcap_path"],
             log_path=paths["log_path"],
         )
 
         with open("result.txt", "a", encoding="utf-8") as f:
-            f.write(f"[Task {i+1}]\n{answer}\n\nNumber of steps: {50-steps}\n\n")
+            f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {20-steps}\n\n")
 
         if done:
             # Extract answers from the formatted response
@@ -190,21 +216,10 @@ async def main():
     print(f"Percentage of identified affected service: {counters[1]/len(pcaps)*100:.2f}%")
     print(f"Percentage of identified vulnerability: {counters[2]/len(pcaps)*100:.2f}%")
     print(f"Percentage of identified attack success: {counters[3]/len(pcaps)*100:.2f}%")
-    """
-    For what concerns vulnerability and attack success, since it's about a binary classification problem, 
-    accuracy can be misleading (we could get 50% predicting by chance), or, since the dataset is unbalanced,
-    we could get 75% by predicting always true (15/20 are successful as attacks).
-    I decided to compute both F1 score anche MCC (Matthews Correlation Coefficient) for each confusion matrix.
-    F1 score: The F1-score is useful when you want to find an optimal balance between false positives and false negatives.
-    It ranges from 0 (worst) to 1 (perfect classification).
-
-    MCC score: The Matthews Correlation Coefficient (MCC) is a more comprehensive metric for evaluating binary classification. It takes into account all four values of the confusion matrix: TP, TN, FP, FN.
-    (+1 perfect prediction, 0 random prediction, -1 inverse prediction->total disagreement).
-    """
-    f1_vulnerable, mcc_vulnerable = calculate_f1_mcc(confusion_matrix_vulnerable)
-    f1_success, mcc_success = calculate_f1_mcc(confusion_matrix_success)
-    print(f"f1 score for vulnerability: {f1_vulnerable:.2f}, MCC: {mcc_vulnerable:.2f}")
-    print(f"f1 score for attack success: {f1_success:.2f}, MCC: {mcc_success:.2f}")
+    f1_macro_vulnerable, mcc_vulnerable = calculate_f1_mcc(confusion_matrix_vulnerable)
+    f1_macro_success, mcc_success = calculate_f1_mcc(confusion_matrix_success)
+    print(f"f1_macro for vulnerability: {f1_macro_vulnerable:.2f}, MCC: {mcc_vulnerable:.2f}")
+    print(f"f1_macro for attack success: {f1_macro_success:.2f}, MCC: {mcc_success:.2f}")
     print("Finished running all tasks.")
     
 
