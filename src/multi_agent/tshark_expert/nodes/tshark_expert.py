@@ -50,6 +50,7 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
     length_exceeded = False
     try:
+        time.sleep(1)  # Slow down requests
         msg = llm.invoke(message, config=debug_config)
     except BadRequestError as e:
         length_exceeded = True
@@ -59,9 +60,10 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
         time.sleep(20)
         print(f"Error: {e}")
         print("TimeoutError: subagent's LLM call took too long!")
-        return {"messages": [], #Empty message to avoid confusion
+        #Stop the task in case of network error, it gets stuck
+        return {"messages": [{"role": "assistant","content":"Network error while processing"}], #Empty message to avoid confusion
                 "steps": state.steps, #Step is not counted
-                "error": False,
+                "done":True
                 }
 
     print("\n\n\n\nAfter calling the LLM")

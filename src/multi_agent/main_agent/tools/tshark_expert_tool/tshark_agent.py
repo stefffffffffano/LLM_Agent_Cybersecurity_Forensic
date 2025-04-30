@@ -29,7 +29,6 @@ def tshark_expert_func(
         task=task,
         messages=[],
         steps=15,  # Default maximum number of steps
-        error=False
     )
 
     # Assign a unique thread ID for the session

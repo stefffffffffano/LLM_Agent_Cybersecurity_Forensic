@@ -1,75 +1,108 @@
 [Task 2]
-Step 1: Based on the summary of the PCAP file, it appears that there is HTTP traffic between two IP addresses, 172.18.0.1 and 172.18.0.2, on port 80. This suggests that the service involved is likely a web server or application running on HTTP.
+Step 1: Based on the summary of the TCP conversations, it appears that the traffic is primarily between two IP addresses, 172.18.0.1 and 172.18.0.2, over port 80. This suggests that the traffic is likely HTTP traffic, which is commonly associated with web services or applications.
 
-The next step is to extract HTTP requests and their headers from the PCAP file to identify the specific service or application involved. This will help in determining if there are any specific patterns or indicators of a known vulnerability.
+To confirm the presence of an HTTP service and gather more details about the application or service involved, I will analyze the HTTP requests and responses within the PCAP file. This will help identify the specific service or application being used.
 
-Let's proceed with extracting HTTP requests and their headers from the PCAP file.
+Let's proceed with extracting HTTP requests and their headers to identify the service or application involved.
 
-Action: Use the "tshark_expert" to extract HTTP requests and their headers from the PCAP file.
+Action: Use the tshark_expert to extract HTTP requests and their headers from the PCAP file.
 Step 2: Final report from the forensic expert:
-The command successfully extracted HTTP requests and their headers from the PCAP file. The output revealed multiple GET requests targeting sensitive files and directories on the server, indicating potential directory traversal attacks. Additionally, a POST request to a CGI script suggests an attempt to execute commands on the server.
-Executed command: -Y "http.request" -T fields -e http.request.method -e http.host -e http.user_agent -e http.request.uri
+The analysis focused on extracting HTTP requests and their headers to identify the service or application involved. The initial command was refined to include additional HTTP headers such as `http.referer`, `http.accept`, and `http.content_type`. The `http.content_type` field was populated for the POST request, indicating form data with `application/x-www-form-urlencoded`. Other fields like `http.referer` and `http.accept` were not present in the captured requests.
+Executed command: -Y "http.request" -T fields -e http.host -e http.request.method -e http.user_agent -e http.referer -e http.accept -e http.content_type
 
-Command output: GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/shadow
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hostname
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/group
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.bash_history
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/authorized_keys
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/syslog
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/auth.log
-GET	localhost		/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/www/html/config.php
-POST	localhost		/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+Command output: localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	GET				
+localhost	POST				application/x-www-form-urlencoded
 
-Step 3: The extracted HTTP requests and headers indicate potential directory traversal attacks and an attempt to execute commands on the server via a POST request to a CGI script. This suggests a possible vulnerability related to directory traversal and remote code execution.
 
-The next step is to identify the relevant CVE associated with these types of attacks. I will perform a web search to find CVEs related to directory traversal and remote code execution vulnerabilities in web servers or CGI scripts.
+Step 3: The HTTP requests extracted from the PCAP file indicate that the traffic is directed to "localhost" with multiple GET requests and a single POST request containing form data with the content type "application/x-www-form-urlencoded". This suggests that the service or application involved is likely a web application running on the local server.
 
-Action: Perform a web search for CVEs related to directory traversal and remote code execution vulnerabilities in web servers or CGI scripts.
+To further identify the specific service or application, I will now focus on analyzing the POST request's payload to see if it contains any identifiable patterns or data that could indicate the application or service being used.
+
+Action: Use the tshark_expert to extract the payload of the POST request from the PCAP file.
 Step 4: 
-Step 5: Search result for query: 'CVE directory traversal remote code execution web server CGI script'
-Information 1: es outside the intended directories, potentially leading to unauthorized access to sensitive files and remote code execution if CGI scripts are enabled.Exploitation in the WildCVE-2021-41773 has been actively exploited in the wild. Attackers have been observed using this vulnerability to gain unauthorized access to sensitive files and execute arbitrary code on vulnerable systems. The exploitation typically involves sending specially crafted HTTP requests to the vulnerable server, which then maps the request
-Information 2:  Leveraging the path traversal vulnerability, attackers can bypass security checks and access files and directories in the server’s file system through the cgi-bin directory. With mod_cgi enabled, they can execute scripts on the server. Steps to exploit CVE-2021-41773 Let's start by identifying the server version using an Nmap version detection scan to verify if it matches the vulnerable version. nmap -sV <IP-address/hostname> To execute the path traversal exploit, we'll send a request to the web server in 
-Information 3: ory directive allows an attacker to read arbitrary files such as passwd from the vulnerable server file system. Remote Code Execution While CVE-2021-41773 was initially documented as Path traversal and File disclosure vulnerability additional research concluded that the vulnerability can be further exploited to conduct remote code execution when mod_cgi module is enabled on the Apache HTTP server, this allows an attacker to leverage the path traversal vulnerability and call any binary on the system using HT
-Information 4: nvironment. In response to this vulnerability, we released ApacheCGI, a machine that showcases a path traversal vulnerability in Apache HTTP Server 2.4.49 and 2.4.50 (labeled CVE-2021-41773), which allows unauthenticated attackers to read files outside of the virtual directory path bounds. Furthermore, if CGI scripts are enabled, this could allow for remote code execution on the system. Play ApacheCGI today Hack The Box provides a wide range of scenarios to keep your team’s skills sharp and up-to-date. Orga
-Information 5: README.md cve-2021-42013.pycve-2021-42013.py httpd.confhttpd.conf View all filesRepository files navigationREADMEApache 2.4.50 - Path Traversal or Remote Code Execution CVE-2021-42013.py is a python script that will help in finding Path Traversal or Remote Code Execution vulnerability in Apache 2.4.50. Vulnerable instance of Docker is provided to get your hands dirty on CVE-2021-42013 If CGI-BIN is enabled than, we can perform Remote Code Execution but not Path Traversal, so "icons" directory has been added
-Step 6: Based on the web search results, the CVE-2021-41773 is associated with directory traversal and remote code execution vulnerabilities in Apache HTTP Server. The extracted HTTP requests from the PCAP file indicate potential directory traversal attacks and an attempt to execute commands on the server via a POST request to a CGI script, which aligns with the characteristics of CVE-2021-41773.
-
-The next step is to gather evidence of malicious activities associated with CVE-2021-41773 from the PCAP file. This involves looking for signs of remote code execution attempts, such as unusual command execution or file access patterns.
-
-Let's proceed with analyzing the PCAP file for signs of remote code execution attempts.
-Step 7: Final report from the forensic expert:
-During the analysis, I focused on identifying potential remote code execution attempts by examining HTTP traffic in the PCAP file. The initial extraction of HTTP request URIs and methods revealed suspicious directory traversal attempts, such as accessing sensitive files like `/etc/passwd` and `/root/.bash_history`. Further investigation into HTTP response status codes indicated that some requests were successful, suggesting a vulnerability to directory traversal attacks. A particularly suspicious POST request to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` was identified, which could be an attempt to execute a shell command. The content of this POST request was extracted as a hexadecimal string `6563686f3b6563686f`, which was decoded to reveal the ASCII representation `echo;echo`. This indicates an attempt to execute the `echo` command on the server, which is a common technique used in remote code execution attacks to test command execution capabilities.
-Executed command: -Y "http.request.method == \"POST\" && http.request.uri contains \"/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh\"" -T fields -e http.file_data
+Step 5: Final report from the forensic expert:
+To extract the payload of the HTTP POST request, I refined the command to filter for HTTP POST requests using the display filter `http.request.method == "POST"` and extracted the payload data using the field `http.file_data`. This allowed us to focus specifically on the POST request payloads, which is crucial for identifying any patterns or data that could indicate the application or service being used.
+Executed command: -Y "http.request.method == \"POST\"" -T fields -e http.file_data
 
 Command output: 6563686f3b6563686f
 
-Step 8: 
-Step 9: Stored memory adb88963-68f2-4f8e-973a-c5dbf17fa49f
-Step 10: Final report from the forensic expert:
-The analysis of the PCAP file for HTTP response status codes revealed a mix of 200, 403, and 404 codes. The presence of 200 status codes indicates successful requests, while 403 and 404 codes suggest that some requests were either forbidden or the resources were not found. This information can be used to assess the success of any directory traversal or remote code execution attempts.
-Executed command: -Y "http.response" -T fields -e http.response.code
+Step 6: The extracted payload of the HTTP POST request is "6563686f3b6563686f". This appears to be hexadecimal data. To understand the content of this payload, I will convert it from hexadecimal to ASCII to see if it reveals any identifiable patterns or data that could indicate the application or service being used.
 
-Command output: 200
-403
-200
-200
-200
-403
-403
-404
-404
-404
-200
+Action: Convert the hexadecimal payload "6563686f3b6563686f" to ASCII.
+Step 7: 
+Step 8: Stored memory bf2fc19d-b609-4413-ab84-9ea776e656c5
+Step 9: The hexadecimal payload "6563686f3b6563686f" was converted to ASCII, resulting in the string "echo;echo". This pattern suggests that the payload might be attempting to execute shell commands, which could be indicative of a command injection attack. 
+
+To further investigate, I will now perform a web search to identify any CVEs related to command injection vulnerabilities, particularly those that might be associated with web applications or services. This will help in determining if there is a known vulnerability that matches the observed behavior.
+Step 10: Search result for query: 'CVE command injection web application echo'
+Information 1: ig. 2Where web command injection attacks occur.Full size imageWeb command injection attack categoriesWeb command injection attack with echo resultsA command injection attack resulting in echoed output occurs when an attacker leverages common operators to execute malicious commands. By combining the original command with the injected command, the attacker can obtain the execution results.For instance, consider a scenario in which a web application employs system call-related functions, such as exec, and acce
+Information 2: Command Injection Attack Guide | Hackviser Skip to main contentFeaturesPricingTacticsBlogSign InGet StartedPentestingHardeningToolsPentesting TacticsWeb VulnerabilitiesCommand InjectionSQL InjectionCross-Site Scripting (XSS)Services & ProtocolsMongoDBADBDNSElasticsearchFTPICMPIMAPIRCISCSIKerberosKibanaLDAPLPDMemcachedModbusMSRPCMySQLNetBIOSNFSNTPPOP3PostgreSQLRDPRedisRpcbindRSHRsyncRTSPSMBSMTPSplunkdSSHTACACSTelnetVNCWebDAVWHOISWeb VulnerabilitiesCommand InjectionOn this pageWant to Practice These Technique
+Information 3: SElasticsearchFTPICMPIMAPIRCISCSIKerberosKibanaLDAPLPDMemcachedModbusMSRPCMySQLNetBIOSNFSNTPPOP3PostgreSQLRDPRedisRpcbindRSHRsyncRTSPSMBSMTPSplunkdSSHTACACSTelnetVNCWebDAVWHOISWeb VulnerabilitiesCommand InjectionOn this pageWant to Practice These Techniques?Try Hackviser's interactive cyber security upskilling platform - Learn by doing!Start Practicing NowCommand Injection Command Injection is a web security vulnerability that allows an attacker to execute arbitrary system commands on the host operating sys
+Information 4: ect vulnerabilities.Practical DemonstrationSetting Up a Vulnerable ApplicationTo understand command injection practically, set up a simple PHP web application on a Linux machine:Install Apache and PHP:sudo apt update && sudo apt install apache2 php -y Create a vulnerable script:sudo nano /var/www/html/vulnerable.php Add the following code:<?php $cmd = $_GET['cmd']; system($cmd); ?> Start Apache:sudo systemctl restart apache2 Access it via browser:http://localhost/vulnerable.php?cmd=lsExploiting the Vulnerab
+Information 5: ence.Real-World Examples of Command Injection Attacks1. Shellshock (CVE-2014-6271)Shellshock was a critical vulnerability in the Bash shell that allowed attackers to execute arbitrary commands by manipulating environment variables.Exploit example:curl -H "User-Agent: () { :; }; echo 'Vulnerable'" http://target.com/cgi-bin/vulnerable_script2. Cisco WebEx Client Vulnerability (CVE-2017-3823)A command injection vulnerability in Cisco WebEx client allowed attackers to execute arbitrary commands when a user open
+Step 11: The extracted payload "echo;echo" suggests a command injection attempt, which is a common web vulnerability. The web search results indicate that command injection vulnerabilities can be exploited to execute arbitrary commands on the host system. One notable example is the Shellshock vulnerability (CVE-2014-6271), which allowed attackers to execute arbitrary commands by manipulating environment variables.
+
+Given the context of the analysis, the traffic is directed to "localhost" with HTTP requests, and the payload suggests a command injection attempt. This aligns with the characteristics of a web application vulnerability.
+
+To proceed, I will now assess whether the service or application is vulnerable to the identified attack and evaluate whether the attack was successful. This will involve analyzing the network traffic for any signs of successful command execution or system compromise. 
+
+I will use the tshark_expert to look for any signs of command execution or system responses that indicate a successful attack.
+Step 12: Final report from the forensic expert:
+The analysis of the network traffic revealed signs of a command injection attempt. The HTTP POST request to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` with a `200 OK` response contained a payload in hexadecimal format, which translates to `echo;echo` in ASCII. This suggests that the attacker was attempting to execute the `echo` command on the server, indicating a potential command injection vulnerability.
+Executed command: -Y "http.request.method == POST" -T fields -e frame.number -e http.file_data
+
+Command output: 107	6563686f3b6563686f
+
+Step 13: 
+Step 14: Final report from the forensic expert:
+The suggested tshark command was missing the initial 'tshark' command and the '-r <pcap_file>' option to specify the input file. After verifying the fields and options used in the suggested command, I executed the corrected command to analyze the network traffic for any signs of successful command execution or system compromise, focusing on responses to the HTTP POST request that might indicate a successful command injection attack.
+Executed command: tshark -r <pcap_file> -Y "http.response" -T fields -e frame.number -e http.response.code -e http.response.phrase -e http.file_data
+
+Command output: No output found for the given command.
+
+Step 15: Based on the analysis so far, the HTTP POST request payload "echo;echo" suggests a command injection attempt, which is a common web vulnerability. The web search results indicate that command injection vulnerabilities can be exploited to execute arbitrary commands on the host system. One notable example is the Shellshock vulnerability (CVE-2014-6271), which allowed attackers to execute arbitrary commands by manipulating environment variables.
+
+Given the context of the analysis, the traffic is directed to "localhost" with HTTP requests, and the payload suggests a command injection attempt. This aligns with the characteristics of a web application vulnerability.
+
+To proceed, I will now assess whether the service or application is vulnerable to the identified attack and evaluate whether the attack was successful. This will involve analyzing the network traffic for any signs of successful command execution or system compromise. 
+
+I will use the tshark_expert to look for any signs of command execution or system responses that indicate a successful attack.
+Step 16: Final report from the forensic expert:
+The analysis focused on identifying signs of successful command execution or system compromise through HTTP POST requests. A single HTTP POST request was identified with a URI suggesting a directory traversal attack, attempting to access the `/bin/sh` shell. The file data associated with this request was in hexadecimal format, which was decoded to ASCII to reveal the command being executed. The decoded command was `echo;echo`, which indicates an attempt to execute a command on the server. This suggests a potential command injection attack, but the command itself (`echo;echo`) does not perform any harmful action. However, the presence of such an attempt indicates a vulnerability that could be exploited for more harmful purposes.
+Executed command: -Y "frame.number == 107" -x
+
+Command output: 0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 da 61 98 40 00 40 06 80 5e ac 12 00 01 ac 12   ..a.@.@..^......
+0020  00 02 88 e2 00 50 36 27 59 87 b4 7f fe 09 80 18   .....P6'Y.......
+0030  01 f6 58 f4 00 00 01 01 08 0a 9f 42 e9 de 62 36   ..X........B..b6
+0040  c7 ff 50 4f 53 54 20 2f 63 67 69 2d 62 69 6e 2f   ..POST /cgi-bin/
+0050  2e 25 32 65 2f 2e 25 32 65 2f 2e 25 32 65 2f 2e   .%2e/.%2e/.%2e/.
+0060  25 32 65 2f 62 69 6e 2f 73 68 20 48 54 54 50 2f   %2e/bin/sh HTTP/
+0070  31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c   1.1..Host: local
+0080  68 6f 73 74 0d 0a 43 6f 6e 74 65 6e 74 2d 4c 65   host..Content-Le
+0090  6e 67 74 68 3a 20 39 0d 0a 43 6f 6e 74 65 6e 74   ngth: 9..Content
+00a0  2d 54 79 70 65 3a 20 61 70 70 6c 69 63 61 74 69   -Type: applicati
+00b0  6f 6e 2f 78 2d 77 77 77 2d 66 6f 72 6d 2d 75 72   on/x-www-form-ur
+00c0  6c 65 6e 63 6f 64 65 64 0d 0a 43 6f 6e 6e 65 63   lencoded..Connec
+00d0  74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d 0a 65   tion: close....e
+00e0  63 68 6f 3b 65 63 68 6f                           cho;echo
 
 
-Step 11: 
-Step 12: FINAL REPORT:
-The analysis of the PCAP file revealed multiple GET requests targeting sensitive files and directories on the server, indicating potential directory traversal attacks. Additionally, a POST request to a CGI script suggests an attempt to execute commands on the server. The CVE-2021-41773 is associated with these types of attacks in Apache HTTP Server. The HTTP response status codes included 200, 403, and 404, with the presence of 200 status codes indicating successful requests. A particularly suspicious POST request to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` was identified, which could be an attempt to execute a shell command. The content of this POST request was extracted as a hexadecimal string `6563686f3b6563686f`, which was decoded to reveal the ASCII representation `echo;echo`. This indicates an attempt to execute the `echo` command on the server, which is a common technique used in remote code execution attacks to test command execution capabilities.
+Step 17: 
+Step 18: FINAL REPORT:
+The analysis of the PCAP file revealed HTTP traffic directed to 'localhost' with multiple GET requests and a single POST request containing form data with the content type 'application/x-www-form-urlencoded'. The POST request payload was extracted and converted from hexadecimal to ASCII, revealing the string 'echo;echo'. This pattern suggests a command injection attempt, which is a common web vulnerability. The web search results indicated that command injection vulnerabilities can be exploited to execute arbitrary commands on the host system. One notable example is the Shellshock vulnerability (CVE-2014-6271), which allowed attackers to execute arbitrary commands by manipulating environment variables. The analysis of the network traffic revealed signs of a command injection attempt. The HTTP POST request to '/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh' with a '200 OK' response contained a payload in hexadecimal format, which translates to 'echo;echo' in ASCII. This suggests that the attacker was attempting to execute the 'echo' command on the server, indicating a potential command injection vulnerability. However, the command itself ('echo;echo') does not perform any harmful action. The presence of such an attempt indicates a vulnerability that could be exploited for more harmful purposes. The service is vulnerable to command injection, but the specific attack observed was not successful in causing harm.
 REPORT SUMMARY:
-Identified CVE: CVE-2021-41773
-Affected Service: Apache HTTP Server
+Identified CVE: CVE-2014-6271
+Affected Service: web application
 Is Service Vulnerable: True
-Attack succeeded: True
+Attack succeeded: False
 

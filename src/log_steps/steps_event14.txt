@@ -1,0 +1,62 @@
+[Task 14]
+Step 1: The PCAP summary indicates multiple TCP conversations between two IP addresses, 172.18.0.3 and 172.18.0.2, all directed to port 2379. This port is commonly associated with the etcd service, which is a distributed key-value store used in many cloud and container environments. However, to confirm the service or application involved, I need to analyze the packet contents to verify if etcd is indeed the service running on this port.
+
+Next, I will use the "tshark_expert" to extract application layer data from the traffic to confirm the service or application involved.
+
+Action: Use the "tshark_expert" to extract application layer data from the traffic on port 2379 to confirm the service or application involved.
+Step 2: Final report from the forensic expert:
+The initial command to extract application layer data from traffic on port 2379 was too verbose, so I refined it to focus on specific fields that could help identify the service or application involved. I used the '-T fields' option to specify fields related to application layer protocols, which helped in narrowing down the output to relevant information.
+Executed command: tshark -r <pcap_file> -Y 'tcp.port == 2379' -T fields -e ip.src -e ip.dst -e tcp.port -e data
+
+Command output: No output found for the given command.
+
+Step 3: The previous attempt to extract application layer data from traffic on port 2379 did not yield any output. This suggests that the traffic might not contain recognizable application layer data, or the service might not be using a standard protocol that tshark can easily decode. 
+
+To further investigate, I should try to identify any specific patterns or signatures in the traffic that could indicate the presence of a particular service or application. This might involve looking for specific strings or byte sequences that are characteristic of certain services.
+
+Next, I will use the "tshark_expert" to search for any specific patterns or strings in the packet data that might help identify the service or application involved.
+Step 4: Network error while processing
+Step 5: The previous attempt to extract application layer data from traffic on port 2379 did not yield any output, which suggests that the traffic might not contain recognizable application layer data, or the service might not be using a standard protocol that tshark can easily decode. To further investigate, I should try to identify any specific patterns or signatures in the traffic that could indicate the presence of a particular service or application. This might involve looking for specific strings or byte sequences that are characteristic of certain services.
+
+Next, I will use the "tshark_expert" to search for any specific patterns or strings in the packet data that might help identify the service or application involved.
+Step 6: Final report from the forensic expert:
+The initial command `tshark -r <pcap_file> -Y 'tcp.port == 2379' -T fields -e data.text` was executed to search for specific patterns or strings in the packet data on port 2379. However, it returned no output, indicating that the field `data.text` might not be the correct field for extracting the desired information. Despite searching the tshark manual for a more appropriate field, no alternative field was identified. Therefore, the final result is that no text data was found in the packets on port 2379 using the specified field.
+Executed command: tshark -r <pcap_file> -Y 'tcp.port == 2379' -T fields -e data.text
+
+Command output: No output found for the given command.
+
+Step 7: The previous attempts to identify the service or application involved in the traffic on port 2379 have not yielded any results. The traffic might not contain recognizable application layer data, or the service might not be using a standard protocol that tshark can easily decode. Since the traffic is directed to port 2379, which is commonly associated with the etcd service, I will proceed with the assumption that etcd might be involved. However, I need to verify this assumption by looking for any specific patterns or signatures in the traffic that could indicate the presence of etcd.
+
+Next, I will perform a web search to gather more information about the etcd service and any known vulnerabilities associated with it. This will help in identifying any relevant CVEs and understanding the potential impact of the traffic observed in the PCAP file.
+Step 8: Search result for query: 'etcd service vulnerabilities CVE'
+Information 1: etcd vulnerabilities and exploits Vulmon Recent Vulnerabilities Product List Research Posts Trends Blog About Contact Vulmon Alerts By Relevance By Risk Score By Publish Date etcd vulnerabilities and exploits(subscribe to this query) 4.3CVSSv3CVE-2023-32082etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.4.26 and 3.5.9, the LeaseTimeToLive API allows access to key names (not value) associated to a lease when `Keys` parameter is true, even a user doesn't have re
+Information 2:  vulnerability.CVSS 7.5-PatchedCVE-2021-28235Authentication vulnerability found in Etcd-io v.3.4.10 allows remote attackers to escalate privileges via the debug function.CVSS 9.800000190734863-PatchedCVE-2020-15113In etcd before versions 3.3.23 and 3.4.10, certain directory paths are created (etcd data directory and the directory path when provided to automatically generate self-signed certificates for TLS connections with clients) with restricted access permissions (700) by using the os.MkdirAll. This func
+Information 3: Etcd CVEs and Security Vulnerabilities - OpenCVE Vulnerabilities (Etcd) Sign in Register MAIN NAVIGATION Vulnerabilities Vendors & Products Weaknesses Statistics Filtered by vendor Etcd Subscriptions Search Switch to Advanced Search (Beta) Empty Low (0 - 3.9) Medium (4.0 - 6.9) High (7.0 - 8.9) Critical (9.0 - 10.0) Search Total 7 CVE CVE Vendors Products Updated CVSS v3.1 CVE-2021-28235 2 Etcd, Redhat 2 Etcd, Openstack 2025-02-18 9.8 Critical Authentication vulnerability found in Etcd-io v.3.4.10 allows re
+Information 4: Latest Etcd VulnerabilitiesCVEsCVEsThreat IntelligenceThreat IntelligenceThreat IntelligenceThreat IntelligenceLog inResourcesResourcesChangelogChangelogResourcesResourcesChangelogChangelogLog inLog inStart Free TrialStart Free TrialCVEsCVEsThreat IntelligenceThreat IntelligenceThreat IntelligenceThreat IntelligenceLog inResourcesResourcesChangelogChangelogResourcesResourcesChangelogChangelogLog inLog inStart Free TrialStart Free TrialCVEsVendorsEtcdEtcd VulnerabilitiesCVE IDCVSSExploitPatchTrendsCVE-2024-4
+Information 5: rabilities. Vulnerability Details CVEID: CVE-2018-1098 DESCRIPTION: etcd is vulnerable to cross-site request forgery, caused by improper validation of user-supplied input. By persuading an authenticated user to visit a malicious Web site, a remote attacker could send a malformed HTTP request to perform unauthorized actions. An attacker could exploit this vulnerability to perform cross-site scripting attacks, Web cache poisoning, and other malicious activities.CWE: CWE-352: Cross-Site Request Forgery (CSRF)C
+Step 9: The web search results indicate that the etcd service has several known vulnerabilities, including CVE-2021-28235, which is an authentication vulnerability that allows remote attackers to escalate privileges via the debug function. This CVE has a high CVSS score of 9.8, indicating its critical nature. Given that the traffic is directed to port 2379, commonly associated with etcd, and considering the potential vulnerabilities, it is plausible that the traffic might be related to an exploitation attempt of this CVE.
+
+Next, I will use the "tshark_expert" to analyze the PCAP file for any signs of exploitation attempts related to CVE-2021-28235. This will involve looking for patterns or behaviors in the traffic that align with privilege escalation attempts or unauthorized access, which are characteristic of this CVE.
+Step 10: Final report from the forensic expert:
+The suggested tshark command was designed to filter for TCP traffic on port 2379 that contains the strings 'debug' or 'auth' in the data payload. This approach was intended to identify potential exploitation attempts related to CVE-2021-28235, as these strings might indicate unauthorized access or privilege escalation attempts. However, the command did not produce any output, indicating that there might not be any packets in the PCAP file that match the specified filter criteria. This suggests that there are no signs of exploitation attempts related to CVE-2021-28235 using the 'debug' or 'auth' strings in the data payload on TCP port 2379.
+Executed command: tshark -r <pcap_file> -Y 'tcp.port == 2379 && (data contains "debug" || data contains "auth")' -T fields -e ip.src -e ip.dst -e tcp.port -e data
+
+Command output: No output found for the given command.
+
+Step 11: 
+Step 12: Stored memory 0530a573-9be1-4ebd-bb16-a5866abb7ba5
+Step 13: The previous attempts to identify signs of exploitation related to CVE-2021-28235 in the PCAP file did not yield any results. The traffic directed to port 2379, which is commonly associated with the etcd service, did not contain any recognizable patterns or strings that would indicate an exploitation attempt using the 'debug' or 'auth' strings. This suggests that there might not be any active exploitation attempts of CVE-2021-28235 in the captured traffic.
+
+Next, I will proceed to evaluate whether the service or application is vulnerable to the identified attack by considering the context and the information gathered so far. This involves assessing the presence of the etcd service and its potential vulnerabilities, even if no active exploitation was detected in the traffic. I will then determine if the attack was successful based on the available evidence.
+
+Action: Evaluate the vulnerability of the etcd service to CVE-2021-28235 and assess the success of the attack based on the gathered information.
+Step 14: 
+Step 15: Stored memory 0530A573-9BE1-4EBD-BB16-A5866ABB7BA5
+Step 16: FINAL REPORT:
+The analysis of the PCAP file focused on traffic directed to port 2379, which is commonly associated with the etcd service. Despite attempts to identify the service or application involved, no recognizable application layer data was found. The assumption was made that the etcd service might be involved, given the port number. A web search revealed that etcd has known vulnerabilities, including CVE-2021-28235, an authentication vulnerability allowing privilege escalation. However, no signs of exploitation attempts related to this CVE were found in the PCAP file. Therefore, it is concluded that the service is potentially vulnerable to CVE-2021-28235, but no successful attack was detected in the captured traffic.
+REPORT SUMMARY:
+Identified CVE: CVE-2021-28235
+Affected Service: etcd
+Is Service Vulnerable: True
+Attack succeeded: False
+

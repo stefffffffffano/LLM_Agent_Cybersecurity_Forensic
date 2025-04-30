@@ -1,0 +1,84 @@
+[Task 18]
+Step 1: The summary of the TCP conversations indicates significant traffic between IP addresses 172.18.0.4 and 172.18.0.2 on port 6379, which is commonly associated with Redis. Additionally, there is traffic between 172.18.0.4 and 172.18.0.3 on port 5432, typically used by PostgreSQL. However, to confirm the presence of these services, I need to analyze the packet contents to verify the application protocols being used.
+
+Next, I will focus on confirming the presence of Redis on port 6379 by analyzing the packet contents for Redis protocol-specific data. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for Redis protocol-specific data on port 6379.
+Step 2: TsharkExpert analysis did not complete successfully.
+Step 3: Since the previous attempt to analyze the packet contents for Redis protocol-specific data on port 6379 was unsuccessful, I will attempt to extract and analyze the packet contents again to confirm the presence of the Redis service. 
+
+Let's proceed with another attempt to use the tshark_expert to extract and analyze the packet contents for Redis protocol-specific data on port 6379. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for Redis protocol-specific data on port 6379.
+Step 4: Final report from the forensic expert:
+The task was to extract and analyze packet contents for Redis protocol-specific data on port 6379 to confirm the presence of the Redis service. The initial command suggested was to filter packets on TCP port 6379 and display specific fields, limiting the output to the first 20 packets. However, this command returned no output. After verifying the correctness of the display filter 'tcp.port == 6379' through a manual search, it was confirmed that the filter was correctly applied. A subsequent attempt to execute a broader command without limiting the output to the first 20 packets also resulted in no output. This suggests that there is no Redis traffic present in the PCAP file on port 6379.
+Executed command: -Y "tcp.port == 6379" -T fields -e frame.number -e ip.src -e ip.dst -e tcp.payload -c 50
+
+Command output: No output found for the given command.
+
+Step 5: The previous attempts to confirm the presence of the Redis service on port 6379 using tshark were unsuccessful, as no Redis protocol-specific data was found. This suggests that the traffic on port 6379 may not be related to Redis, or the service might not be active or correctly captured in the PCAP file.
+
+Next, I will focus on analyzing the traffic on port 5432, which is typically associated with PostgreSQL, to confirm the presence of the PostgreSQL service. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432.
+Step 6: 
+Step 7: Network error while processing
+Step 8: 
+Step 9: Network error while processing
+Step 10: 
+Step 11: Network error while processing
+Step 12: Since the previous attempts to confirm the presence of the PostgreSQL service on port 5432 using tshark were unsuccessful due to network errors, I will attempt to extract and analyze the packet contents again to confirm the presence of the PostgreSQL service.
+
+Let's proceed with another attempt to use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432.
+Step 13: Network error while processing
+Step 14: Since the previous attempts to confirm the presence of the PostgreSQL service on port 5432 using tshark were unsuccessful due to network errors, I will attempt to extract and analyze the packet contents again to confirm the presence of the PostgreSQL service.
+
+Let's proceed with another attempt to use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432.
+Step 15: Network error while processing
+Step 16: Since the previous attempts to confirm the presence of the PostgreSQL service on port 5432 using tshark were unsuccessful due to network errors, I will attempt to extract and analyze the packet contents again to confirm the presence of the PostgreSQL service.
+
+Let's proceed with another attempt to use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for PostgreSQL protocol-specific data on port 5432.
+Step 17: Final report from the forensic expert:
+The analysis confirmed the presence of the PostgreSQL service by extracting PostgreSQL protocol-specific data from the PCAP file. The executed command successfully displayed SQL queries, such as 'SELECT 1' and more complex queries involving table attributes and configurations, indicating active PostgreSQL operations.
+Executed command: -Y "tcp.port == 5432" -T fields -e frame.number -e ip.src -e ip.dst -e tcp.port -e pgsql.query -c 20
+
+Command output: 1	172.18.0.4	172.18.0.3	36758,5432	SELECT 1
+2	172.18.0.3	172.18.0.4	5432,36758	
+3	172.18.0.4	172.18.0.3	36758,5432	
+4	172.18.0.4	172.18.0.3	36758,5432	SELECT a.attname, format_type(a.atttypid, a.atttypmod),\n       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,\n       c.collname, col_description(a.attrelid, a.attnum) AS comment\n  FROM pg_attribute a\n  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum\n  LEFT JOIN pg_type t ON a.atttypid = t.oid\n  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation\n WHERE a.attrelid = '"project_alerting_settings"'::regclass\n   AND a.attnum > 0 AND NOT a.attisdropped\n ORDER BY a.attnum\n
+5	172.18.0.3	172.18.0.4	5432,36758	
+6	172.18.0.4	172.18.0.3	36758,5432	SELECT 1
+7	172.18.0.3	172.18.0.4	5432,36758	
+8	172.18.0.4	172.18.0.3	36758,5432	SELECT a.attname, format_type(a.atttypid, a.atttypmod),\n       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,\n       c.collname, col_description(a.attrelid, a.attnum) AS comment\n  FROM pg_attribute a\n  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum\n  LEFT JOIN pg_type t ON a.atttypid = t.oid\n  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation\n WHERE a.attrelid = '"atlassian_identities"'::regclass\n   AND a.attnum > 0 AND NOT a.attisdropped\n ORDER BY a.attnum\n
+9	172.18.0.3	172.18.0.4	5432,36758	
+10	172.18.0.4	172.18.0.3	36758,5432	SELECT 1
+11	172.18.0.3	172.18.0.4	5432,36758	
+12	172.18.0.4	172.18.0.3	36758,5432	
+13	172.18.0.4	172.18.0.3	36758,5432	SELECT a.attname, format_type(a.atttypid, a.atttypmod),\n       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,\n       c.collname, col_description(a.attrelid, a.attnum) AS comment\n  FROM pg_attribute a\n  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum\n  LEFT JOIN pg_type t ON a.atttypid = t.oid\n  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation\n WHERE a.attrelid = '"bulk_imports"'::regclass\n   AND a.attnum > 0 AND NOT a.attisdropped\n ORDER BY a.attnum\n
+14	172.18.0.3	172.18.0.4	5432,36758	
+15	172.18.0.4	172.18.0.3	36758,5432	
+16	172.18.0.4	172.18.0.3	36758,5432	SELECT 1
+17	172.18.0.3	172.18.0.4	5432,36758	
+18	172.18.0.4	172.18.0.3	36758,5432	SELECT a.attname, format_type(a.atttypid, a.atttypmod),\n       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,\n       c.collname, col_description(a.attrelid, a.attnum) AS comment\n  FROM pg_attribute a\n  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum\n  LEFT JOIN pg_type t ON a.atttypid = t.oid\n  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation\n WHERE a.attrelid = '"bulk_import_configurations"'::regclass\n   AND a.attnum > 0 AND NOT a.attisdropped\n ORDER BY a.attnum\n
+19	172.18.0.3	172.18.0.4	5432,36758	
+20	172.18.0.4	172.18.0.3	36758,5432	SELECT 1
+
+
+Step 18: 
+Step 19: Search result for query: 'CVE PostgreSQL SQL queries'
+Information 1: loyments. PostgreSQL is highly extensible, allowing users to define custom functions, data types, and operators. Its commitment to open standards and active community support contribute to its widespread adoption across diverse industries.Summary of CVE-2025-1094CVE ID: CVE-2025-1094Description: SQL injection vulnerability in PostgreSQL libpq functions and command-line utilities.CVSS Score: 8.1 (High)CVSS Vector: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:HCVE-2025-1094 highlights a critical SQL injection v
+Information 2: E-2025-1094? CVE-2025-1094 is a significant SQL Injection vulnerability found in the PostgreSQL libpq functions and command line utilities. PostgreSQL is a widely used open-source relational database management system (RDBMS) designed for reliability and robustness. The vulnerability stems from improper neutralization of quoting syntax in specific functions, which can allow an attacker to manipulate SQL queries by injecting malicious input. If exploited, this could lead to unauthorized data access or comman
+Information 3: 25-1094CVE ID: CVE-2025-1094Description: SQL injection vulnerability in PostgreSQL libpq functions and command-line utilities.CVSS Score: 8.1 (High)CVSS Vector: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:HCVE-2025-1094 highlights a critical SQL injection vulnerability within PostgreSQL. The flaw lies in the libpq functions, specifically PQescapeLiteral(), PQescapeIdentifier(), PQescapeString(), and PQescapeStringConn(). These functions, when used to construct input for psql (PostgreSQL interactive terminal)
+Information 4: CVE-2025-1094 : SQL Injection Vulnerability in PostgreSQL libpq Functions and Command Line Utilities | SecurityVulnerability.ioVulnerabilitiesVendorsExploitsStatsNewsroomAdvanced SearchSearch Open main menuSQL Injection Vulnerability in PostgreSQL libpq Functions and Command Line UtilitiesCVE-2025-1094 8.1HIGHVendor AdvisoryQuick LinksKey Information:VendorPostgreSQL StatusPostgresqlVendorCVE Published:13 February 2025Badges📈 Trended📈 Score: 7,490👾 Exploit Exists🟡 Public PoC🟣 EPSS 84%📰 News WorthyWhat is CV
+Information 5: ds via psql’s meta-commands (e.g., \! followed by shell commands).Arbitrary SQL Execution: Malicious SQL statements can be injected to manipulate databases.Affected VersionsAll versions of PostgreSQL before 17.3All versions of PostgreSQL before 16.7All versions of PostgreSQL before 15.11All versions of PostgreSQL before 14.16All versions of PostgreSQL before 13.19RemediationUpgrade PostgreSQL: Apply patches for the affected versionsReference link: https://www.postgresql.org/support/security/CVE-2025-1094/Mi
+Step 20: The analysis has confirmed the presence of the PostgreSQL service on port 5432, and the search results indicate a relevant CVE, CVE-2025-1094, which is an SQL injection vulnerability in PostgreSQL. The next step is to gather evidence of malicious activities associated with this CVE from the PCAP file.
+
+To proceed, I will analyze the packet contents for signs of SQL injection attempts or any unusual SQL queries that could indicate exploitation of the CVE-2025-1094 vulnerability. 
+
+Action: Use the tshark_expert to extract and analyze the packet contents for signs of SQL injection attempts or unusual SQL queries related to CVE-2025-1094 in the PostgreSQL traffic on port 5432.

@@ -14,6 +14,5 @@ class State:
     steps: int #Maximum number of steps for the autonomous agent
     pcap_path: str #Path to the pcap file
     task: str #Task to be performed
-    error: bool=False #Error flag
     done: bool=False #Done flag
     
