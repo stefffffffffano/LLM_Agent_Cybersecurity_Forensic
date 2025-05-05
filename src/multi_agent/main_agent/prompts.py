@@ -66,20 +66,16 @@ Queue of steps: {queue}
 '''
 
 
-#Find the version of the affected service and perform a web search on the CVEs based on the service version.
-
-REACT_TEMPLATE = '''Role: You are a specialized network forensics analyst.
+REACT_TEMPLATE = '''
+Role: You are a specialized network forensics analyst.
 You are working towards the final task on a step by step manner.
-
 Instruction:
-I will give you the previous steps performed in the analyisis and the content of the context. \
 You are provided with a queue of the most recent steps in the reasoning process and a summary of the pcap file \
 given by the command: tshark -r <pcap_file> -q -z conv,tcp. The PCAP file is filtered on the traffic of the service of interest.
 You have access to a specialized sub-agent, the "tshark_expert", whose role is to assist you 
 in analyzing network traffic through the execution of tshark commands.
 
-DO NOT CALL THE WEB SEARCH TOOL AND THE TSHARK COMMAND TOOL IN THE SAME STEP. WEB SEARCH TOOL
-CALLS WILL BE IGNORED IN THAT CASE. 
+DO NOT CALL THE WEB SEARCH TOOL AND THE TSHARK COMMAND TOOL IN THE SAME STEP. WEB SEARCH TOOL CALLS WILL BE IGNORED IN THAT CASE. 
 Store the most relevant information as soon as you get them, because the queue has a limited size and older messages will be removed.
 By thinking in a step by step manner, provide only one single reasoning \
 step in response to the last observation and the action for the next step.
@@ -102,4 +98,5 @@ Context: Analyze the provided PCAP (Packet Capture) file to accomplish the follo
     Pcap summary: {pcap_content}
 {memories}
 Queue of steps: {queue}
+
 '''

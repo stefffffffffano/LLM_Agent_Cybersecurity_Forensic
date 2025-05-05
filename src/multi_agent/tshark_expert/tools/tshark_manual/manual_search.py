@@ -6,7 +6,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 
 
-def manualSearch_func(searchString: str) -> str:
+def manualSearch_func(searchString: str, threshold: float = 0.5) -> str:
     """
     Search the vector database containing the TShark and Wireshark-filter manuals
     for relevant information about a specific command, filter, option, or error.
@@ -31,13 +31,19 @@ def manualSearch_func(searchString: str) -> str:
     vectorstore = FAISS.load_local(str(db_path), OpenAIEmbeddings(), allow_dangerous_deserialization=True)
 
     # Semantic search
-    results = vectorstore.similarity_search(searchString, k=2)
+    results_with_score = vectorstore.similarity_search_with_score(searchString, k=3)
 
-    if results:
-        combined_text = "\n\n".join([doc.page_content for doc in results])
-        return combined_text
-    else:
-        return "No relevant information found in the manuals."
+    # Filter by threshold
+    filtered = [(doc, score) for doc, score in results_with_score if score >= threshold]
+
+    if not filtered:
+        return "No relevant information found in the manuals (similarity too low with respect to the query)."
+
+    output = []
+    for doc, score in filtered:
+        output.append(f"**Similarity: {score:.2f}**\n{doc.page_content.strip()}")
+
+    return "\n\n---\n\n".join(output)
 
 
 # Pydantic schema for arguments
@@ -51,14 +57,12 @@ manualSearch = Tool(
     Search the TShark and Wireshark-filter manuals to retrieve detailed information about:
     - TShark command-line options, flags, and syntax
     - Wireshark display filter syntax and field names
-    - Error messages and troubleshooting hints
-    - Protocol-specific options (e.g., http, tcp, dns fields)
 
     Use this tool when:
     - You need to understand a specific TShark command or option.
     - You need to fix a tshark command or understand an error.
     - You need to understand how to build a correct Wireshark display filter.
-    - You want examples of usage or syntax for tshark or filters.
+    - You want examples of usage or syntax for tshark commands or filters.
 
     The search is performed over a vector database built from the official manuals.
     """,

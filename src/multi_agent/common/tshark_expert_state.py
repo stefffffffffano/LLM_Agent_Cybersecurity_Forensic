@@ -15,4 +15,5 @@ class State:
     pcap_path: str #Path to the pcap file
     task: str #Task to be performed
     done: bool=False #Done flag
-    
+    inputTokens: int = 0
+    outputTokens: int = 0

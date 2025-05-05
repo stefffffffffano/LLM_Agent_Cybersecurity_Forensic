@@ -15,6 +15,8 @@ from multi_agent.tshark_expert.tools.tshark_manual import manualSearch
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.pcap import generate_summary
 
+MAX_TOKENS = 124000
+
 class PromptDebugHandler(BaseCallbackHandler):
     """
     For debug only: print the full prompt sent to the LLM.
@@ -31,13 +33,23 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     """Extract the user's state from the conversation and update the memory."""
     configurable = Configuration.from_runnable_config(config)
 
-    # Prepare the system prompt with user memories and current time
-    # This helps the model understand the context and temporal relevance
-    steps = '\n'.join([f" {m.content}\n" for  m in state.messages])
+    #Count how many messages you can include, in order not to overcome the context window
+    fifo_token_counter = 0
+    fifo_messages_to_be_included = 0
+    for m in state.messages:
+        fifo_token_counter += count_tokens(m)
+        if fifo_token_counter < MAX_TOKENS:
+            fifo_messages_to_be_included += 1
+        else:
+            break
+    fifo_messages = state.messages[-fifo_messages_to_be_included:]   
+    queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
+    queue_str = "\n".join(queue_lines)
+
     sys = configurable.tshark_expert_template.format(
         pcap_content=generate_summary(state.pcap_path),
         task=state.task,
-        steps=steps
+        steps=queue_str
     )
     if state.steps == 2 or state.steps == 3:
         sys += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the answer with the information you gathered so far."
@@ -50,7 +62,6 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
     length_exceeded = False
     try:
-        time.sleep(1)  # Slow down requests
         msg = llm.invoke(message, config=debug_config)
     except BadRequestError as e:
         length_exceeded = True
@@ -66,8 +77,11 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
                 "done":True
                 }
 
-    print("\n\n\n\nAfter calling the LLM")
+    input_token_count = state.inputTokens + msg.response_metadata.get("usage", {}).get("prompt_tokens", 0)
+    output_token_count = state.outputTokens + msg.response_metadata.get("usage", {}).get("completion_tokens", 0)
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,
+            "inputTokens" : input_token_count,
+            "outputTokens": output_token_count
             }

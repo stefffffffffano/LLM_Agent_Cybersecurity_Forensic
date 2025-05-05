@@ -30,7 +30,6 @@ def commandExecutor_func(tshark_command: str, pcap_file: str) -> str:
     full_command = ["tshark", "-r", pcap_file] + parsed_args
 
     try:
-        print('\n\n\nbefore executing the command:', full_command)
         result = subprocess.run(
             full_command,
             capture_output=True,
@@ -39,7 +38,6 @@ def commandExecutor_func(tshark_command: str, pcap_file: str) -> str:
             shell=False,
         )
         out = result.stdout
-        print("\n\n\nAfter command execution")
         if count_tokens(out) > 60000:
             out = "Output too long, please refine your command using additional tshark options like -Y filters."
     except subprocess.CalledProcessError as e:
@@ -67,12 +65,12 @@ commandExecutor = Tool(
         - If the output is too large, refine your query using:
             - Display filters with '-Y'
             - Selecting specific fields with '-T fields' and '-e'
-            - Limiting the number of packets with '-c'
+            - Another type of command that still respects the high-level task assigned.
 
     Examples:
         - '-q -z conv,ip'
         - '-Y "http.request" -T fields -e ip.src -e http.host'
-        - '-T fields -e frame.number -e frame.time -c 20'
+        - '-T fields -e frame.number -e frame.time'
 
     If your command causes an error, you can consult the tshark manual for troubleshooting.
     """,

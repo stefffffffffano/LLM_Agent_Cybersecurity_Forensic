@@ -29,6 +29,9 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
 
     results = []
 
+    input_tokens_count = state.inputTokens
+    output_tokens_count = state.outputTokens
+
     # Handle upsert_memory
     upsert_calls = [tc for tc in tool_calls if tc["name"] == "upsert_memory"]
     if upsert_calls:
@@ -104,12 +107,15 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         if not state.pcap_path:
                 result_content = "Error: No PCAP file available for Tshark Expert analysis."
         else:
-            result_content = tshark_expert_func(task=task_input, pcap_path=state.pcap_path)
+            (result_content,inTokens,outTokens) = tshark_expert_func(task=task_input, pcap_path=state.pcap_path,event_id=state.event_id, call_number=state.call_number)
             results.append({
                 "role": "tool",
                 "content": result_content,
                 "tool_call_id": first_tshark_call["id"],
             })
+            #counting tokens generated (in and out) by the subagent 
+            input_tokens_count += inTokens
+            output_tokens_count += outTokens
         if(len(tshark_calls) > 1):
             skipped_calls = len(tshark_calls) - 1
             skipped_calls_content = '\n'.join([text["args"].get("task","unknown") for text in tshark_calls[1:]])
@@ -131,13 +137,17 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
                         f"Skipped call(s): {skipped_calls_content}",
                 "tool_call_id": web_calls[0]["id"]  
             })
+
     
     
         
     return {
         "messages": results,
         "steps": state.steps - 1,
-        "done": done
+        "done": done,
+        "inputTokens": input_tokens_count,
+        "outputTokens": output_tokens_count,
+        "call_number": state.call_number if not tshark_calls else state.call_number + 1, #Increment the call number only if the tshark_expert is called
     }
 
 

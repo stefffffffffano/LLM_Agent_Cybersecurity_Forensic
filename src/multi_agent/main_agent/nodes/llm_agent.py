@@ -94,8 +94,6 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
     queue_str = "\n".join(queue_lines)
 
-    
-
     # Final prompt
     system_prompt = configurable.react_template.format(
         pcap_content=pcap_content,
@@ -125,9 +123,13 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
+    input_token_count = state.inputTokens + msg.response_metadata.get("usage", {}).get("prompt_tokens", 0)
+    output_token_count = state.outputTokens + msg.response_metadata.get("usage", {}).get("completion_tokens", 0)
     
 
     return {"messages": [msg],
             "steps": state.steps - 1,
             "done": length_exceeded,
+            "inputTokens": input_token_count,
+            "outputTokens": output_token_count
             }

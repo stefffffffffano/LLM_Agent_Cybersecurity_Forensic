@@ -131,7 +131,8 @@ async def run_forensic_example(
         pcap_path=pcap_path,
         log_path=log_path,
         messages=[],  
-        steps=max_steps
+        steps=max_steps,
+        event_id=event_id,
     )
     thread_id = str(uuid.uuid4())
     #Call the graph
@@ -149,7 +150,7 @@ async def run_forensic_example(
         f.write(f"[Task {event_id}]\n")
         for i, message in enumerate(state["messages"]):
             f.write(f"Step {i+1}: {message.content}\n")
-    return (done,answer.content, state["steps"])
+    return (done,answer.content, state["steps"], state["inputTokens"],state["outputTokens"])
 
 
 async def main():
@@ -178,7 +179,7 @@ async def main():
         is_vulnerable = game["vulnerable"]
         is_success = game["success"]
 
-        done, answer, steps = await run_forensic_example(
+        done, answer, steps,inTokens,outTokens = await run_forensic_example(
             event_id=i,
             graph=graph,
             pcap_path=paths["pcap_path"],
@@ -187,6 +188,7 @@ async def main():
 
         with open("result.txt", "a", encoding="utf-8") as f:
             f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {20-steps}\n\n")
+            f.write(f"Input tokens written: {inTokens}, output tokens: {outTokens}")
 
         if done:
             # Extract answers from the formatted response
