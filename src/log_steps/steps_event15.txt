@@ -1,116 +1,518 @@
 [Task 15]
-Step 1: The PCAP summary indicates multiple TCP conversations, primarily between IP addresses 172.18.0.3 and 172.18.0.2 on port 2379. This port is commonly associated with etcd, a distributed key-value store used in many cloud-native applications. However, to confirm the service running on this port, I need to analyze the packet contents to identify any specific service signatures or application-layer protocols.
+Step 1: The PCAP summary indicates multiple TCP conversations, primarily involving traffic between IP addresses 172.18.0.4, 172.18.0.3, and 172.18.0.2 on port 2379. This port is commonly associated with etcd, a distributed key-value store used in many cloud and container environments. However, to confirm the service or application involved, I need to analyze the packet contents to verify if etcd or another service is indeed running on this port.
 
-Next, I will use the "tshark_expert" to extract application-layer data from the traffic on port 2379 to confirm the service or application involved.
-
-Action: Use the "tshark_expert" to extract application-layer data from the traffic on port 2379.
+Next, I will use the "tshark_expert" to extract application layer data from the traffic on port 2379 to identify the service or application involved.
 Step 2: Final report from the forensic expert:
-The analysis of the traffic on port 2379 revealed that the application-layer protocol used is HTTP. The traffic consists of HTTP POST requests to endpoints such as `/v3/watch`, `/v3/lease/grant`, and `/v3/kv/put`, with successful HTTP 200 OK responses. This indicates that the service or application involved is likely an API service, possibly related to a key-value store or a similar service.
-Executed command: tshark -Y "tcp.port == 2379 && http" -T fields -e http.request.method -e http.request.uri -e http.response.code -e http.response.phrase
+The analysis of the TCP traffic on port 2379 revealed that the application layer data involves HTTP requests and responses. Specifically, there are POST requests to endpoints like `/v3/watch` and `/v3/lease/grant`, and HTTP responses with status `200 OK`. This indicates that the service or application involved is likely an HTTP-based API, possibly etcd, which is known to use port 2379 for client communication.
+Executed command: -Y "tcp.port == 2379" -T fields -e text
 
-Command output: POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-POST	/v3/watch		
-	/v3/watch	200	OK
-	/v3/watch	200	OK
-	/v3/watch	200	OK
-	/v3/watch	200	OK
-POST	/v3/watch		
-POST	/v3/lease/grant		
-	/v3/lease/grant	200	OK
-POST	/v3/kv/put		
-	/v3/kv/put	200	OK
+Command output: Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n,HTTP chunked response,Data chunk (142 octets),Data chunk (728 octets),Data chunk (102 octets),End of chunked encoding,\\r\\n
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n,HTTP chunked response,Data chunk (142 octets),Data chunk (728 octets),Data chunk (102 octets),End of chunked encoding,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n,HTTP chunked response,Data chunk (142 octets),Data chunk (728 octets),Data chunk (102 octets),End of chunked encoding,\\r\\n
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n,HTTP chunked response,Data chunk (142 octets),Data chunk (728 octets),Data chunk (102 octets),End of chunked encoding,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/watch HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps
+Timestamps,POST /v3/lease/grant HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps,POST /v3/kv/put HTTP/1.1\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps,HTTP/1.1 200 OK\\r\\n,\\r\\n
+Timestamps
+Timestamps
+Timestamps
+Timestamps
 
 
-Step 3: The analysis of the traffic on port 2379 has revealed that the application-layer protocol used is HTTP, with endpoints such as `/v3/watch`, `/v3/lease/grant`, and `/v3/kv/put`. This suggests that the service involved is likely an API service related to a key-value store, possibly etcd, which is known to use port 2379.
+Step 3: The analysis of the PCAP file indicates that the service involved is likely etcd, as evidenced by the HTTP-based API requests to endpoints like `/v3/watch` and `/v3/lease/grant` on port 2379. The next step is to identify any relevant CVEs associated with etcd that could be exploited through HTTP requests to these endpoints.
 
-To proceed, I need to identify any relevant CVEs associated with etcd that could be exploited through HTTP requests to these endpoints. I will perform a web search to find any known vulnerabilities related to etcd that match the observed traffic patterns.
+I will perform a web search to find CVEs related to etcd, particularly those that might involve HTTP API vulnerabilities.
+Step 4: Search result for query: 'etcd CVE vulnerabilities HTTP API'
+Information 1: etcd Unauthenticated HTTP API Leak - Vulnerability & Exploit Database Skip to main content HomeLog inOpen main menuToolsFeatures Pricing ServicesResourcesCompanyLog in Free sign up Vulnerabilities & Exploitsetcd Unauthenticated HTTP API Leak SeverityHigh Vulnerability descriptionNot availableN/ARisk descriptionNot availableN/ARecommendationNot availableN/AReferenceshttps://hackerone.com/reports/1088429CodenameNot availableN/ADetectable withNetwork ScannerScan engineNuclei Exploitable with SniperNoCVE Publis
+Information 2: etcd Unauthenticated HTTP API Leak Search the blog Beagle SecurityResources RESOURCE CENTERBlog Newsletter Vulnerability Index Guides Whitepapers FREE TOOLSWebsite Security Assessment SSL Certificate Checker Domain Expiry Checker HELP AND SUPPORTHelp Center Developer Hub Features Pricing Product tour Log out Free trial Dashboardetcd Unauthenticated HTTP API LeakByJijith RajanPublished on01 Oct 2021 Table of contentsImpactMitigation / PrecautionShare VulnerabilityThe etcd HTTP API can be used without requiri
+Information 3: Etcd CVEs and Security Vulnerabilities - OpenCVE Vulnerabilities (Etcd) Sign in Register MAIN NAVIGATION Vulnerabilities Vendors & Products Weaknesses Statistics Search Search Toggle Dropdown Query Builder Save Query Load Query Use the Query Builder to create your own search query, or check out the documentation to learn the search syntax. Search Examples Crit. Microsoft High Apache SQL Injection (CWE-89) Linux Kernel High (CVSS 3.1) Apache Struts RCE (Remote Code Execution) XSS (CWE-79) Critical (CVSS 4.0)
+Information 4:  CVEs to check Search Results (7 CVEs found) CVE Vendors Products Updated CVSS v3.1 CVE-2021-28235 2 Etcd, Redhat 2 Etcd, Openstack 2025-02-18 9.8 Critical Authentication vulnerability found in Etcd-io v.3.4.10 allows remote attackers to escalate privileges via the debug function. CVE-2023-32082 2 Etcd, Redhat 2 Etcd, Openstack 2025-01-24 3.1 Low etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.4.26 and 3.5.9, the LeaseTimeToLive API allows access to key names 
+Information 5: verity9CVSS(AV:N/AC:L/Au:N/C:C/I:C/A:N)Published03/28/2018Added03/28/2018Modified04/06/2018Description The etcd HTTP API is accessible without authentication. This can result in keys being exposed which may contain sensitive information. It will also allow a user to change and delete keys without authentication. As a result, a remote attacker can not only discern sensitive information such as usernames and passwords, but also change or delete that data.Solutionhttp-etcd-unauthenticated-api-data-leakReferenc
+Step 5: 
+Step 6: Stored memory 6911e831-18cf-4afc-974b-2c0ad4cfae7a
+Step 7: The analysis of the PCAP file and the web search results indicate that the service involved is etcd, and there is a known vulnerability related to the etcd HTTP API being accessible without authentication. This vulnerability can lead to sensitive information exposure and unauthorized changes or deletions of data. The next step is to gather evidence of malicious activities associated with this CVE in the PCAP file.
 
-Action: Perform a web search for CVEs associated with etcd, focusing on vulnerabilities that could be exploited through HTTP requests to endpoints like `/v3/watch`, `/v3/lease/grant`, and `/v3/kv/put`.
-Step 4: 
-Step 5: Search result for query: 'CVE associated with etcd HTTP endpoints /v3/watch /v3/lease/grant /v3/kv/put'
-Information 1: etcd vulnerabilities and exploits Vulmon Recent Vulnerabilities Product List Research Posts Trends Blog About Contact Vulmon Alerts By Relevance By Risk Score By Publish Date etcd vulnerabilities and exploits(subscribe to this query) 4.3CVSSv3CVE-2023-32082etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.4.26 and 3.5.9, the LeaseTimeToLive API allows access to key names (not value) associated to a lease when `Keys` parameter is true, even a user doesn't have re
-Information 2: Live API allows access to key names (not value) associated to a lease when `Keys` parameter is true, even a user doesn't have read permission to the keys. The impact is limited to a cluster which enables auth (RBAC). Versions 3.4.26 and 3.5.9 fix this issue. There are no known workarounds. CVE-2022-34038 1 Etcd 1 Etcd 2024-11-21 7.5 High Etcd v3.5.4 allows remote attackers to cause a denial of service via function PageWriter.write in pagewriter.go. NOTE: the vendor's position is that this is not a vulnerabi
-Information 3: ponse.Canceled on compacted watch request. Fix concurrency/stm Put with serializable snapshot. Use store revision from first fetch to resolve write conflicts instead of modified revision. etcdctl v3 Add etcdctl --discovery-srv flag. Add etcdctl --keepalive-time, --keepalive-timeout flags. Add etcdctl lease list command. Add etcdctl lease keep-alive --once flag. Make lease timetolive LEASE_ID on expired lease print lease LEASE_ID already expired. <=3.2 prints lease LEASE_ID granted with TTL(0s), remaining(-1
-Information 4: 2etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.4.26 and 3.5.9, the LeaseTimeToLive API allows access to key names (not value) associated to a lease when `Keys` parameter is true, even a user doesn't have read permission to the...Etcd Etcd7.5CVSSv3CVE-2022-34038Etcd v3.5.4 allows remote malicious users to cause a denial of service via function PageWriter.write in pagewriter.go. NOTE: the vendor's position is that this is not a vulnerability.Etcd Etcd 3.5.49.8
-Information 5: mote attackers to escalate privileges via the debug function. CVE-2023-32082 2 Etcd, Redhat 2 Etcd, Openstack 2025-01-24 3.1 Low etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.4.26 and 3.5.9, the LeaseTimeToLive API allows access to key names (not value) associated to a lease when `Keys` parameter is true, even a user doesn't have read permission to the keys. The impact is limited to a cluster which enables auth (RBAC). Versions 3.4.26 and 3.5.9 fix this issu
-Step 6: 
-Step 7: Stored memory 250f8728-af82-4ad5-8f50-50fbe9d3d58b
-Step 8: The web search results indicate that there is a relevant CVE associated with etcd, specifically CVE-2023-32082. This vulnerability involves the LeaseTimeToLive API, which allows access to key names associated with a lease even if a user doesn't have read permission to the keys. This issue is fixed in versions 3.4.26 and 3.5.9 of etcd.
+I will use the "tshark_expert" to search for signs of unauthorized access or data manipulation in the PCAP file, which could indicate exploitation of the unauthenticated HTTP API vulnerability in etcd.
+Step 8: Final report from the forensic expert:
+The analysis of HTTP requests and responses on port 2379 revealed multiple POST requests to the "/v3/watch" endpoint and a few to "/v3/lease/grant" and "/v3/kv/put". All HTTP responses were "200 OK", indicating that the requests were successfully processed. No other HTTP response codes were found, suggesting no unauthorized access or data manipulation attempts based on the HTTP response codes.
+Executed command: -Y "http.response && tcp.port == 2379" -T fields -e http.response.code -e http.response.phrase
 
-Next, I need to gather evidence of malicious activities associated with this CVE in the PCAP file. I will use the "tshark_expert" to analyze the traffic for any signs of exploitation related to the LeaseTimeToLive API, such as unauthorized access attempts to key names.
+Command output: 200	OK
+200	OK
+200	OK
+200	OK
+200	OK
+200	OK
 
-Action: Use the "tshark_expert" to analyze the PCAP file for signs of exploitation related to CVE-2023-32082, focusing on unauthorized access attempts to key names through the LeaseTimeToLive API.
-Step 9: 
-Step 10: Final report from the forensic expert:
-To analyze the PCAP file for HTTP requests to the LeaseTimeToLive API endpoint, I constructed a tshark command using the `http.request.uri` field to filter for specific API endpoints. The command was designed to extract HTTP requests and responses related to the LeaseTimeToLive API. However, the command execution resulted in no output, indicating that there were no HTTP requests to the LeaseTimeToLive API endpoint in the provided PCAP file.
-Executed command: -Y "http.request.uri contains 'LeaseTimeToLive'" -T fields -e ip.src -e http.request.uri
 
-Command output: No output found for the given command.
+Step 9: The analysis of the PCAP file and the web search results indicate that the service involved is etcd, and there is a known vulnerability related to the etcd HTTP API being accessible without authentication. This vulnerability can lead to sensitive information exposure and unauthorized changes or deletions of data. The analysis of HTTP requests and responses on port 2379 revealed multiple POST requests to the "/v3/watch" endpoint and a few to "/v3/lease/grant" and "/v3/kv/put". All HTTP responses were "200 OK", indicating that the requests were successfully processed. No other HTTP response codes were found, suggesting no unauthorized access or data manipulation attempts based on the HTTP response codes.
 
-Step 11: The analysis of the PCAP file did not reveal any HTTP requests to the LeaseTimeToLive API endpoint, which is associated with CVE-2023-32082. This suggests that there were no attempts to exploit this specific vulnerability in the captured traffic.
-
-Next, I will assess whether the service or application is vulnerable to the identified attack by checking the version of etcd in use. If the version is prior to 3.4.26 or 3.5.9, it may be vulnerable to CVE-2023-32082. I will use the "tshark_expert" to extract any version information from the traffic, if available.
-
-Action: Use the "tshark_expert" to extract version information of etcd from the traffic, if available, to assess vulnerability to CVE-2023-32082.
-Step 12: 
-Step 13: Final report from the forensic expert:
-The task was to extract version information of etcd from the traffic to assess vulnerability to CVE-2023-32082. I attempted to extract HTTP payloads and decode them to find any version information. However, the payloads were encoded, and decoding them did not reveal any version information related to etcd. The command used was to extract HTTP payloads, but no relevant version information was found in the decoded data.
-Executed command: -Y "http" -T fields -e http.file_data
-
-Command output: No version information related to etcd was found in the decoded HTTP payloads.
-
-Step 14: The analysis of the PCAP file did not reveal any HTTP requests to the LeaseTimeToLive API endpoint, which is associated with CVE-2023-32082. This suggests that there were no attempts to exploit this specific vulnerability in the captured traffic. Additionally, the attempt to extract version information of etcd from the traffic did not yield any results, leaving the version of etcd in use unknown.
-
-Given the absence of evidence of exploitation and the lack of version information, I will now proceed to provide the final answer based on the findings so far.
-Step 15: FINAL REPORT:
-The analysis of the PCAP file revealed that the service involved is etcd, a distributed key-value store, using HTTP endpoints such as /v3/watch, /v3/lease/grant, and /v3/kv/put on port 2379. A relevant CVE, CVE-2023-32082, was identified, which involves unauthorized access to key names through the LeaseTimeToLive API. However, no evidence of exploitation of this CVE was found in the PCAP file, and the version of etcd in use could not be determined from the traffic. Therefore, it is unclear if the service is vulnerable to this CVE, and there is no indication of a successful attack.
+Now, I will proceed to provide the final answer based on the gathered information.
+Step 10: FINAL REPORT:
+The service involved is etcd, which was identified through HTTP-based API requests to endpoints like /v3/watch and /v3/lease/grant on port 2379. A known vulnerability related to the etcd HTTP API being accessible without authentication was identified. This vulnerability can lead to sensitive information exposure and unauthorized changes or deletions of data. However, the analysis of HTTP requests and responses on port 2379 revealed that all requests were successfully processed with '200 OK' responses, indicating no signs of unauthorized access or data manipulation attempts.
 REPORT SUMMARY:
-Identified CVE: CVE-2023-32082
+Identified CVE: CVE-2021-28235
 Affected Service: etcd
-Is Service Vulnerable: False
+Is Service Vulnerable: True
 Attack succeeded: False
 

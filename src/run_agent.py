@@ -92,7 +92,7 @@ def load_data():
     Returns:
         list: collection of tasks
     """
-    with open('data/tasks/data.json', 'r') as file: 
+    with open('src/data/tasks/data.json', 'r') as file: 
         games = json.loads(file.read())
     return games['tasks']
 
@@ -109,10 +109,10 @@ def get_artifact_paths(entry: dict) -> dict:
     Given a task entry from data.json, returns string paths to the associated log and pcap files.
     """
     event_id = entry["event"]
-    event_pcap_files = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.pcap')]
+    event_pcap_files = [f for f in os.listdir(f'src/data/raw/eventID_{event_id}') if f.endswith('.pcap')]
     #Just get the first one for now
-    event_log_file = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.log')][0]
-    base_dir = f'data/raw/eventID_{event_id}'
+    event_log_file = [f for f in os.listdir(f'src/data/raw/eventID_{event_id}') if f.endswith('.log')][0]
+    base_dir = f'src/data/raw/eventID_{event_id}'
     return {
         "log_path": base_dir + "/" + event_log_file,
         "pcap_path": base_dir + "/" + event_pcap_files[0],
@@ -124,7 +124,7 @@ async def run_forensic_example(
     event_id: int,
     pcap_path: str,
     log_path: str,
-    max_steps: int = 20
+    max_steps: int = 25
 ):
     #Initial state
     state = State(
@@ -187,8 +187,8 @@ async def main():
         )
 
         with open("result.txt", "a", encoding="utf-8") as f:
-            f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {20-steps}\n\n")
-            f.write(f"Input tokens written: {inTokens}, output tokens: {outTokens}")
+            f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {25-steps}\n\n")
+            f.write(f"Input tokens written: {inTokens}, output tokens: {outTokens}\n\n\n")
 
         if done:
             # Extract answers from the formatted response

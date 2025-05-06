@@ -1,0 +1,845 @@
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 3306\" -T fields -e mysql.query -e mysql.response"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 3306" -T fields -e mysql.query -e mysql.response'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_7\\CVE-2016-5734.pcap', '-Y', 'tcp.port == 3306', '-T', 'fields', '-e', 'mysql.query', '-e', 'mysql.response']' returned non-zero exit status 1.
+tshark: Some fields aren't valid:
+	mysql.response
+
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+No relevant information found in the manuals (similarity too low with respect to the query).
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 3306\" -T fields -e mysql.query"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 3306" -T fields -e mysql.query'}:  
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT @@version, @@version_comment
+
+
+
+SHOW VARIABLES LIKE 'character_set_results'
+
+
+
+SET CHARACTER SET 'utf8mb4';
+
+
+
+SET collation_connection = 'utf8mb4_unicode_ci';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SET CHARACTER SET 'utf8mb4';
+
+
+
+SET collation_connection = 'utf8mb4_unicode_ci';
+
+
+
+SELECT * FROM information_schema.CHARACTER_SETS
+
+
+
+SELECT * FROM information_schema.COLLATIONS
+
+
+
+
+
+SELECT 1 FROM mysql.user LIMIT 1
+
+
+SHOW GRANTS
+
+
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+
+
+SELECT CURRENT_USER();
+
+
+SELECT 1 FROM (SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`COLUMN_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`TABLE_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`SCHEMA_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES`) t WHERE `IS_GRANTABLE` = 'YES' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1
+
+
+SELECT CURRENT_USER();
+
+
+SELECT 1 FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE `PRIVILEGE_TYPE` = 'CREATE USER' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1
+
+
+
+SELECT USER();
+
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`, (SELECT DB_first_level FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t ORDER BY DB_first_level ASC LIMIT 0, 100) t2 WHERE 1 = LOCATE(CONCAT(DB_first_level, '_'), CONCAT(SCHEMA_NAME, '_')) ORDER BY SCHEMA_NAME ASC
+
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 
+
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 
+
+SHOW MASTER LOGS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SET CHARACTER SET 'utf8mb4';
+
+
+
+SET collation_connection = 'utf8mb4_unicode_ci';
+
+
+
+SHOW TABLES FROM `test`;
+
+
+
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+
+
+
+
+
+
+
+CREATE TABLE `prgpwn` (\n      `first` varchar(10) CHARACTER SET utf8 NOT NULL\n    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+
+INSERT INTO `prgpwn` (`first`) VALUES (UNHEX('302F6500'))
+
+
+SHOW TABLES FROM `test`;
+
+SELECT CURRENT_USER();
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'
+
+SELECT CURRENT_USER();
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'
+
+SHOW TABLES FROM `test`;
+
+SELECT CURRENT_USER();
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'
+
+SELECT CURRENT_USER();
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SET CHARACTER SET 'utf8mb4';
+
+
+
+SET collation_connection = 'utf8mb4_unicode_ci';
+
+
+
+SHOW TABLES FROM `test`;
+
+
+
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`
+
+
+
+SHOW FULL COLUMNS FROM `test`.`prgpwn`
+
+
+
+SHOW INDEXES FROM `test`.`prgpwn`
+
+SHOW CREATE TABLE `test`.`prgpwn`
+
+
+SHOW VARIABLES LIKE 'character_set_connection'
+
+
+SELECT `first`, 1, COUNT(*) FROM `test`.`prgpwn` WHERE `first` RLIKE '0/e
+
+
+SHOW  COLUMNS FROM `test`.`prgpwn`
+
+
+SHOW INDEXES FROM `test`.`prgpwn`
+
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'
+
+
+SELECT CURRENT_USER();
+
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'
+
+
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'
+
+
+
+
+
+SHOW VARIABLES LIKE 'lower_case_table_names'
+
+
+SHOW VARIABLES LIKE 'lower_case_table_names'
+
+
+\n                SELECT *,\n                    `TABLE_SCHEMA`       AS `Db`,\n                    `TABLE_NAME`         AS `Name`,\n                    `TABLE_TYPE`         AS `TABLE_TYPE`,\n                    `ENGINE`             AS `Engine`,\n                    `ENGINE`             AS `Type`,\n                    `VERSION`            AS `Version`,\n                    `ROW_FORMAT`         AS `Row_format`,\n                    `TABLE_ROWS`         AS `Rows`,\n                    `AVG_ROW_LENGTH`     AS `Avg_row_length`,\n                    `DATA_LENGTH`        AS `Data_length`,\n                    `MAX_DATA_LENGTH`    AS `Max_data_length`,\n                    `INDEX_LENGTH`       AS `Index_length`,\n                    `DATA_FREE`          AS `Data_free`,\n                    `AUTO_INCREMENT`     AS `Auto_increment`,\n                    `CREATE_TIME`        AS `Create_time`,\n                    `UPDATE_TIME`        AS `Update_time`,\n                    `CHECK_TIME`         AS `Check_time`,\n                    `TABLE_COLLATION`    AS `Collation`,\n                    `CHECKSUM`           AS `Checksum`,\n                    `CREATE_OPTIONS`     AS `Create_options`,\n                    `TABLE_COMMENT`      AS `Comment`\n                FROM `information_schema`.`TABLES` t\n                WHERE `TABLE_SCHEMA` COLLATE utf8_bin\n                    IN ('test')\n                    AND t.`TABLE_NAME` COLLATE utf8_bin = 'prgpwn' ORDER BY Name ASC
+
+
+
+
+
+SELECT CURRENT_USER();
+
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'
+
+
+
+
+
+
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+No relevant information found in the manuals (similarity too low with respect to the query).
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 3306\" -T fields -e mysql.query -e mysql.command -e mysql.error_code"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 3306" -T fields -e mysql.query -e mysql.command -e mysql.error_code'}:  		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SELECT @@version, @@version_comment	3	
+		
+		
+		
+SHOW VARIABLES LIKE 'character_set_results'	3	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SELECT * FROM information_schema.CHARACTER_SETS	3	
+		
+		
+		
+SELECT * FROM information_schema.COLLATIONS	3	
+		
+		
+		
+		
+		
+SELECT 1 FROM mysql.user LIMIT 1	3	
+		
+		
+SHOW GRANTS	3	
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT 1 FROM (SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`COLUMN_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`TABLE_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`SCHEMA_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES`) t WHERE `IS_GRANTABLE` = 'YES' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT 1 FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE `PRIVILEGE_TYPE` = 'CREATE USER' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1	3	
+		
+	2	
+		
+SELECT USER();	3	
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`, (SELECT DB_first_level FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t ORDER BY DB_first_level ASC LIMIT 0, 100) t2 WHERE 1 = LOCATE(CONCAT(DB_first_level, '_'), CONCAT(SCHEMA_NAME, '_')) ORDER BY SCHEMA_NAME ASC	3	
+		
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 	3	
+		
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 	3	
+		
+SHOW MASTER LOGS	3	
+		1381
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+		
+	2	
+		
+		
+		
+CREATE TABLE `prgpwn` (\n      `first` varchar(10) CHARACTER SET utf8 NOT NULL\n    ) ENGINE=InnoDB DEFAULT CHARSET=latin1	3	
+		
+		
+INSERT INTO `prgpwn` (`first`) VALUES (UNHEX('302F6500'))	3	
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+SHOW TABLES FROM `test`;	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+		
+SHOW FULL COLUMNS FROM `test`.`prgpwn`	3	
+		
+		
+		
+SHOW INDEXES FROM `test`.`prgpwn`	3	
+		
+SHOW CREATE TABLE `test`.`prgpwn`	3	
+		
+		
+SHOW VARIABLES LIKE 'character_set_connection'	3	
+		
+		
+SELECT `first`, 1, COUNT(*) FROM `test`.`prgpwn` WHERE `first` RLIKE '0/e	3	
+		
+		
+SHOW  COLUMNS FROM `test`.`prgpwn`	3	
+		
+		
+SHOW INDEXES FROM `test`.`prgpwn`	3	
+		
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+		
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'	3	
+		
+		
+	2	
+		
+		
+SHOW VARIABLES LIKE 'lower_case_table_names'	3	
+		
+		
+SHOW VARIABLES LIKE 'lower_case_table_names'	3	
+		
+		
+\n                SELECT *,\n                    `TABLE_SCHEMA`       AS `Db`,\n                    `TABLE_NAME`         AS `Name`,\n                    `TABLE_TYPE`         AS `TABLE_TYPE`,\n                    `ENGINE`             AS `Engine`,\n                    `ENGINE`             AS `Type`,\n                    `VERSION`            AS `Version`,\n                    `ROW_FORMAT`         AS `Row_format`,\n                    `TABLE_ROWS`         AS `Rows`,\n                    `AVG_ROW_LENGTH`     AS `Avg_row_length`,\n                    `DATA_LENGTH`        AS `Data_length`,\n                    `MAX_DATA_LENGTH`    AS `Max_data_length`,\n                    `INDEX_LENGTH`       AS `Index_length`,\n                    `DATA_FREE`          AS `Data_free`,\n                    `AUTO_INCREMENT`     AS `Auto_increment`,\n                    `CREATE_TIME`        AS `Create_time`,\n                    `UPDATE_TIME`        AS `Update_time`,\n                    `CHECK_TIME`         AS `Check_time`,\n                    `TABLE_COLLATION`    AS `Collation`,\n                    `CHECKSUM`           AS `Checksum`,\n                    `CREATE_OPTIONS`     AS `Create_options`,\n                    `TABLE_COMMENT`      AS `Comment`\n                FROM `information_schema`.`TABLES` t\n                WHERE `TABLE_SCHEMA` COLLATE utf8_bin\n                    IN ('test')\n                    AND t.`TABLE_NAME` COLLATE utf8_bin = 'prgpwn' ORDER BY Name ASC	3	
+		
+		
+		
+	2	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+	1	
+		
+		
+		
+
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 3306\" -T fields -e mysql.query -e mysql.command -e mysql.error_code -e mysql.server_version -e mysql.client_version"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 3306" -T fields -e mysql.query -e mysql.command -e mysql.error_code -e mysql.server_version -e mysql.client_version'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_7\\CVE-2016-5734.pcap', '-Y', 'tcp.port == 3306', '-T', 'fields', '-e', 'mysql.query', '-e', 'mysql.command', '-e', 'mysql.error_code', '-e', 'mysql.server_version', '-e', 'mysql.client_version']' returned non-zero exit status 1.
+tshark: Some fields aren't valid:
+	mysql.client_version
+	mysql.server_version
+
+
+---
+
+TOOL CALL:
+- tool name: final_answer_formatter
+- args: {
+  "report": "The analysis focused on extracting MySQL protocol exchanges from TCP traffic on port 3306. Initially, an attempt was made to extract both MySQL queries and responses, but the field 'mysql.response' was invalid. Subsequent commands successfully extracted MySQL queries and additional fields like 'mysql.command' and 'mysql.error_code'. Further attempts to extract fields such as 'mysql.server_version' and 'mysql.client_version' resulted in errors due to invalid field names. The final command provided a comprehensive view of MySQL queries and commands, which are crucial for verifying MySQL protocol exchanges.",
+  "executed_command": "-Y \"tcp.port == 3306\" -T fields -e mysql.query -e mysql.command -e mysql.error_code"
+}
+
+---
+
+Final report from the forensic expert:
+The analysis focused on extracting MySQL protocol exchanges from TCP traffic on port 3306. Initially, an attempt was made to extract both MySQL queries and responses, but the field 'mysql.response' was invalid. Subsequent commands successfully extracted MySQL queries and additional fields like 'mysql.command' and 'mysql.error_code'. Further attempts to extract fields such as 'mysql.server_version' and 'mysql.client_version' resulted in errors due to invalid field names. The final command provided a comprehensive view of MySQL queries and commands, which are crucial for verifying MySQL protocol exchanges.
+Executed command: -Y "tcp.port == 3306" -T fields -e mysql.query -e mysql.command -e mysql.error_code
+
+Command output: 		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SELECT @@version, @@version_comment	3	
+		
+		
+		
+SHOW VARIABLES LIKE 'character_set_results'	3	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SELECT * FROM information_schema.CHARACTER_SETS	3	
+		
+		
+		
+SELECT * FROM information_schema.COLLATIONS	3	
+		
+		
+		
+		
+		
+SELECT 1 FROM mysql.user LIMIT 1	3	
+		
+		
+SHOW GRANTS	3	
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT 1 FROM (SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`COLUMN_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`TABLE_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`SCHEMA_PRIVILEGES` UNION SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES`) t WHERE `IS_GRANTABLE` = 'YES' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT 1 FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE `PRIVILEGE_TYPE` = 'CREATE USER' AND '''root''@''%''' LIKE `GRANTEE` LIMIT 1	3	
+		
+	2	
+		
+SELECT USER();	3	
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`, (SELECT DB_first_level FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t ORDER BY DB_first_level ASC LIMIT 0, 100) t2 WHERE 1 = LOCATE(CONCAT(DB_first_level, '_'), CONCAT(SCHEMA_NAME, '_')) ORDER BY SCHEMA_NAME ASC	3	
+		
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 	3	
+		
+SELECT COUNT(*) FROM ( SELECT DISTINCT SUBSTRING_INDEX(SCHEMA_NAME, '_', 1) DB_first_level FROM INFORMATION_SCHEMA.SCHEMATA WHERE TRUE ) t 	3	
+		
+SHOW MASTER LOGS	3	
+		1381
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+		
+	2	
+		
+		
+		
+CREATE TABLE `prgpwn` (\n      `first` varchar(10) CHARACTER SET utf8 NOT NULL\n    ) ENGINE=InnoDB DEFAULT CHARSET=latin1	3	
+		
+		
+INSERT INTO `prgpwn` (`first`) VALUES (UNHEX('302F6500'))	3	
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+SHOW TABLES FROM `test`;	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='EVENT'	3	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+	1	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	27	
+		
+		
+		
+SET CHARACTER SET 'utf8mb4';	3	
+		
+		
+		
+SET collation_connection = 'utf8mb4_unicode_ci';	3	
+		
+		
+		
+SHOW TABLES FROM `test`;	3	
+		
+		
+		
+SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`	3	
+		
+		
+		
+SHOW FULL COLUMNS FROM `test`.`prgpwn`	3	
+		
+		
+		
+SHOW INDEXES FROM `test`.`prgpwn`	3	
+		
+SHOW CREATE TABLE `test`.`prgpwn`	3	
+		
+		
+SHOW VARIABLES LIKE 'character_set_connection'	3	
+		
+		
+SELECT `first`, 1, COUNT(*) FROM `test`.`prgpwn` WHERE `first` RLIKE '0/e	3	
+		
+		
+SHOW  COLUMNS FROM `test`.`prgpwn`	3	
+		
+		
+SHOW INDEXES FROM `test`.`prgpwn`	3	
+		
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'	3	
+		
+		
+SELECT CURRENT_USER();	3	
+		
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+		
+SELECT TABLE_NAME\n            FROM information_schema.VIEWS\n            WHERE TABLE_SCHEMA = 'test'\n                AND TABLE_NAME = 'prgpwn'	3	
+		
+		
+	2	
+		
+		
+SHOW VARIABLES LIKE 'lower_case_table_names'	3	
+		
+		
+SHOW VARIABLES LIKE 'lower_case_table_names'	3	
+		
+		
+\n                SELECT *,\n                    `TABLE_SCHEMA`       AS `Db`,\n                    `TABLE_NAME`         AS `Name`,\n                    `TABLE_TYPE`         AS `TABLE_TYPE`,\n                    `ENGINE`             AS `Engine`,\n                    `ENGINE`             AS `Type`,\n                    `VERSION`            AS `Version`,\n                    `ROW_FORMAT`         AS `Row_format`,\n                    `TABLE_ROWS`         AS `Rows`,\n                    `AVG_ROW_LENGTH`     AS `Avg_row_length`,\n                    `DATA_LENGTH`        AS `Data_length`,\n                    `MAX_DATA_LENGTH`    AS `Max_data_length`,\n                    `INDEX_LENGTH`       AS `Index_length`,\n                    `DATA_FREE`          AS `Data_free`,\n                    `AUTO_INCREMENT`     AS `Auto_increment`,\n                    `CREATE_TIME`        AS `Create_time`,\n                    `UPDATE_TIME`        AS `Update_time`,\n                    `CHECK_TIME`         AS `Check_time`,\n                    `TABLE_COLLATION`    AS `Collation`,\n                    `CHECKSUM`           AS `Checksum`,\n                    `CREATE_OPTIONS`     AS `Create_options`,\n                    `TABLE_COMMENT`      AS `Comment`\n                FROM `information_schema`.`TABLES` t\n                WHERE `TABLE_SCHEMA` COLLATE utf8_bin\n                    IN ('test')\n                    AND t.`TABLE_NAME` COLLATE utf8_bin = 'prgpwn' ORDER BY Name ASC	3	
+		
+		
+		
+	2	
+		
+SELECT CURRENT_USER();	3	
+		
+SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`USER_PRIVILEGES` WHERE GRANTEE='''root''@''%''' AND PRIVILEGE_TYPE='TRIGGER'	3	
+		
+	1	
+		
+		
+		
+
+
+
+---
+

@@ -38,7 +38,7 @@ def commandExecutor_func(tshark_command: str, pcap_file: str) -> str:
             shell=False,
         )
         out = result.stdout
-        if count_tokens(out) > 60000:
+        if count_tokens(out) > 70000:
             out = "Output too long, please refine your command using additional tshark options like -Y filters."
     except subprocess.CalledProcessError as e:
         out = f"Error: {e}\n{e.stderr}"

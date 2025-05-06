@@ -83,6 +83,8 @@ tshark_expert = Tool(
 
     Behavior:
     - The Tshark Expert attempts to execute a tshark command to accomplish the task assigned.
+    - The tshark expert has no memory of previously assigned tasks, so give it some context.
+    - The tshark expert has no knowledge of CVEs, exploits or vulnerabilities. Do not ask it to identify them.
     - If the command is malformed or the output is not useful, it tries to autonomously correct or adjust the query.
     - If the analysis fails to complete after adjustments, it returns an error message.
     Guidelines for using the tshark_expert:
@@ -92,7 +94,7 @@ tshark_expert = Tool(
     - The sub-agent expects technical goals (such as "extract fields", "filter packets matching condition X") expressed in network analysis terms.
     Important:
     - This agent can optimize tshark commands but cannot independently infer complex forensic conclusions (e.g., exploitation detection must be guided by specific data extraction instructions).
-    - DO NOT ASK FOR SIGN OF EXPLOITATION OF SPECIFIC SERVICES OR CVES, THE SUBAGENT IS ONLY AN EXPERT IN TSHARK COMMANDS.
+    - DO NOT ASK FOR SIGN OF EXPLOITATION OF SPECIFIC SERVICES OR CVES, THE SUBAGENT IS ONLY AN EXPERT IN TSHARK COMMANDS. DOESN'T KNOW ABOUT CVES.
     """,
     args_schema=TsharkExpertArgs,
     func=tshark_expert_func,

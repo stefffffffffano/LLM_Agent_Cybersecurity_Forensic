@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from langchain_core.tools import Tool
 
+from multi_agent.tshark_expert.tools.pcap import commandExecutor_func
 
 
 """
@@ -24,34 +25,33 @@ even if it is ASCII code (possibly with the corresponding translation)
 class FinalAnswerArgs(BaseModel):
     report: str
     executed_command: str
-    command_output: str
 
 def finalAnswerFormatter_func(
     report: str,
     executed_command: str,
-    command_output: str,
+    pcap_file: str,
 ) -> str:
     """Format the final answer."""
     final_report = f'Final report from the forensic expert:\n'
     final_report += report
     final_report += f'\nExecuted command: {executed_command}\n'
-    final_report += f'\nCommand output: {command_output}\n'
+    command_output = commandExecutor_func(executed_command,pcap_file)
+    if command_output.startswith("Error:"):
+        final_report += f'\nError in the command\n'
+    else:
+        final_report += f'\nCommand output: {command_output}\n'
     return final_report
 
 finalAnswerFormatter = Tool(
     name="final_answer_formatter",
     description="""Format the final answer when you want to provide it as a solution to the proposed task.
     It is fine if the command provided 'No output found for the given command.' as output, you can return it.
-    If the command returns an error you are not able to correct, in the 'command_output' do not report what has been
-    printed from stderr, but only an explanation of the error.
+   
     Args: 
         report: A brief report of your analysis, mainly focusing on the adjustments you have made to the command (If any).
         executed_command: The tshark command you have executed.
-        command_output: The actual output of the command as it has been obtained by executig it with the tshark command tool.
     Returns:
         The final report of the attack to be returned before ending
-    IMPORTANT:
-    EVEN WHEN THE COMMAND IS LONG, REPORT THE FULL OUTPUT RETURNED BY TSHARK AS IT IS.
     """,
     args_schema=FinalAnswerArgs,
     func=finalAnswerFormatter_func,

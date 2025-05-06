@@ -55,7 +55,7 @@ def tools(state: State) -> dict:
         raise ValueError("Only one final answer formatter call is allowed.")
     final_answer_call = final_answer_calls[0] if final_answer_calls else None
     if final_answer_calls:
-        final_answer_content = finalAnswerFormatter_func(**final_answer_call["args"])
+        final_answer_content = finalAnswerFormatter_func(**final_answer_call["args"],pcap_file=state.pcap_path)
         
         results.extend([
             {

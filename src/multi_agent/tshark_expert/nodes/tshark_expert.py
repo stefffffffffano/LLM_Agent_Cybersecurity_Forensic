@@ -1,6 +1,5 @@
 from typing import Any
 from openai import BadRequestError
-import time
 
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
@@ -15,7 +14,8 @@ from multi_agent.tshark_expert.tools.tshark_manual import manualSearch
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.pcap import generate_summary
 
-MAX_TOKENS = 124000
+MAX_TOKENS = 120000
+ 
 
 class PromptDebugHandler(BaseCallbackHandler):
     """
@@ -56,7 +56,7 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     message =  [{"role": "system", "content": sys}]
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     #Define the LLM with the model and the provider, temperature=0 to reduce randomness
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,request_timeout=20,max_retries=3)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,request_timeout=30)
     #Add the tools to the LLM
     llm = llm.bind_tools([commandExecutor, manualSearch,finalAnswerFormatter]) 
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
@@ -68,17 +68,14 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
     except Exception as e:
-        time.sleep(20)
         print(f"Error: {e}")
         print("TimeoutError: subagent's LLM call took too long!")
-        #Stop the task in case of network error, it gets stuck
-        return {"messages": [{"role": "assistant","content":"Network error while processing"}], #Empty message to avoid confusion
+        return {"messages": [], #Empty message to avoid confusion
                 "steps": state.steps, #Step is not counted
-                "done":True
                 }
-
-    input_token_count = state.inputTokens + msg.response_metadata.get("usage", {}).get("prompt_tokens", 0)
-    output_token_count = state.outputTokens + msg.response_metadata.get("usage", {}).get("completion_tokens", 0)
+    if not length_exceeded:
+        input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
+        output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,

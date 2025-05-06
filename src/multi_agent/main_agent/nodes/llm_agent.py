@@ -123,8 +123,9 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
-    input_token_count = state.inputTokens + msg.response_metadata.get("usage", {}).get("prompt_tokens", 0)
-    output_token_count = state.outputTokens + msg.response_metadata.get("usage", {}).get("completion_tokens", 0)
+    if not length_exceeded:
+        input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
+        output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
     
 
     return {"messages": [msg],
