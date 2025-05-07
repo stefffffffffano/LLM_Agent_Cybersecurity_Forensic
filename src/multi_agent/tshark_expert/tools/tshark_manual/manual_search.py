@@ -6,7 +6,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 
 
-def manualSearch_func(searchString: str, threshold: float = 0.5) -> str:
+def manualSearch_func(searchString: str, threshold: float = 0.0) -> str:
     """
     Search the vector database containing the TShark and Wireshark-filter manuals
     for relevant information about a specific command, filter, option, or error.

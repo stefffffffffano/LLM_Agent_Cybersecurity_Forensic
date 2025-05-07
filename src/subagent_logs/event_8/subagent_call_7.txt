@@ -1,0 +1,504 @@
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y mysql"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y mysql'}:     23   0.129758   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   25   0.130176   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   27   0.131257   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   29   0.131697   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+   31   0.132181   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+   33   0.133335   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+   35   0.133747   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   37   0.134093   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+   39   0.134946   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   44   0.141621   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   46   0.141646   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   48   0.141646   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   50   0.143380   172.18.0.3 â†’ 172.18.0.2   MySQL 93 Request Query
+   52   0.143810   172.18.0.2 â†’ 172.18.0.3   MySQL 140 Response TABULAR Response 
+   54   0.144225   172.18.0.3 â†’ 172.18.0.2   MySQL 82 Request Query
+   56   0.144676   172.18.0.2 â†’ 172.18.0.3   MySQL 252 Response TABULAR Response 
+   58   0.145194   172.18.0.3 â†’ 172.18.0.2   MySQL 81 Request Query
+   60   0.145591   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   62   0.146079   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+   64   0.147193   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+   66   0.152113   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+   71   0.152984   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+   82   0.174135   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   84   0.174922   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   86   0.175291   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   88   0.175694   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+   90   0.176121   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+   92   0.177266   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+   94   0.177744   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   96   0.178142   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+   98   0.179168   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  103   0.185258   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  105   0.185615   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  107   0.186111   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  109   0.189536   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  111   0.190142   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  113   0.198334   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  115   0.199464   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  117   0.200337   172.18.0.3 â†’ 172.18.0.2   MySQL 492 Request Query
+  118   0.201129   172.18.0.2 â†’ 172.18.0.3   MySQL 116 Response TABULAR Response 
+  120   0.201537   172.18.0.3 â†’ 172.18.0.2   MySQL 206 Request Query
+  121   0.202003   172.18.0.2 â†’ 172.18.0.3   MySQL 116 Response TABULAR Response 
+  123   0.202479   172.18.0.3 â†’ 172.18.0.2   MySQL 103 Request Query
+  124   0.203312   172.18.0.2 â†’ 172.18.0.3   MySQL 145 Response  Error 1142 
+  126   0.203792   172.18.0.3 â†’ 172.18.0.2   MySQL 85 Request Query
+  127   0.204174   172.18.0.2 â†’ 172.18.0.3   MySQL 141 Response TABULAR Response 
+  128   0.224510   172.18.0.3 â†’ 172.18.0.2   MySQL 186 Request Query
+  129   0.225205   172.18.0.2 â†’ 172.18.0.3   MySQL 1409 Response TABULAR Response 
+  130   0.225987   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  131   0.227112   172.18.0.2 â†’ 172.18.0.3   MySQL 5851 Response TABULAR Response 
+  133   0.238978   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  134   0.239962   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  135   0.240959   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  136   0.241490   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  137   0.241868   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  138   0.242384   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  139   0.265771   172.18.0.3 â†’ 172.18.0.2   MySQL 87 Request Query
+  140   0.266352   172.18.0.2 â†’ 172.18.0.3   MySQL 181 Response  Error 1227 
+  145   0.284536   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  148   0.284870   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  167   0.318236   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  169   0.319174   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  171   0.319627   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  173   0.320102   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+  175   0.320643   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+  177   0.321815   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  179   0.322382   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  181   0.323437   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+  183   0.324081   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  188   0.329198   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  190   0.329559   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  192   0.329922   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  194   0.336471   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  196   0.337170   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  198   0.344558   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  199   0.344989   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  201   0.349059   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  202   0.349711   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  204   0.351338   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  205   0.351913   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  207   0.356090   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  208   0.356862   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  210   0.365063   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Use Database
+  211   0.365580   172.18.0.2 â†’ 172.18.0.3   MySQL 99 Response  Error 1046 
+  213   0.365999   172.18.0.3 â†’ 172.18.0.2   MySQL 101 Request Query
+  214   0.366504   172.18.0.2 â†’ 172.18.0.3   MySQL 162 Response TABULAR Response 
+  216   0.369055   172.18.0.3 â†’ 172.18.0.2   MySQL 84 Request Query
+  217   0.369460   172.18.0.2 â†’ 172.18.0.3   MySQL 219 Response TABULAR Response 
+  219   0.369910   172.18.0.3 â†’ 172.18.0.2   MySQL 102 Request Query
+  220   0.370317   172.18.0.2 â†’ 172.18.0.3   MySQL 145 Response TABULAR Response 
+  222   0.371673   172.18.0.3 â†’ 172.18.0.2   MySQL 90 Request Query
+  223   0.372177   172.18.0.2 â†’ 172.18.0.3   MySQL 225 Response  Error 1064 
+  225   0.375966   172.18.0.3 â†’ 172.18.0.2   MySQL 94 Request Query
+  226   0.376831   172.18.0.2 â†’ 172.18.0.3   MySQL 139 Response TABULAR Response 
+  228   0.412860   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  229   0.413153   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  231   0.419505   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  232   0.420382   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  234   0.421814   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  235   0.422400   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  237   0.423368   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  238   0.423888   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  243   0.431183   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  246   0.431481   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  265   0.463390   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  267   0.463809   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  269   0.464188   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  271   0.464614   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+  273   0.465092   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+  275   0.466215   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  277   0.467032   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  279   0.467456   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+  281   0.467868   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  286   0.473423   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  288   0.473828   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  290   0.474154   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  292   0.475010   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  294   0.475556   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  296   0.480412   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  298   0.480428   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  300   0.519205   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  302   0.519920   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  304   0.521415   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  305   0.522010   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  307   0.522476   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  308   0.523755   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  314   0.532443   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  317   0.532768   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"mysql.error\""
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "mysql.error"'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_8\\CVE-2018-12613.pcap', '-Y', 'mysql.error']' returned non-zero exit status 4.
+tshark: "mysql.error" is not a valid protocol or protocol field.
+    mysql.error
+    ^~~~~~~~~~~
+
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL error response filter"
+}
+
+---
+
+**Similarity: 0.50**
+io,stat
+can also do much more statistics and calculate COUNT(), SUM(),
+MIN(), MAX(), AVG() and LOAD() using a slightly different filter syntax:
+-z io,stat,
+interval
+,"COUNT|SUM|MIN|MAX|AVG|LOAD(
+field
+)
+filter
+"
+Note
+One important thing to note here is that the filter is not optional
+and that the field that the calculation is based on MUST be part of the filter
+string or the calculation will fail.
+So:
+-z io,stat,0.010,AVG(smb.time)
+does not work.  Use
+-z
+io,stat,0.010,AVG(smb.time)smb.time
+
+---
+
+**Similarity: 0.50**
+Column #2: AVG(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+Column #3: SUM(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |
+Time            |       AVG      |       SUM      |       AVG      |       SUM      |
+000.000-                    30018         28067522               72             3240
+
+---
+
+**Similarity: 0.51**
+Column #0: MIN(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==0
+Column #1: MAX(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==1
+Column #2: MIN(smb.time)smb.time and smb.cmd==0x2e
+Column #3: MAX(smb.time)smb.time and smb.cmd==0x2e
+Column #4: AVG(smb.time)smb.time and smb.cmd==0x2e
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |    Column #4   |
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql error response filter"
+}
+
+---
+
+**Similarity: 0.49**
+io,stat
+can also do much more statistics and calculate COUNT(), SUM(),
+MIN(), MAX(), AVG() and LOAD() using a slightly different filter syntax:
+-z io,stat,
+interval
+,"COUNT|SUM|MIN|MAX|AVG|LOAD(
+field
+)
+filter
+"
+Note
+One important thing to note here is that the filter is not optional
+and that the field that the calculation is based on MUST be part of the filter
+string or the calculation will fail.
+So:
+-z io,stat,0.010,AVG(smb.time)
+does not work.  Use
+-z
+io,stat,0.010,AVG(smb.time)smb.time
+
+---
+
+**Similarity: 0.50**
+Column #2: AVG(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+Column #3: SUM(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |
+Time            |       AVG      |       SUM      |       AVG      |       SUM      |
+000.000-                    30018         28067522               72             3240
+
+---
+
+**Similarity: 0.50**
+Column #0: MIN(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==0
+Column #1: MAX(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==1
+Column #2: MIN(smb.time)smb.time and smb.cmd==0x2e
+Column #3: MAX(smb.time)smb.time and smb.cmd==0x2e
+Column #4: AVG(smb.time)smb.time and smb.cmd==0x2e
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |    Column #4   |
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL error response filter"
+}
+
+---
+
+**Similarity: 0.50**
+io,stat
+can also do much more statistics and calculate COUNT(), SUM(),
+MIN(), MAX(), AVG() and LOAD() using a slightly different filter syntax:
+-z io,stat,
+interval
+,"COUNT|SUM|MIN|MAX|AVG|LOAD(
+field
+)
+filter
+"
+Note
+One important thing to note here is that the filter is not optional
+and that the field that the calculation is based on MUST be part of the filter
+string or the calculation will fail.
+So:
+-z io,stat,0.010,AVG(smb.time)
+does not work.  Use
+-z
+io,stat,0.010,AVG(smb.time)smb.time
+
+---
+
+**Similarity: 0.50**
+Column #2: AVG(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+Column #3: SUM(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |
+Time            |       AVG      |       SUM      |       AVG      |       SUM      |
+000.000-                    30018         28067522               72             3240
+
+---
+
+**Similarity: 0.51**
+Column #0: MIN(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==0
+Column #1: MAX(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==1
+Column #2: MIN(smb.time)smb.time and smb.cmd==0x2e
+Column #3: MAX(smb.time)smb.time and smb.cmd==0x2e
+Column #4: AVG(smb.time)smb.time and smb.cmd==0x2e
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |    Column #4   |
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL error response filter"
+}
+
+---
+
+**Similarity: 0.50**
+io,stat
+can also do much more statistics and calculate COUNT(), SUM(),
+MIN(), MAX(), AVG() and LOAD() using a slightly different filter syntax:
+-z io,stat,
+interval
+,"COUNT|SUM|MIN|MAX|AVG|LOAD(
+field
+)
+filter
+"
+Note
+One important thing to note here is that the filter is not optional
+and that the field that the calculation is based on MUST be part of the filter
+string or the calculation will fail.
+So:
+-z io,stat,0.010,AVG(smb.time)
+does not work.  Use
+-z
+io,stat,0.010,AVG(smb.time)smb.time
+
+---
+
+**Similarity: 0.50**
+Column #2: AVG(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+Column #3: SUM(smb.file.rw.length)smb.file.rw.length and smb.cmd==0x2f and not smb.response_to
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |
+Time            |       AVG      |       SUM      |       AVG      |       SUM      |
+000.000-                    30018         28067522               72             3240
+
+---
+
+**Similarity: 0.51**
+Column #0: MIN(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==0
+Column #1: MAX(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==1
+Column #2: MIN(smb.time)smb.time and smb.cmd==0x2e
+Column #3: MAX(smb.time)smb.time and smb.cmd==0x2e
+Column #4: AVG(smb.time)smb.time and smb.cmd==0x2e
+|    Column #0   |    Column #1   |    Column #2   |    Column #3   |    Column #4   |
+
+---
+
+TOOL CALL:
+- tool name: final_answer_formatter
+- args: {
+  "report": "The analysis of the MySQL traffic on port 3306 confirmed the presence of MySQL services, as indicated by the MySQL protocol packets such as server greetings, login requests, and various query requests and responses. However, when attempting to filter for MySQL error responses using the filter 'mysql.error', it resulted in an error because 'mysql.error' is not a valid protocol or protocol field in tshark. Despite searching the tshark manual, the correct field or method to capture error messages in MySQL traffic was not identified. Therefore, the task of identifying anomalies or specific patterns within the MySQL traffic, particularly error responses, could not be completed with the available information.",
+  "executed_command": "-Y mysql"
+}
+
+---
+
+Final report from the forensic expert:
+The analysis of the MySQL traffic on port 3306 confirmed the presence of MySQL services, as indicated by the MySQL protocol packets such as server greetings, login requests, and various query requests and responses. However, when attempting to filter for MySQL error responses using the filter 'mysql.error', it resulted in an error because 'mysql.error' is not a valid protocol or protocol field in tshark. Despite searching the tshark manual, the correct field or method to capture error messages in MySQL traffic was not identified. Therefore, the task of identifying anomalies or specific patterns within the MySQL traffic, particularly error responses, could not be completed with the available information.
+Executed command: -Y mysql
+
+Command output:    23   0.129758   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   25   0.130176   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   27   0.131257   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   29   0.131697   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+   31   0.132181   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+   33   0.133335   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+   35   0.133747   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   37   0.134093   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+   39   0.134946   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   44   0.141621   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   46   0.141646   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   48   0.141646   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   50   0.143380   172.18.0.3 â†’ 172.18.0.2   MySQL 93 Request Query
+   52   0.143810   172.18.0.2 â†’ 172.18.0.3   MySQL 140 Response TABULAR Response 
+   54   0.144225   172.18.0.3 â†’ 172.18.0.2   MySQL 82 Request Query
+   56   0.144676   172.18.0.2 â†’ 172.18.0.3   MySQL 252 Response TABULAR Response 
+   58   0.145194   172.18.0.3 â†’ 172.18.0.2   MySQL 81 Request Query
+   60   0.145591   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   62   0.146079   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+   64   0.147193   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+   66   0.152113   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+   71   0.152984   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+   82   0.174135   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+   84   0.174922   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+   86   0.175291   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   88   0.175694   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+   90   0.176121   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+   92   0.177266   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+   94   0.177744   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+   96   0.178142   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+   98   0.179168   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  103   0.185258   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  105   0.185615   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  107   0.186111   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  109   0.189536   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  111   0.190142   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  113   0.198334   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  115   0.199464   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  117   0.200337   172.18.0.3 â†’ 172.18.0.2   MySQL 492 Request Query
+  118   0.201129   172.18.0.2 â†’ 172.18.0.3   MySQL 116 Response TABULAR Response 
+  120   0.201537   172.18.0.3 â†’ 172.18.0.2   MySQL 206 Request Query
+  121   0.202003   172.18.0.2 â†’ 172.18.0.3   MySQL 116 Response TABULAR Response 
+  123   0.202479   172.18.0.3 â†’ 172.18.0.2   MySQL 103 Request Query
+  124   0.203312   172.18.0.2 â†’ 172.18.0.3   MySQL 145 Response  Error 1142 
+  126   0.203792   172.18.0.3 â†’ 172.18.0.2   MySQL 85 Request Query
+  127   0.204174   172.18.0.2 â†’ 172.18.0.3   MySQL 141 Response TABULAR Response 
+  128   0.224510   172.18.0.3 â†’ 172.18.0.2   MySQL 186 Request Query
+  129   0.225205   172.18.0.2 â†’ 172.18.0.3   MySQL 1409 Response TABULAR Response 
+  130   0.225987   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  131   0.227112   172.18.0.2 â†’ 172.18.0.3   MySQL 5851 Response TABULAR Response 
+  133   0.238978   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  134   0.239962   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  135   0.240959   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  136   0.241490   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  137   0.241868   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  138   0.242384   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  139   0.265771   172.18.0.3 â†’ 172.18.0.2   MySQL 87 Request Query
+  140   0.266352   172.18.0.2 â†’ 172.18.0.3   MySQL 181 Response  Error 1227 
+  145   0.284536   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  148   0.284870   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  167   0.318236   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  169   0.319174   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  171   0.319627   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  173   0.320102   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+  175   0.320643   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+  177   0.321815   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  179   0.322382   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  181   0.323437   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+  183   0.324081   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  188   0.329198   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  190   0.329559   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  192   0.329922   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  194   0.336471   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  196   0.337170   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  198   0.344558   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  199   0.344989   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  201   0.349059   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  202   0.349711   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  204   0.351338   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  205   0.351913   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  207   0.356090   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  208   0.356862   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  210   0.365063   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Use Database
+  211   0.365580   172.18.0.2 â†’ 172.18.0.3   MySQL 99 Response  Error 1046 
+  213   0.365999   172.18.0.3 â†’ 172.18.0.2   MySQL 101 Request Query
+  214   0.366504   172.18.0.2 â†’ 172.18.0.3   MySQL 162 Response TABULAR Response 
+  216   0.369055   172.18.0.3 â†’ 172.18.0.2   MySQL 84 Request Query
+  217   0.369460   172.18.0.2 â†’ 172.18.0.3   MySQL 219 Response TABULAR Response 
+  219   0.369910   172.18.0.3 â†’ 172.18.0.2   MySQL 102 Request Query
+  220   0.370317   172.18.0.2 â†’ 172.18.0.3   MySQL 145 Response TABULAR Response 
+  222   0.371673   172.18.0.3 â†’ 172.18.0.2   MySQL 90 Request Query
+  223   0.372177   172.18.0.2 â†’ 172.18.0.3   MySQL 225 Response  Error 1064 
+  225   0.375966   172.18.0.3 â†’ 172.18.0.2   MySQL 94 Request Query
+  226   0.376831   172.18.0.2 â†’ 172.18.0.3   MySQL 139 Response TABULAR Response 
+  228   0.412860   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  229   0.413153   172.18.0.2 â†’ 172.18.0.3   MySQL 284 Response TABULAR Response 
+  231   0.419505   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  232   0.420382   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  234   0.421814   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  235   0.422400   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  237   0.423368   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  238   0.423888   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  243   0.431183   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  246   0.431481   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  265   0.463390   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  267   0.463809   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  269   0.464188   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  271   0.464614   172.18.0.3 â†’ 172.18.0.2   MySQL 106 Request Query
+  273   0.465092   172.18.0.2 â†’ 172.18.0.3   MySQL 207 Response TABULAR Response 
+  275   0.466215   172.18.0.3 â†’ 172.18.0.2   MySQL 120 Request Query
+  277   0.467032   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  279   0.467456   172.18.0.3 â†’ 172.18.0.2   MySQL 97 Request Query
+  281   0.467868   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  286   0.473423   172.18.0.2 â†’ 172.18.0.3   MySQL 144 Server Greeting  proto=10 version=5.5.62 
+  288   0.473828   172.18.0.3 â†’ 172.18.0.2   MySQL 151 Login Request user=test db= 
+  290   0.474154   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  292   0.475010   172.18.0.3 â†’ 172.18.0.2   MySQL 128 Request Query
+  294   0.475556   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  296   0.480412   172.18.0.3 â†’ 172.18.0.2   MySQL 119 Request Query
+  298   0.480428   172.18.0.2 â†’ 172.18.0.3   MySQL 77 Response  OK 
+  300   0.519205   172.18.0.3 â†’ 172.18.0.2   MySQL 426 Request Query
+  302   0.519920   172.18.0.2 â†’ 172.18.0.3   MySQL 203 Response TABULAR Response 
+  304   0.521415   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  305   0.522010   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  307   0.522476   172.18.0.3 â†’ 172.18.0.2   MySQL 210 Request Query
+  308   0.523755   172.18.0.2 â†’ 172.18.0.3   MySQL 129 Response TABULAR Response 
+  314   0.532443   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+  317   0.532768   172.18.0.3 â†’ 172.18.0.2   MySQL 71 Request Quit
+
+
+
+---
+

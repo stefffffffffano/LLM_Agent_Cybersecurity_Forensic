@@ -1,138 +1,49 @@
 TOOL CALL:
 - tool name: command_executor
 - args: {
-  "tshark_command": "-Y \"tcp.port == 61616\" -T fields -e data"
+  "tshark_command": "-Y \"tcp.port == 61616\" -T fields -e tcp.flags"
 }
 
 ---
 
 
-Result of command {'tshark_command': '-Y "tcp.port == 61616" -T fields -e data'}:  No output found for the given command.
+Result of command {'tshark_command': '-Y "tcp.port == 61616" -T fields -e tcp.flags'}:  0x0002
+0x0012
+0x0010
+0x0018
+0x0010
+0x0018
+0x0010
+0x0011
+0x0011
+0x0010
 
----
-
-TOOL CALL:
-- tool name: command_executor
-- args: {
-  "tshark_command": "-Y \"ip.addr == 172.18.0.1 || ip.addr == 172.18.0.2\" -T fields -e data"
-}
-
----
-
-
-Result of command {'tshark_command': '-Y "ip.addr == 172.18.0.1 || ip.addr == 172.18.0.2" -T fields -e data'}:  No output found for the given command.
-
----
-
-TOOL CALL:
-- tool name: command_executor
-- args: {
-  "tshark_command": "-z follow,tcp,raw,0"
-}
-
----
-
-
-Result of command {'tshark_command': '-z follow,tcp,raw,0'}:      1   0.000000 02:42:fb:80:b6:d8 â†’ Broadcast    ARP 42 Who has 172.18.0.2? Tell 172.18.0.1
-    2   0.000141 02:42:ac:12:00:02 â†’ 02:42:fb:80:b6:d8 ARP 42 172.18.0.2 is at 02:42:ac:12:00:02
-    3   0.000252   172.18.0.1 â†’ 172.18.0.2   TCP 74 41374 â†’ 61616 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=79410352 TSecr=0 WS=128
-    4   0.000426   172.18.0.2 â†’ 172.18.0.1   TCP 74 61616 â†’ 41374 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=4190685298 TSecr=79410352 WS=128
-    5   0.000506   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=79410352 TSecr=4190685298
-    6   0.131075   172.18.0.2 â†’ 172.18.0.1   OpenWire 408 WireFormatInfo
-    7   0.131186   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [ACK] Seq=1 Ack=343 Win=64128 Len=0 TSval=79410483 TSecr=4190685429
-    8   7.527525   172.18.0.1 â†’ 172.18.0.2   TCP 72 41374 â†’ 61616 [PSH, ACK] Seq=1 Ack=343 Win=64128 Len=6 TSval=79417879 TSecr=4190685429
-    9   7.528086   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [ACK] Seq=343 Ack=7 Win=65280 Len=0 TSval=4190692826 TSecr=79417879
-   10   7.544754   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [FIN, ACK] Seq=343 Ack=7 Win=65280 Len=0 TSval=4190692843 TSecr=79417879
-   11   7.545919   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [FIN, ACK] Seq=7 Ack=344 Win=64128 Len=0 TSval=79417898 TSecr=4190692843
-   12   7.546008   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [ACK] Seq=344 Ack=8 Win=65280 Len=0 TSval=4190692844 TSecr=79417898
-
-===================================================================
-Follow: tcp,raw
-Filter: tcp.stream eq 0
-Node 0: 172.18.0.1:41374
-Node 1: 172.18.0.2:61616
-	00000152014163746976654d510000000c01000001400000000d0011537461636b5472616365456e61626c65640101000f506c6174666f726d44657461696c730900044a617661000c4361636865456e61626c6564010100115463704e6f44656c6179456e61626c65640101001253697a6550726566697844697361626c656401000009436163686553697a650500000400000c50726f76696465724e616d650900084163746976654d5100145469676874456e636f64696e67456e61626c65640101000c4d61784672616d6553697a6506000000000640000000154d6178496e61637469766974794475726174696f6e06000000000000753000204d6178496e61637469766974794475726174696f6e496e6974616c44656c617906000000000000271000134d61784672616d6553697a65456e61626c65640101000f50726f766964657256657273696f6e090006352e31372e33
-657869740d0a
-===================================================================
-
-
----
-
-TOOL CALL:
-- tool name: manual_search
-- args: {
-  "searchString": "Java serialized object filter"
-}
-
----
-
-No relevant information found in the manuals (similarity too low with respect to the query).
-
----
-
-TOOL CALL:
-- tool name: command_executor
-- args: {
-  "tshark_command": "-Y \"java\" -T fields -e data"
-}
-
----
-
-
-Result of command {'tshark_command': '-Y "java" -T fields -e data'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_16\\cve-2017-15709_fail.pcap', '-Y', 'java', '-T', 'fields', '-e', 'data']' returned non-zero exit status 4.
-tshark: "java" is not a valid protocol or protocol field.
-    java
-    ^~~~
-
-
----
-
-TOOL CALL:
-- tool name: manual_search
-- args: {
-  "searchString": "filter byte pattern 0xACED"
-}
-
----
-
-No relevant information found in the manuals (similarity too low with respect to the query).
 
 ---
 
 TOOL CALL:
 - tool name: final_answer_formatter
 - args: {
-  "report": "The analysis of the PCAP file focused on identifying signs of unsafe deserialization or attempts to execute arbitrary code, which are indicative of CVE-2025-29953 exploitation attempts. The TCP conversation between the two IP addresses on ports 41374 and 61616 was examined. Attempts to extract TCP payload data using specific filters did not yield any output, suggesting no relevant data was captured. A broader examination of the entire TCP stream revealed some encoded or serialized data, potentially related to Java-based messaging or serialization. However, further attempts to identify serialized Java objects using specific byte patterns or keywords were unsuccessful due to limitations in the tshark command options and filters. Therefore, no definitive signs of unsafe deserialization or code execution attempts were found in the provided PCAP file.",
-  "executed_command": "-z follow,tcp,raw,0"
+  "report": "The TCP flags extracted from the conversation on port 61616 were decoded to identify any anomalies. The sequence of flags indicates a typical TCP handshake and data transfer process, followed by a connection termination. However, the presence of two FIN, ACK flags in sequence might suggest an anomaly or a retransmission. This could be indicative of a network issue or an attempt to close the connection from both ends simultaneously.",
+  "executed_command": "-Y \"tcp.port == 61616\" -T fields -e tcp.flags"
 }
 
 ---
 
 Final report from the forensic expert:
-The analysis of the PCAP file focused on identifying signs of unsafe deserialization or attempts to execute arbitrary code, which are indicative of CVE-2025-29953 exploitation attempts. The TCP conversation between the two IP addresses on ports 41374 and 61616 was examined. Attempts to extract TCP payload data using specific filters did not yield any output, suggesting no relevant data was captured. A broader examination of the entire TCP stream revealed some encoded or serialized data, potentially related to Java-based messaging or serialization. However, further attempts to identify serialized Java objects using specific byte patterns or keywords were unsuccessful due to limitations in the tshark command options and filters. Therefore, no definitive signs of unsafe deserialization or code execution attempts were found in the provided PCAP file.
-Executed command: -z follow,tcp,raw,0
+The TCP flags extracted from the conversation on port 61616 were decoded to identify any anomalies. The sequence of flags indicates a typical TCP handshake and data transfer process, followed by a connection termination. However, the presence of two FIN, ACK flags in sequence might suggest an anomaly or a retransmission. This could be indicative of a network issue or an attempt to close the connection from both ends simultaneously.
+Executed command: -Y "tcp.port == 61616" -T fields -e tcp.flags
 
-Command output:     1   0.000000 02:42:fb:80:b6:d8 â†’ Broadcast    ARP 42 Who has 172.18.0.2? Tell 172.18.0.1
-    2   0.000141 02:42:ac:12:00:02 â†’ 02:42:fb:80:b6:d8 ARP 42 172.18.0.2 is at 02:42:ac:12:00:02
-    3   0.000252   172.18.0.1 â†’ 172.18.0.2   TCP 74 41374 â†’ 61616 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=79410352 TSecr=0 WS=128
-    4   0.000426   172.18.0.2 â†’ 172.18.0.1   TCP 74 61616 â†’ 41374 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=4190685298 TSecr=79410352 WS=128
-    5   0.000506   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=79410352 TSecr=4190685298
-    6   0.131075   172.18.0.2 â†’ 172.18.0.1   OpenWire 408 WireFormatInfo
-    7   0.131186   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [ACK] Seq=1 Ack=343 Win=64128 Len=0 TSval=79410483 TSecr=4190685429
-    8   7.527525   172.18.0.1 â†’ 172.18.0.2   TCP 72 41374 â†’ 61616 [PSH, ACK] Seq=1 Ack=343 Win=64128 Len=6 TSval=79417879 TSecr=4190685429
-    9   7.528086   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [ACK] Seq=343 Ack=7 Win=65280 Len=0 TSval=4190692826 TSecr=79417879
-   10   7.544754   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [FIN, ACK] Seq=343 Ack=7 Win=65280 Len=0 TSval=4190692843 TSecr=79417879
-   11   7.545919   172.18.0.1 â†’ 172.18.0.2   TCP 66 41374 â†’ 61616 [FIN, ACK] Seq=7 Ack=344 Win=64128 Len=0 TSval=79417898 TSecr=4190692843
-   12   7.546008   172.18.0.2 â†’ 172.18.0.1   TCP 66 61616 â†’ 41374 [ACK] Seq=344 Ack=8 Win=65280 Len=0 TSval=4190692844 TSecr=79417898
-
-===================================================================
-Follow: tcp,raw
-Filter: tcp.stream eq 0
-Node 0: 172.18.0.1:41374
-Node 1: 172.18.0.2:61616
-	00000152014163746976654d510000000c01000001400000000d0011537461636b5472616365456e61626c65640101000f506c6174666f726d44657461696c730900044a617661000c4361636865456e61626c6564010100115463704e6f44656c6179456e61626c65640101001253697a6550726566697844697361626c656401000009436163686553697a650500000400000c50726f76696465724e616d650900084163746976654d5100145469676874456e636f64696e67456e61626c65640101000c4d61784672616d6553697a6506000000000640000000154d6178496e61637469766974794475726174696f6e06000000000000753000204d6178496e61637469766974794475726174696f6e496e6974616c44656c617906000000000000271000134d61784672616d6553697a65456e61626c65640101000f50726f766964657256657273696f6e090006352e31372e33
-657869740d0a
-===================================================================
+Command output: 0x0002
+0x0012
+0x0010
+0x0018
+0x0010
+0x0018
+0x0010
+0x0011
+0x0011
+0x0010
 
 
 

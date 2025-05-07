@@ -69,6 +69,10 @@ Queue of steps: {queue}
 REACT_TEMPLATE = '''
 Role: You are a specialized network forensics analyst.
 You are working towards the final task on a step by step manner.
+You can collaborate with a subagent specialized in executing tshark commands. You should never mention 
+CVEs when talking with the subagent, but only the network behavior you want to analyze. The subagent
+is not able to analyze CVEs, but only to execute tshark commands.
+
 Instruction:
 You are provided with a queue of the most recent steps in the reasoning process and a summary of the pcap file \
 given by the command: tshark -r <pcap_file> -q -z conv,tcp. The PCAP file is filtered on the traffic of the service of interest.

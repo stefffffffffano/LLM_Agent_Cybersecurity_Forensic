@@ -1,0 +1,530 @@
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"mysql\" -T fields -e mysql.query -e mysql.response"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "mysql" -T fields -e mysql.query -e mysql.response'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_8\\CVE-2018-12613.pcap', '-Y', 'mysql', '-T', 'fields', '-e', 'mysql.query', '-e', 'mysql.response']' returned non-zero exit status 1.
+tshark: Some fields aren't valid:
+	mysql.response
+
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.40**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+Field 1
+protocol name
+Field 2
+protocol short name
+Field 3
+protocol filter name
+Field 4
+protocol enabled (e.g. "T" or "F")
+Field 5
+protocol enabled by default (e.g. "T" or "F")
+Field 6
+protocol can toggle (e.g. "T" or "F")
+services
+Dumps the TCP, UDP, and SCTP transport service (port) table.
+values
+Dumps the value_strings, range_strings or true/false strings
+for fields that have them.  There is one record per line.  Fields are
+tab-delimited.  There are three types of records: Value String, Range
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql tshark fields"
+}
+
+---
+
+**Similarity: 0.34**
+can be auto-generated with the command "tshark -G elastic-mapping". Since
+the mapping file can be huge, protocols can be selected by using the option
+--elastic-mapping-filter:
+tshark -G elastic-mapping --elastic-mapping-filter ip,udp,dns
+fields
+The values of fields specified with the
+-e
+option, in a
+form specified by the
+-E
+option.  For example,
+tshark -T fields -E separator=, -E quote=d
+would generate comma-separated values (CSV) output suitable for importing
+into your favorite spreadsheet program.
+json
+
+---
+
+**Similarity: 0.35**
+-T fields
+option is
+selected. Column types may be used prefixed with "_ws.col."
+Example:
+tshark -T fields -e frame.number -e ip.addr -e udp -e _ws.col.info
+Fields are separated by tab characters by default.
+-E
+controls the
+format of the printed fields.
+Giving a protocol rather than a single field will print the protocol summary
+(subtree label) from the packet details as a single field.
+If the protocol summary contains only the protocol name
+
+---
+
+**Similarity: 0.37**
+TShark
+, which allow you to select which packets are
+to be decoded or written to a file, are very powerful; more fields are
+filterable in
+TShark
+than in other protocol analyzers, and the syntax
+you can use to create your filters is richer.  As
+TShark
+progresses,
+expect more and more protocol fields to be allowed in display filters.
+Display filters use the same syntax as display and color filters in
+Wireshark
+; a display filter is specified with the
+-Y
+option.
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+

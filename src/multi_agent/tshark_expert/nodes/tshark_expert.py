@@ -36,12 +36,14 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     #Count how many messages you can include, in order not to overcome the context window
     fifo_token_counter = 0
     fifo_messages_to_be_included = 0
-    for m in state.messages:
-        fifo_token_counter += count_tokens(m)
-        if fifo_token_counter < MAX_TOKENS:
+    for m in reversed(state.messages):  # reversed to collect latest messages
+        tok = count_tokens(m)
+        if fifo_token_counter + tok < MAX_TOKENS:
+            fifo_token_counter += tok
             fifo_messages_to_be_included += 1
         else:
             break
+
     fifo_messages = state.messages[-fifo_messages_to_be_included:]   
     queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
     queue_str = "\n".join(queue_lines)
@@ -76,6 +78,9 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     if not length_exceeded:
         input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
         output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
+    else:
+        input_token_count = 0
+        output_token_count = 0
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,
