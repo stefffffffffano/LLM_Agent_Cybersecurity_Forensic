@@ -25,7 +25,7 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
         log_content = log_content)
 
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=600)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
 
     messages = [{"role": "system", "content": system_prompt}]
     
