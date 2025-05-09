@@ -1,57 +1,59 @@
 [Task 16]
-Step 1: The PCAP summary indicates a TCP conversation between two IP addresses on port 61616. This port is commonly associated with the Apache ActiveMQ service. To confirm the presence of this service, I will extract the application layer data from the PCAP file to identify any specific service signatures or application data that can confirm the service running on this port.
+Step 1: Report of the log analysis done by the log reporter:
 
-Let's proceed with extracting the application layer data from the PCAP file to verify the service.
-Step 2: Final report from the forensic expert:
-After multiple attempts to extract application layer data from the TCP traffic on port 61616 using various tshark fields, no output was found. This suggests that the data might not be in a format that tshark can interpret directly using the fields attempted. The commands executed included attempts to extract text and raw data, but both resulted in no output. Further investigation into the specific protocol or data format used on port 61616 might be necessary to proceed with the analysis.
-Executed command: -Y "tcp.port == 61616" -T fields -e data
+1. **Summary of Relevant and Suspicious Events:**
+   - The log indicates the startup of an Apache ActiveMQ service, version 5.17.3. 
+   - A warning is logged regarding uncovered HTTP methods for the root path, which could potentially expose the service to unauthorized access or attacks.
+   - There are warnings about storage limits being reset due to insufficient disk space, which could impact the service's ability to handle data effectively.
+   - A critical warning is logged: "Transport Connection to: tcp://172.18.0.1:41374 failed: Frame size of 1 GB larger than max allowed 100 MB." This suggests an attempt to send a message exceeding the maximum frame size, which could be indicative of a denial-of-service (DoS) attempt or a misconfiguration.
 
-Command output: No output found for the given command.
+2. **Service Involved:**
+   - The service involved is Apache ActiveMQ, version 5.17.3.
 
-Step 3: Given that the application layer data extraction attempts have not yielded any results, it might be beneficial to explore other aspects of the traffic, such as the TCP flags or any anomalies in the TCP conversation. This could provide insights into potential malicious activities or unusual patterns that might be associated with a CVE. 
+3. **Log Entries Highlighting Potential Vulnerabilities or Exploitation Patterns:**
+   - The warning about uncovered HTTP methods: "WARN | ServletContext@o.e.j.s.ServletContextHandler@4674d90{/,null,STARTING} has uncovered http methods for path: /" could be a security concern, as it may allow unauthorized HTTP methods to be executed.
+   - The frame size warning: "WARN | Transport Connection to: tcp://172.18.0.1:41374 failed: Frame size of 1 GB larger than max allowed 100 MB" could be indicative of an attempt to exploit the service by sending oversized messages, potentially leading to a DoS condition.
 
-Let's proceed by analyzing the TCP flags and any anomalies in the TCP conversation on port 61616.
-Step 4: Final report from the forensic expert:
-The TCP flags extracted from the conversation on port 61616 were decoded to identify any anomalies. The sequence of flags indicates a typical TCP handshake and data transfer process, followed by a connection termination. However, the presence of two FIN, ACK flags in sequence might suggest an anomaly or a retransmission. This could be indicative of a network issue or an attempt to close the connection from both ends simultaneously.
-Executed command: -Y "tcp.port == 61616" -T fields -e tcp.flags
+4. **Useful Log Excerpts:**
+   - "INFO | Apache ActiveMQ 5.17.3 (localhost, ID:0b13347f7452-33973-1739882621001-0:1) is starting"
+   - "WARN | ServletContext@o.e.j.s.ServletContextHandler@4674d90{/,null,STARTING} has uncovered http methods for path: /"
+   - "WARN | Transport Connection to: tcp://172.18.0.1:41374 failed: Frame size of 1 GB larger than max allowed 100 MB"
 
-Command output: 0x0002
-0x0012
-0x0010
-0x0018
-0x0010
-0x0018
-0x0010
-0x0011
-0x0011
-0x0010
+5. **Conclusion:**
+   - The log provides evidence of potential security issues, such as uncovered HTTP methods and oversized message attempts, which should be further investigated in the full packet capture (PCAP) to determine if they were part of an attack or misconfiguration. The disk space warnings, while not directly indicative of an attack, could affect service performance and should be monitored.
+Step 2: The log analysis indicates that the service involved is Apache ActiveMQ, version 5.17.3. There are potential security issues such as uncovered HTTP methods and oversized message attempts, which could be indicative of a denial-of-service (DoS) attempt. The TCP conversation summary shows traffic between two IPs on port 61616, which is commonly associated with ActiveMQ.
 
+Next, I need to analyze the PCAP file to look for signs of oversized message attempts or any other suspicious activities that could be related to a DoS attack. This will help in gathering evidence of malicious activities associated with the identified CVE.
 
-Step 5: Given the presence of two FIN, ACK flags in sequence, which might suggest an anomaly or a retransmission, it would be prudent to investigate further for any signs of malicious activity or unusual patterns. Since the application layer data extraction was unsuccessful, and the TCP flags analysis did not reveal any clear evidence of malicious activity, the next logical step is to perform a web search to identify any known CVEs or vulnerabilities associated with Apache ActiveMQ, which is commonly associated with port 61616.
+Let's proceed with extracting the relevant packet details to identify any oversized messages or anomalies in the traffic.
 
-Let's proceed with a web search to find any CVEs related to Apache ActiveMQ.
-Step 6: Search result for query: 'CVE Apache ActiveMQ'
-Information 1: e Apache ActiveMQ project logo are trademarks of The Apache Software Foundation. Copyright © 2025, The Apache Software Foundation. Licensed under Apache License 2.0.
-Information 2:  Apache ActiveMQ 5.18.0 before 5.18.3 Apache ActiveMQ 5.17.0 before 5.17.6 Apache ActiveMQ 5.16.0 before 5.16.7 Apache ActiveMQ before 5.15.16 Apache ActiveMQ Legacy OpenWire Module 5.18.0 before 5.18.3 Apache ActiveMQ Legacy OpenWire Module 5.17.0 before 5.17.6 Apache ActiveMQ Legacy OpenWire Module 5.16.0 before 5.16.7 Apache ActiveMQ Legacy OpenWire Module 5.8.0 before 5.15.16 Observed Attacker Behavior During a successful exploitation of the vulnerability, Java.exe will contain the specific Apache appli
-Information 3: CVE-2023-46604: Apache ActiveMQ Actively Exploited For RCE - community.greenbone.net Community Forum Community Blog Portal entry Search Menu Menu CVE-2023-46604: Apache ActiveMQ Actively Exploited For RCEBlog, CommunityCVE-2023-46604 Intelligence Summary Enterprise | CVSS 9.8 Apache ActiveMQ is vulnerable to a CVSS 9.8 high-severity remote code execution (RCE) vulnerability tracked as CVE-2023-46604 that leverages deserialization of untrusted data [CWE-502] in the OpenWire protocol. The Apache ActiveMQ mess
-Information 4: 5.16This is rated as a critical severity vulnerability with a CVSS base score of 10.0. If you are running an affected version of Apache ActiveMQ, it is recommended to urgently upgrade or apply mitigations to avoid getting compromised.Several proof-of-concept exploits that leverage this vulnerability to achieve RCE have already been published. There are also reports of active exploitation in the wild.Verifying Vulnerability PresenceThe first step is to verify whether your Apache ActiveMQ installation is actu
-Information 5: nterprise | CVSS 9.8 Apache ActiveMQ is vulnerable to a CVSS 9.8 high-severity remote code execution (RCE) vulnerability tracked as CVE-2023-46604 that leverages deserialization of untrusted data [CWE-502] in the OpenWire protocol. The Apache ActiveMQ message broker can be exploited remotely [T1210] for execution of arbitrary shell commands at the privilege level of the ActiveMQ process [T1068]. CISA added CVE-2023-46604 to its actively exploited catalog on November 2nd, and its exploitation is considered t
-Step 7: 
-Step 8: Stored memory 616b5f64-7564-48b7-a33d-ca70499c5f4c
-Step 9: The web search has confirmed that Apache ActiveMQ is associated with CVE-2023-46604, a high-severity remote code execution vulnerability. This vulnerability leverages deserialization of untrusted data in the OpenWire protocol. Given this information, the next step is to gather evidence of malicious activities associated with this CVE from the PCAP file. Specifically, we should look for signs of remote code execution attempts or deserialization of untrusted data in the traffic.
-
-Let's proceed by using the tshark_expert to analyze the PCAP file for any signs of remote code execution attempts or deserialization of untrusted data, which are indicative of CVE-2023-46604 exploitation.
-Step 10: Final report from the forensic expert:
-The analysis focused on extracting payload data from packets on port 61616 to identify signs of remote code execution attempts or deserialization of untrusted data, indicative of CVE-2023-46604 exploitation. However, the command executed to extract payload data resulted in no output, suggesting either the absence of raw data in the packets or an incorrect field extraction. Further attempts to identify relevant fields related to Java Object Serialization or other deserialization protocols did not yield any results. Therefore, no signs of exploitation were found in the provided PCAP file.
-Executed command: -Y "tcp.port == 61616" -T fields -e data
+Action: I will ask the "tshark_expert" to extract packet details, focusing on identifying any oversized messages or anomalies in the traffic.
+Step 3: Final report from the forensic expert:
+The analysis of the traffic between 172.18.0.1:41374 and 172.18.0.2:61616 showed no oversized messages or anomalies. The packet lengths were small, and the TCP flags, sequence and acknowledgment numbers, retransmissions, duplicate ACKs, and zero window conditions were all normal. No issues were detected in the communication.
+Executed command: -Y "ip.src==172.18.0.1 && ip.dst==172.18.0.2 && tcp.srcport==41374 && tcp.dstport==61616 && tcp.analysis.zero_window" -T fields -e frame.number -e tcp.analysis.zero_window
 
 Command output: No output found for the given command.
 
-Step 11: Based on the analysis so far, we have identified that Apache ActiveMQ is associated with CVE-2023-46604, a high-severity remote code execution vulnerability. However, attempts to find evidence of exploitation in the PCAP file have not yielded any results. The absence of application layer data and signs of remote code execution or deserialization of untrusted data suggests that there might not be any active exploitation in the captured traffic.
+Step 4: The analysis of the PCAP file did not reveal any oversized messages or anomalies in the traffic between the two IPs on port 61616. The packet lengths were small, and no issues were detected in the communication. This suggests that there might not be any direct evidence of a denial-of-service (DoS) attack in the captured traffic.
 
-Given this, I will now proceed to provide the final answer based on the findings.
-Step 12: FINAL REPORT:
-The analysis of the PCAP file on port 61616 suggests the presence of Apache ActiveMQ. A web search revealed CVE-2023-46604 as a relevant vulnerability. However, attempts to extract application layer data and identify signs of remote code execution or deserialization of untrusted data did not yield any results. This suggests that there might not be any active exploitation in the captured traffic.
+Since the exploratory analysis of the PCAP file is complete, I will now proceed to verify the findings and gather additional information about potential CVEs related to Apache ActiveMQ, version 5.17.3, especially those that might involve uncovered HTTP methods or oversized message attempts.
+
+Action: I will perform a web search to find CVEs associated with Apache ActiveMQ, version 5.17.3, focusing on vulnerabilities related to uncovered HTTP methods or oversized message attempts.
+Step 5: Search result for query: 'Apache ActiveMQ 5.17.3 CVE uncovered HTTP methods oversized message'
+Information 1:  Apache ActiveMQ 5.18.0 before 5.18.3 Apache ActiveMQ 5.17.0 before 5.17.6 Apache ActiveMQ 5.16.0 before 5.16.7 Apache ActiveMQ before 5.15.16 Apache ActiveMQ Legacy OpenWire Module 5.18.0 before 5.18.3 Apache ActiveMQ Legacy OpenWire Module 5.17.0 before 5.17.6 Apache ActiveMQ Legacy OpenWire Module 5.16.0 before 5.16.7 Apache ActiveMQ Legacy OpenWire Module 5.8.0 before 5.15.16 Observed Attacker Behavior During a successful exploitation of the vulnerability, Java.exe will contain the specific Apache appli
+Information 2:  Security Apache ActiveMQ Vulnerability CVE-2023-46604 1. Executive Summary Updated: October 31, 2023Unbounded deserialization causes ActiveMQ to be vulnerable to a remote code execution (RCE) attack.The vulnerability may allow a remote attacker with network access to a broker to run arbitrary shell commands by manipulating serialized class types in the OpenWire protocol to cause the broker to instantiate any class on the classpath. 2. Affected Versions Apache ActiveMQ affected versions:Apache ActiveMQ 5.18
+Information 3: Apache ActiveMQ RCE (CVE-2023-46604) - vsociety about by vicarius log in join communityscriptsCVEsappsOS by @jakaba29 Nov 20231201841#cve_analysisWrite a blog analysis for a CVE publishsee all related postsApache ActiveMQ RCE (CVE-2023-46604) by @jakaba12 by @jakaba29 Nov 20231201841#cve_analysisWrite a blog analysis for a CVE publishsee all related postsApache ActiveMQ RCE (CVE-2023-46604)CVEsCVE-2023-4660410 Critical SeverityAppsALOActivemq Legacy Openwire ModuleApache5.15.16.*5.16.7.**.*5.17.0.*5.18.3.*5
+Information 4: .17.6.*5.18.0.*5.16.0.*show all related AppsAActivemqApache5.15.16.*5.15.15.*5.15.14.*5.15.13.*5.15.10.*5.15.12.*5.4-Snapshot.*5.15.11.*5.16.7.**.*Screenshots from the blog posts SummaryIn essence, CVE-2023-46604 poses a severe risk, as it enables remote attackers to execute arbitrary commands, exploiting the deserialization vulnerability in ActiveMQ's OpenWire protocol. The exploitation process involves the manipulation of serialized class types, offering threat actors the capability to instantiate any cla
+Information 5: r current Apache ActiveMQ service is one of the susceptible versions below and apply the latest patches to prevent attacks that exploit known vulnerabilities. Apache ActiveMQ versions 5.18.0 – 5.18.2Apache ActiveMQ versions 5.17.0 – 5.17.5Apache ActiveMQ versions 5.16.0 – 5.16.6Apache ActiveMQ versions 5.15.15 or earlierApache ActiveMQ Legacy OpenWire Module versions 5.18.0 – 5.18.2Apache ActiveMQ Legacy OpenWire Module versions 5.17.0 – 5.17.5Apache ActiveMQ Legacy OpenWire Module versions 5.16.0 – 5.16.6A
+Step 6: 
+Step 7: Stored memory 241e2028-64e3-4370-8daf-e8d55b2e3433
+Step 8: The web search results indicate that Apache ActiveMQ versions 5.17.0 to 5.17.5 are vulnerable to CVE-2023-46604, which involves a remote code execution (RCE) attack through unbounded deserialization. This vulnerability allows a remote attacker to execute arbitrary shell commands by manipulating serialized class types in the OpenWire protocol.
+
+Given that the PCAP analysis did not reveal any oversized messages or anomalies, and the log analysis indicated potential security issues with uncovered HTTP methods and oversized message attempts, it seems that the specific attack related to CVE-2023-46604 might not have been executed in the captured traffic.
+
+Now, I will proceed to compile the final report based on the findings.
+Step 9: FINAL REPORT:
+The analysis focused on Apache ActiveMQ 5.17.3, which is vulnerable to CVE-2023-46604, a remote code execution vulnerability through unbounded deserialization. The PCAP analysis showed no oversized messages or anomalies, and the log analysis indicated potential security issues with uncovered HTTP methods and oversized message attempts. However, there was no direct evidence of a successful attack in the captured traffic.
 REPORT SUMMARY:
 Identified CVE: CVE-2023-46604
 Affected Service: Apache ActiveMQ

@@ -1,0 +1,1244 @@
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"mysql.query || mysql.response\" -T fields -e frame.number -e mysql.query -e mysql.response"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "mysql.query || mysql.response" -T fields -e frame.number -e mysql.query -e mysql.response'}:  Error: Command '['tshark', '-r', 'C:\\Users\\Stefano\\OneDrive\\Desktop\\LLM_Agent_Cybersecurity_Forensic\\src\\data\\raw\\eventID_9\\CVE-2022-46169.pcap', '-Y', 'mysql.query || mysql.response', '-T', 'fields', '-e', 'frame.number', '-e', 'mysql.query', '-e', 'mysql.response']' returned non-zero exit status 1.
+tshark: Some fields aren't valid:
+	mysql.response
+
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql protocol fields tshark"
+}
+
+---
+
+**Similarity: 0.37**
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+, in which case the output is limited to protocols and fields whose
+abbreviation starts with the search prefix.
+Search Output
+Field 1
+protocol or field abbreviation
+Field 2
+descriptive protocol or field name
+folders
+Dumps various folders used by
+TShark
+
+---
+
+**Similarity: 0.37**
+-T fields
+option is
+selected. Column types may be used prefixed with "_ws.col."
+Example:
+tshark -T fields -e frame.number -e ip.addr -e udp -e _ws.col.info
+Fields are separated by tab characters by default.
+-E
+controls the
+format of the printed fields.
+Giving a protocol rather than a single field will print the protocol summary
+(subtree label) from the packet details as a single field.
+If the protocol summary contains only the protocol name
+
+---
+
+**Similarity: 0.38**
+can be auto-generated with the command "tshark -G elastic-mapping". Since
+the mapping file can be huge, protocols can be selected by using the option
+--elastic-mapping-filter:
+tshark -G elastic-mapping --elastic-mapping-filter ip,udp,dns
+fields
+The values of fields specified with the
+-e
+option, in a
+form specified by the
+-E
+option.  For example,
+tshark -T fields -E separator=, -E quote=d
+would generate comma-separated values (CSV) output suitable for importing
+into your favorite spreadsheet program.
+json
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql protocol fields tshark"
+}
+
+---
+
+**Similarity: 0.37**
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+, in which case the output is limited to protocols and fields whose
+abbreviation starts with the search prefix.
+Search Output
+Field 1
+protocol or field abbreviation
+Field 2
+descriptive protocol or field name
+folders
+Dumps various folders used by
+TShark
+
+---
+
+**Similarity: 0.37**
+-T fields
+option is
+selected. Column types may be used prefixed with "_ws.col."
+Example:
+tshark -T fields -e frame.number -e ip.addr -e udp -e _ws.col.info
+Fields are separated by tab characters by default.
+-E
+controls the
+format of the printed fields.
+Giving a protocol rather than a single field will print the protocol summary
+(subtree label) from the packet details as a single field.
+If the protocol summary contains only the protocol name
+
+---
+
+**Similarity: 0.38**
+can be auto-generated with the command "tshark -G elastic-mapping". Since
+the mapping file can be huge, protocols can be selected by using the option
+--elastic-mapping-filter:
+tshark -G elastic-mapping --elastic-mapping-filter ip,udp,dns
+fields
+The values of fields specified with the
+-e
+option, in a
+form specified by the
+-E
+option.  For example,
+tshark -T fields -E separator=, -E quote=d
+would generate comma-separated values (CSV) output suitable for importing
+into your favorite spreadsheet program.
+json
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "MySQL protocol fields"
+}
+
+---
+
+**Similarity: 0.40**
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+base for display (for integer types); "parent bitfield width" for FT_BOOLEAN
+Field 7
+bitmask: format: hex: 0x…​.
+Field 8
+blurb describing field
+An optional search prefix argument can be given to
+fields
+
+---
+
+**Similarity: 0.42**
+tables or HTML or whatever.  There is one record per line.  Each record is
+either a protocol or a header field, differentiated by the first field.
+The fields are tab-delimited.
+Protocols
+Field 1
+'P'
+Field 2
+descriptive protocol name
+Field 3
+protocol abbreviation
+Header Fields
+Field 1
+'F'
+Field 2
+descriptive field name
+Field 3
+field abbreviation
+Field 4
+type (textual representation of the ftenum type)
+Field 5
+parent protocol abbreviation
+Field 6
+
+---
+
+**Similarity: 0.42**
+preference.
+Protocol field types
+Each protocol field is typed. The types are:
+ASN.1 object identifier, plain or relative
+AX.25 address
+Boolean
+Byte sequence
+Character string
+Character, 1 byte
+Date and time
+Ethernet or other MAC address
+EUI64 address
+Fibre Channel WWN
+Floating point, single or double precision
+Frame number
+Globally Unique Identifier
+IEEE-11073 floating point, 16 or 32 bits
+IPv4 address
+IPv6 address
+IPX network number
+Label
+OSI System-ID
+Protocol
+Signed integer, 1, 2, 3, 4, or 8 bytes
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "mysql query field tshark"
+}
+
+---
+
+**Similarity: 0.38**
+can be auto-generated with the command "tshark -G elastic-mapping". Since
+the mapping file can be huge, protocols can be selected by using the option
+--elastic-mapping-filter:
+tshark -G elastic-mapping --elastic-mapping-filter ip,udp,dns
+fields
+The values of fields specified with the
+-e
+option, in a
+form specified by the
+-E
+option.  For example,
+tshark -T fields -E separator=, -E quote=d
+would generate comma-separated values (CSV) output suitable for importing
+into your favorite spreadsheet program.
+json
+
+---
+
+**Similarity: 0.39**
+continuation line:
+tshark -o tcp.desegment_tcp_streams:FALSE -n -q -r smb_reads.cap -z io,stat,0,
+"MIN(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==0",
+"MAX(frame.time_relative)frame.time_relative and smb.cmd==0x2e and smb.flags.response==1",
+"MIN(smb.time)smb.time and smb.cmd==0x2e",
+"MAX(smb.time)smb.time and smb.cmd==0x2e",
+"AVG(smb.time)smb.time and smb.cmd==0x2e"
+======================================================================================================
+
+---
+
+**Similarity: 0.39**
+field
+value
+from the packet,
+field
+MUST be part of the
+filter
+string.  If not,
+TShark
+will not be able to extract its value.
+For a simple example to add the "nfs.fh.hash" field to the Info column
+for all packets containing the "nfs.fh.hash" field, use
+-z proto,colinfo,nfs.fh.hash,nfs.fh.hash
+To put "nfs.fh.hash" in the Info column but only for packets coming from
+host 1.2.3.4 use:
+-z "proto,colinfo,nfs.fh.hash && ip.src==1.2.3.4,nfs.fh.hash"
+This option can be used multiple times on the command line.
+-z
+
+---
+
+TOOL CALL:
+- tool name: final_answer_formatter
+- args: {
+  "report": "The task was to extract MySQL queries and responses from the PCAP file to identify any suspicious or unauthorized database operations. Initially, I attempted to use the fields 'mysql.query' and 'mysql.response' to filter the traffic, but encountered an error indicating that 'mysql.response' is not a valid field. After searching the tshark manual, I was unable to find a valid field for MySQL responses. Therefore, I focused on extracting MySQL queries using the 'mysql.query' field. However, due to the lack of a valid field for responses, I could not extract the responses. The final command executed was to extract MySQL queries only.",
+  "executed_command": "-Y \"mysql.query\" -T fields -e frame.number -e mysql.query"
+}
+
+---
+
+Final report from the forensic expert:
+The task was to extract MySQL queries and responses from the PCAP file to identify any suspicious or unauthorized database operations. Initially, I attempted to use the fields 'mysql.query' and 'mysql.response' to filter the traffic, but encountered an error indicating that 'mysql.response' is not a valid field. After searching the tshark manual, I was unable to find a valid field for MySQL responses. Therefore, I focused on extracting MySQL queries using the 'mysql.query' field. However, due to the lack of a valid field for responses, I could not extract the responses. The final command executed was to extract MySQL queries only.
+Executed command: -Y "mysql.query" -T fields -e frame.number -e mysql.query
+
+Command output: 44	show tables
+62	DROP FUNCTION IF EXISTS NOAUTOCREATENEEDED
+66	CREATE FUNCTION NOAUTOCREATENEEDED()\nRETURNS BOOL\nREADS SQL DATA\nDETERMINISTIC\nBEGIN\n\nDECLARE ret BOOL;\nDECLARE ismaria BOOL;\n\nDECLARE majv INT;\nDECLARE medv INT;\nDECLARE minv INT;\n\nDECLARE realversion VARCHAR(16);\n\nDECLARE majn INT;\nDECLARE medn INT;\nDECLARE minn INT;\n\nSET ret = TRUE;\n\n\nSELECT LOCATE('MariaDB', @@version) > 0 INTO ismaria;\n\nIF ismaria THEN\n        \n        SET majn = 10;\n        SET medn = 1;\n        SET minn = 7;\nELSE\n        \n        SET majn = 8;\n        SET medn = 0;\n        SET minn = 11;\nEND IF;\n\nSELECT SUBSTRING_INDEX(SUBSTRING_INDEX(@@VERSION, '.', 3),'-',1) INTO realversion;\nSELECT CONVERT(SUBSTRING_INDEX(realversion, '.', 1), SIGNED INTEGER) INTO majv;\nSELECT CONVERT(SUBSTRING_INDEX(SUBSTRING_INDEX(realversion, '.', 2), '.', -1), SIGNED INTEGER) INTO medv;\nSELECT CONVERT(SUBSTRING_INDEX(SUBSTRING_INDEX(realversion, '.', 3), '.', -1), SIGNED INTEGER) INTO minv;\n\nIF majv >= majn AND medv >= medn AND minv >= minn THEN\n        SET ret = FALSE;\nEND IF;\n\nRETURN ret;\nEND
+70	SET @sqlmode= ""
+74	SELECT IF(NOAUTOCREATENEEDED(), 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION', 'NO_ENGINE_SUBSTITUTION') INTO @sqlmode
+78	SET SESSION sql_mode = @sqlmode
+82	CREATE TABLE `aggregate_graph_templates` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(64) NOT NULL,\n  `graph_template_id` int(10) unsigned NOT NULL,\n  `gprint_prefix` varchar(64) NOT NULL,\n  `gprint_format` char(2) DEFAULT '',\n  `graph_type` int(10) unsigned NOT NULL,\n  `total` int(10) unsigned NOT NULL,\n  `total_type` int(10) unsigned NOT NULL,\n  `total_prefix` varchar(64) NOT NULL,\n  `order_type` int(10) unsigned NOT NULL,\n  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `user_id` int(10) unsigned NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `graph_template_id` (`graph_template_id`),\n  KEY `user_id` (`user_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Template Definitions for Aggregate Graphs'
+86	CREATE TABLE `aggregate_graph_templates_graph` (\n  `aggregate_template_id` int(10) unsigned NOT NULL,\n  `t_image_format_id` char(2) DEFAULT '',\n  `image_format_id` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `t_height` char(2) DEFAULT '',\n  `height` mediumint(8) NOT NULL DEFAULT '0',\n  `t_width` char(2) DEFAULT '',\n  `width` mediumint(8) NOT NULL DEFAULT '0',\n  `t_upper_limit` char(2) DEFAULT '',\n  `upper_limit` varchar(20) NOT NULL DEFAULT '0',\n  `t_lower_limit` char(2) DEFAULT '',\n  `lower_limit` varchar(20) NOT NULL DEFAULT '0',\n  `t_vertical_label` char(2) DEFAULT '',\n  `vertical_label` varchar(200) DEFAULT '',\n  `t_slope_mode` char(2) DEFAULT '',\n  `slope_mode` char(2) DEFAULT 'on',\n  `t_auto_scale` char(2) DEFAULT '',\n  `auto_scale` char(2) DEFAULT '',\n  `t_auto_scale_opts` char(2) DEFAULT '',\n  `auto_scale_opts` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `t_auto_scale_log` char(2) DEFAULT '',\n  `auto_scale_log` char(2) DEFAULT '',\n  `t_scale_log_units` char(2) DEFAULT '',\n  `scale_log_units` char(2) DEFAULT '',\n  `t_auto_scale_rigid` char(2) DEFAULT '',\n  `auto_scale_rigid` char(2) DEFAULT '',\n  `t_auto_padding` char(2) DEFAULT '',\n  `auto_padding` char(2) DEFAULT '',\n  `t_base_value` char(2) DEFAULT '',\n  `base_value` mediumint(8) NOT NULL DEFAULT '0',\n  `t_grouping` char(2) DEFAULT '',\n  `grouping` char(2) NOT NULL DEFAULT '',\n  `t_unit_value` char(2) DEFAULT '',\n  `unit_value` varchar(20) DEFAULT '',\n  `t_unit_exponent_value` char(2) DEFAULT '',\n  `unit_exponent_value` varchar(5) NOT NULL DEFAULT '',\n  t_alt_y_grid char(2) default '',\n  alt_y_grid char(2) default NULL,\n  t_right_axis char(2) DEFAULT '',\n  right_axis varchar(20) DEFAULT NULL,\n  t_right_axis_label char(2) DEFAULT '',\n  right_axis_label varchar(200) DEFAULT NULL,\n  t_right_axis_format char(2) DEFAULT '',\n  right_axis_format mediumint(8) DEFAULT NULL,\n  t_right_axis_formatter char(2) DEFAULT '',\n  right_axis_formatter varchar(10) DEFAULT NULL,\n  t_left_axis_formatter char(2) DEFAULT '',\n  left_axis_formatter varchar(10) DEFAULT NULL,\n  t_no_gridfit char(2) DEFAULT '',\n  no_gridfit char(2) DEFAULT NULL,\n  t_unit_length char(2) DEFAULT '',\n  unit_length varchar(10) DEFAULT NULL,\n  t_tab_width char(2) DEFAULT '',\n  tab_width varchar(20) DEFAULT '30',\n  t_dynamic_labels char(2) default '',\n  dynamic_labels char(2) default NULL,\n  t_force_rules_legend char(2) DEFAULT '',\n  force_rules_legend char(2) DEFAULT NULL,\n  t_legend_position char(2) DEFAULT '',\n  legend_position varchar(10) DEFAULT NULL,\n  t_legend_direction char(2) DEFAULT '',\n  legend_direction varchar(10) DEFAULT NULL,\n  PRIMARY KEY (`aggregate_template_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Aggregate Template Graph Data'
+90	CREATE TABLE `aggregate_graph_templates_item` (\n  `aggregate_template_id` int(10) unsigned NOT NULL,\n  `graph_templates_item_id` int(10) unsigned NOT NULL,\n  `sequence` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `color_template` int(10) unsigned NOT NULL,\n  `t_graph_type_id` char(2) DEFAULT '',\n  `graph_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `t_cdef_id` char(2) DEFAULT '',\n  `cdef_id` mediumint(8) unsigned DEFAULT NULL,\n  `item_skip` char(2) NOT NULL,\n  `item_total` char(2) NOT NULL,\n  PRIMARY KEY (`aggregate_template_id`,`graph_templates_item_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Aggregate Template Graph Items'
+93	CREATE TABLE `aggregate_graphs` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `aggregate_template_id` int(10) unsigned NOT NULL,\n  `template_propogation` char(2) NOT NULL DEFAULT '',\n  `local_graph_id` int(10) unsigned NOT NULL,\n  `title_format` varchar(128) NOT NULL,\n  `graph_template_id` int(10) unsigned NOT NULL,\n  `gprint_prefix` varchar(64) NOT NULL,\n  `gprint_format` char(2) DEFAULT '',\n  `graph_type` int(10) unsigned NOT NULL,\n  `total` int(10) unsigned NOT NULL,\n  `total_type` int(10) unsigned NOT NULL,\n  `total_prefix` varchar(64) NOT NULL,\n  `order_type` int(10) unsigned NOT NULL,\n  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `user_id` int(10) unsigned NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `aggregate_template_id` (`aggregate_template_id`),\n  KEY `local_graph_id` (`local_graph_id`),\n  KEY `title_format` (`title_format`),\n  KEY `user_id` (`user_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Aggregate Graph Definitions'
+96	CREATE TABLE `aggregate_graphs_graph_item` (\n  `aggregate_graph_id` int(10) unsigned NOT NULL,\n  `graph_templates_item_id` int(10) unsigned NOT NULL,\n  `sequence` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `color_template` int(10) unsigned NOT NULL,\n  `t_graph_type_id` char(2) DEFAULT '',\n  `graph_type_id` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `t_cdef_id` char(2) DEFAULT '',\n  `cdef_id` mediumint(8) unsigned DEFAULT NULL,\n  `item_skip` char(2) NOT NULL,\n  `item_total` char(2) NOT NULL,\n  PRIMARY KEY (`aggregate_graph_id`,`graph_templates_item_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Aggregate Graph Graph Items'
+99	CREATE TABLE `aggregate_graphs_items` (\n  `aggregate_graph_id` int(10) unsigned NOT NULL,\n  `local_graph_id` int(10) unsigned NOT NULL,\n  `sequence` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`aggregate_graph_id`,`local_graph_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Aggregate Graph Items'
+102	CREATE TABLE `automation_devices` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `network_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `hostname` varchar(100) NOT NULL DEFAULT '',\n  `ip` varchar(17) NOT NULL DEFAULT '',\n  `snmp_community` varchar(100) NOT NULL DEFAULT '',\n  `snmp_version` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `snmp_port` mediumint(8) unsigned NOT NULL DEFAULT '161',\n  `snmp_username` varchar(50) DEFAULT NULL,\n  `snmp_password` varchar(50) DEFAULT NULL,\n  `snmp_auth_protocol` char(6) DEFAULT '',\n  `snmp_priv_passphrase` varchar(200) DEFAULT '',\n  `snmp_priv_protocol` char(6) DEFAULT '',\n  `snmp_context` varchar(64) DEFAULT '',\n  `snmp_engine_id` varchar(64) DEFAULT '',\n  `sysName` varchar(100) NOT NULL DEFAULT '',\n  `sysLocation` varchar(255) NOT NULL DEFAULT '',\n  `sysContact` varchar(255) NOT NULL DEFAULT '',\n  `sysDescr` varchar(255) NOT NULL DEFAULT '',\n  `sysUptime` bigint(20) unsigned NOT NULL DEFAULT '0',\n  `os` varchar(64) NOT NULL DEFAULT '',\n  `snmp` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `known` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `up` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `time` int(10) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `ip` (`ip`),\n  KEY `hostname` (`hostname`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table of Discovered Devices'
+105	CREATE TABLE `automation_graph_rule_items` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `rule_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `sequence` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `operation` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `field` varchar(255) NOT NULL DEFAULT '',\n  `operator` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `pattern` varchar(255) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Automation Graph Rule Items'
+108	INSERT INTO `automation_graph_rule_items` VALUES (1,1,1,0,'ifOperStatus',7,'Up'),(2,1,2,1,'ifIP',16,''),(3,1,3,1,'ifHwAddr',16,''),(4,2,1,0,'ifOperStatus',7,'Up'),(5,2,2,1,'ifIP',16,''),(6,2,3,1,'ifHwAddr',16,'')
+111	CREATE TABLE `automation_graph_rules` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL DEFAULT '',\n  `snmp_query_id` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `graph_type_id` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `enabled` char(2) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Automation Graph Rules'
+114	INSERT INTO `automation_graph_rules` VALUES (1,'Traffic 64 bit Server',1,12,'on'),(2,'Traffic 64 bit Server Linux',1,12,'on'),(3,'Disk Space',3,17,'on')
+117	CREATE TABLE `automation_ips` (\n  `ip_address` varchar(20) NOT NULL DEFAULT '',\n  `hostname` varchar(100) DEFAULT NULL,\n  `network_id` int(10) unsigned DEFAULT NULL,\n  `pid` int(10) unsigned DEFAULT NULL,\n  `status` int(10) unsigned DEFAULT NULL,\n  `thread` int(10) unsigned DEFAULT NULL,\n  PRIMARY KEY (`ip_address`),\n  KEY `pid` (`pid`)\n) ENGINE=MEMORY COMMENT='List of discoverable ip addresses used for scanning'
+120	CREATE TABLE `automation_match_rule_items` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `rule_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `rule_type` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `sequence` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `operation` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `field` varchar(255) NOT NULL DEFAULT '',\n  `operator` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `pattern` varchar(255) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Automation Match Rule Items'
+123	INSERT INTO `automation_match_rule_items` VALUES (1,1,1,1,0,'h.snmp_sysDescr',8,''),(2,1,1,2,1,'h.snmp_version',12,'2'),(3,1,3,1,0,'ht.name',1,'Linux'),(4,2,1,1,0,'ht.name',1,'Linux'),(5,2,1,2,1,'h.snmp_version',12,'2'),(6,2,3,1,0,'ht.name',1,'SNMP'),(7,2,3,2,1,'gt.name',1,'Traffic'),(8,1,1,3,1,'h.snmp_sysDescr',2,'Windows')
+126	CREATE TABLE `automation_networks` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `poller_id` int(10) unsigned DEFAULT '1',\n  `site_id` int(10) unsigned DEFAULT '1',\n  `name` varchar(128) NOT NULL DEFAULT '' COMMENT 'The name for this network',\n  `subnet_range` varchar(1024) NOT NULL DEFAULT '' COMMENT 'Defined subnet ranges for discovery',\n  `dns_servers` varchar(128) NOT NULL DEFAULT '' COMMENT 'DNS Servers to use for name resolution',\n  `enabled` char(2) DEFAULT '',\n  `notification_enabled` char(2) DEFAULT '',\n  `notification_email` varchar(255) DEFAULT '',\n  `notification_fromname` varchar(32) DEFAULT '',\n  `notification_fromemail` varchar(128) DEFAULT '',\n  `snmp_id` int(10) unsigned DEFAULT NULL,\n  `enable_netbios` char(2) DEFAULT '',\n  `add_to_cacti` char(2) DEFAULT '',\n  `same_sysname` char(2) DEFAULT '',\n  `total_ips` int(10) unsigned DEFAULT '0',\n  `up_hosts` int(10) unsigned NOT NULL DEFAULT '0',\n  `snmp_hosts` int(10) unsigned NOT NULL DEFAULT '0',\n  `ping_method` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'The ping method (ICMP:TCP:UDP)',\n  `ping_port` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'For TCP:UDP the port to ping',\n  `ping_timeout` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'The ping timeout in seconds',\n  `ping_retries` int(10) unsigned DEFAULT '0',\n  `sched_type` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Schedule type: manual or automatic',\n  `threads` int(10) unsigned DEFAULT '1',\n  `run_limit` int(10) unsigned DEFAULT '0' COMMENT 'The maximum runtime for the discovery',\n  `start_at` varchar(20) DEFAULT NULL,\n  `next_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `recur_every` int(10) unsigned DEFAULT '1',\n  `day_of_week` varchar(45) DEFAULT NULL COMMENT 'The days of week to run in crontab format',\n  `month` varchar(45) DEFAULT NULL COMMENT 'The months to run in crontab format',\n  `day_of_month` varchar(45) DEFAULT NULL COMMENT 'The days of month to run in crontab format',\n  `monthly_week` varchar(45) DEFAULT NULL,\n  `monthly_day` varchar(45) DEFAULT NULL,\n  `last_runtime` double NOT NULL DEFAULT '0' COMMENT 'The last runtime for discovery',\n  `last_started` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The time the discovery last started',\n  `last_status` varchar(128) NOT NULL DEFAULT '' COMMENT 'The last exit message if any',\n  `rerun_data_queries` char(2) DEFAULT NULL COMMENT 'Rerun data queries or not for existing hosts',\n  PRIMARY KEY (`id`),\n  KEY `poller_id` (`poller_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores scanning subnet definitions'
+129	INSERT INTO `automation_networks` VALUES (1,1,0,'Test Network','192.168.1.0/24','','on','','','','',1,'on','on','',254,0,0,1,22,400,1,2,10,1200,'0000-00-00 00:00:00','0000-00-00 00:00:00',2,'4','','','','',0,'0000-00-00 00:00:00','','on')
+132	CREATE TABLE `automation_processes` (\n  `pid` int(10) unsigned NOT NULL,\n  `poller_id` int(10) unsigned DEFAULT '1',\n  `network_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `task` varchar(20) DEFAULT '',\n  `status` varchar(20) DEFAULT NULL,\n  `command` varchar(20) DEFAULT NULL,\n  `up_hosts` int(10) unsigned DEFAULT '0',\n  `snmp_hosts` int(10) unsigned DEFAULT '0',\n  `heartbeat` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  PRIMARY KEY (`pid`,`network_id`)\n) ENGINE=MEMORY COMMENT='Table tracking active poller processes'
+135	CREATE TABLE `automation_snmp` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(100) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Group of SNMP Option Sets'
+138	INSERT INTO `automation_snmp` VALUES (1,'Default Option Set')
+141	CREATE TABLE `automation_snmp_items` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `snmp_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `sequence` int(10) unsigned NOT NULL DEFAULT '0',\n  `snmp_version` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `snmp_community` varchar(100) NOT NULL,\n  `snmp_port` mediumint(8) unsigned NOT NULL DEFAULT '161',\n  `snmp_timeout` int(10) unsigned NOT NULL DEFAULT '500',\n  `snmp_retries` tinyint(3) unsigned NOT NULL DEFAULT '3',\n  `max_oids` int(10) unsigned DEFAULT '10',\n  `bulk_walk_size` int(11) DEFAULT '-1',\n  `snmp_username` varchar(50) DEFAULT NULL,\n  `snmp_password` varchar(50) DEFAULT NULL,\n  `snmp_auth_protocol` char(6) DEFAULT '',\n  `snmp_priv_passphrase` varchar(200) DEFAULT '',\n  `snmp_priv_protocol` char(6) DEFAULT '',\n  `snmp_context` varchar(64) DEFAULT '',\n  `snmp_engine_id` varchar(64) DEFAULT '',\n  PRIMARY KEY (`id`,`snmp_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Set of SNMP Options'
+144	INSERT INTO `automation_snmp_items` VALUES (1,1,1,'2','public',161,1000,3,10,-1,'admin','baseball','MD5','','DES','',''),(2,1,2,'2','private',161,1000,3,10,-1,'admin','baseball','MD5','','DES','','')
+147	CREATE TABLE `automation_templates` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `host_template` int(10) unsigned NOT NULL DEFAULT '0',\n  `availability_method` int(10) unsigned DEFAULT '2',\n  `sysDescr` varchar(255) DEFAULT '',\n  `sysName` varchar(255) DEFAULT '',\n  `sysOid` varchar(60) DEFAULT '',\n  `sequence` int(10) unsigned DEFAULT '0',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Templates of SNMP Sys variables used for automation'
+150	INSERT INTO `automation_templates` VALUES (1,3,2,'Linux','','',2),(2,1,2,'HP ETHERNET','','',1)
+153	CREATE TABLE `automation_tree_rule_items` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `rule_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `sequence` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `field` varchar(255) NOT NULL DEFAULT '',\n  `sort_type` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `propagate_changes` char(2) DEFAULT '',\n  `search_pattern` varchar(255) NOT NULL DEFAULT '',\n  `replace_pattern` varchar(255) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Automation Tree Rule Items'
+156	INSERT INTO `automation_tree_rule_items` VALUES (1,1,1,'ht.name',1,'','^(.*)\\\\s*Linux\\\\s*(.*)$','${1}\\\\n${2}'),(2,1,2,'h.hostname',1,'','^(\\\\w*)\\\\s*(\\\\w*)\\\\s*(\\\\w*).*$',''),(3,2,1,'0',2,'on','Traffic',''),(4,2,2,'gtg.title_cache',1,'','^(.*)\\\\s*-\\\\s*Traffic -\\\\s*(.*)$','${1}\\\\n${2}')
+159	CREATE TABLE `automation_tree_rules` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL DEFAULT '',\n  `tree_id` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `tree_item_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `leaf_type` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `host_grouping_type` smallint(3) unsigned NOT NULL DEFAULT '0',\n  `enabled` char(2) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Automation Tree Rules'
+162	INSERT INTO `automation_tree_rules` VALUES (1,'New Device',1,0,3,1,'on'),(2,'New Graph',1,0,2,1,'')
+165	CREATE TABLE cdef (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `hash` varchar(32) NOT NULL default '',\n  `system` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `name` varchar(255) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY `hash` (`hash`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+168	INSERT INTO cdef VALUES (3,'3d352eed9fa8f7b2791205b3273708c7',0,'Make Stack Negative')
+171	INSERT INTO cdef VALUES (4,'e961cc8ec04fda6ed4981cf5ad501aa5',0,'Make Per 5 Minutes')
+173	INSERT INTO cdef VALUES (12,'f1ac79f05f255c02f914c920f1038c54',0,'Total All Data Sources')
+175	INSERT INTO cdef VALUES (2,'73f95f8b77b5508157d64047342c421e',0,'Turn Bytes into Bits')
+177	INSERT INTO cdef VALUES (14,'634a23af5e78af0964e8d33b1a4ed26b',0,'Multiply by 1024')
+179	INSERT INTO cdef VALUES (15,'068984b5ccdfd2048869efae5166f722',0,'Total All Data Sources, Multiply by 1024')
+181	CREATE TABLE cdef_items (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  cdef_id mediumint(8) unsigned NOT NULL default '0',\n  sequence mediumint(8) unsigned NOT NULL default '0',\n  type tinyint(3) unsigned NOT NULL default '0',\n  value varchar(150) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY cdef_id_sequence (`cdef_id`,`sequence`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+183	INSERT INTO cdef_items VALUES (7,'9bbf6b792507bb9bb17d2af0970f9be9',2,1,4,'CURRENT_DATA_SOURCE')
+185	INSERT INTO cdef_items VALUES (9,'a4b8eb2c3bf4920a3ef571a7a004be53',2,2,6,'8')
+187	INSERT INTO cdef_items VALUES (8,'caa4e023ac2d7b1c4b4c8c4adfd55dfe',2,3,2,'3')
+189	INSERT INTO cdef_items VALUES (10,'c888c9fe6b62c26c4bfe23e18991731d',3,1,4,'CURRENT_DATA_SOURCE')
+191	INSERT INTO cdef_items VALUES (11,'1e1d0b29a94e08b648c8f053715442a0',3,3,2,'3')
+193	INSERT INTO cdef_items VALUES (12,'4355c197998c7f8b285be7821ddc6da4',3,2,6,'-1')
+195	INSERT INTO cdef_items VALUES (13,'40bb7a1143b0f2e2efca14eb356236de',4,1,4,'CURRENT_DATA_SOURCE')
+197	INSERT INTO cdef_items VALUES (14,'42686ea0925c0220924b7d333599cd67',4,3,2,'3')
+199	INSERT INTO cdef_items VALUES (15,'faf1b148b2c0e0527362ed5b8ca1d351',4,2,6,'300')
+201	INSERT INTO cdef_items VALUES (16,'0ef6b8a42dc83b4e43e437960fccd2ea',12,1,4,'ALL_DATA_SOURCES_NODUPS')
+203	INSERT INTO cdef_items VALUES (18,'86370cfa0008fe8c56b28be80ee39a40',14,1,4,'CURRENT_DATA_SOURCE')
+205	INSERT INTO cdef_items VALUES (19,'9a35cc60d47691af37f6fddf02064e20',14,2,6,'1024')
+207	INSERT INTO cdef_items VALUES (20,'5d7a7941ec0440b257e5598a27dd1688',14,3,2,'3')
+209	INSERT INTO cdef_items VALUES (21,'44fd595c60539ff0f5817731d9f43a85',15,1,4,'ALL_DATA_SOURCES_NODUPS')
+211	INSERT INTO cdef_items VALUES (22,'aa38be265e5ac31783e57ce6f9314e9a',15,2,6,'1024')
+213	INSERT INTO cdef_items VALUES (23,'204423d4b2598f1f7252eea19458345c',15,3,2,'3')
+215	CREATE TABLE `color_templates` (\n  `color_template_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL DEFAULT '',\n  PRIMARY KEY (`color_template_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Color Templates'
+217	INSERT INTO `color_templates` VALUES (1,'Yellow: light -> dark, 4 colors')
+219	INSERT INTO `color_templates` VALUES (2,'Red: light yellow > dark red, 8 colors')
+221	INSERT INTO `color_templates` VALUES (3,'Red: light -> dark, 16 colors')
+223	INSERT INTO `color_templates` VALUES (4,'Green: dark -> light, 16 colors')
+225	CREATE TABLE `color_template_items` (\n  `color_template_item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `color_template_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `color_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `sequence` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`color_template_item_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Color Items for Color Templates'
+227	INSERT INTO `color_template_items` VALUES (1,1,4,1)
+229	INSERT INTO `color_template_items` VALUES (2,1,24,2)
+231	INSERT INTO `color_template_items` VALUES (3,1,98,3)
+233	INSERT INTO `color_template_items` VALUES (4,1,25,4)
+235	INSERT INTO `color_template_items` VALUES (5,2,25,1)
+237	INSERT INTO `color_template_items` VALUES (6,2,29,2)
+239	INSERT INTO `color_template_items` VALUES (7,2,30,3)
+241	INSERT INTO `color_template_items` VALUES (8,2,31,4)
+243	INSERT INTO `color_template_items` VALUES (9,2,33,5)
+245	INSERT INTO `color_template_items` VALUES (10,2,35,6)
+247	INSERT INTO `color_template_items` VALUES (11,2,41,7)
+249	INSERT INTO `color_template_items` VALUES (12,2,9,8)
+251	INSERT INTO `color_template_items` VALUES (13,3,15,1)
+253	INSERT INTO `color_template_items` VALUES (14,3,31,2)
+255	INSERT INTO `color_template_items` VALUES (15,3,28,3)
+257	INSERT INTO `color_template_items` VALUES (16,3,8,4)
+259	INSERT INTO `color_template_items` VALUES (17,3,34,5)
+261	INSERT INTO `color_template_items` VALUES (18,3,33,6)
+263	INSERT INTO `color_template_items` VALUES (19,3,35,7)
+265	INSERT INTO `color_template_items` VALUES (20,3,41,8)
+267	INSERT INTO `color_template_items` VALUES (21,3,36,9)
+269	INSERT INTO `color_template_items` VALUES (22,3,42,10)
+271	INSERT INTO `color_template_items` VALUES (23,3,44,11)
+273	INSERT INTO `color_template_items` VALUES (24,3,48,12)
+275	INSERT INTO `color_template_items` VALUES (25,3,9,13)
+277	INSERT INTO `color_template_items` VALUES (26,3,49,14)
+279	INSERT INTO `color_template_items` VALUES (27,3,51,15)
+281	INSERT INTO `color_template_items` VALUES (28,3,52,16)
+283	INSERT INTO `color_template_items` VALUES (29,4,76,1)
+285	INSERT INTO `color_template_items` VALUES (30,4,84,2)
+287	INSERT INTO `color_template_items` VALUES (31,4,89,3)
+289	INSERT INTO `color_template_items` VALUES (32,4,17,4)
+291	INSERT INTO `color_template_items` VALUES (33,4,86,5)
+293	INSERT INTO `color_template_items` VALUES (34,4,88,6)
+295	INSERT INTO `color_template_items` VALUES (35,4,90,7)
+297	INSERT INTO `color_template_items` VALUES (36,4,94,8)
+299	INSERT INTO `color_template_items` VALUES (37,4,96,9)
+301	INSERT INTO `color_template_items` VALUES (38,4,93,10)
+303	INSERT INTO `color_template_items` VALUES (39,4,91,11)
+305	INSERT INTO `color_template_items` VALUES (40,4,22,12)
+307	INSERT INTO `color_template_items` VALUES (41,4,12,13)
+309	INSERT INTO `color_template_items` VALUES (42,4,95,14)
+311	INSERT INTO `color_template_items` VALUES (43,4,6,15)
+313	INSERT INTO `color_template_items` VALUES (44,4,92,16)
+315	CREATE TABLE colors (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  name varchar(40) default '',\n  hex varchar(6) NOT NULL default '',\n  read_only char(2) default '',\n  PRIMARY KEY (id),\n  UNIQUE KEY hex (hex)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+318	INSERT INTO colors VALUES (1,'Black','000000','on')
+321	INSERT INTO colors VALUES (2,'White','FFFFFF','on')
+324	INSERT INTO colors VALUES (4,'','FAFD9E','')
+327	INSERT INTO colors VALUES (5,'','C0C0C0','')
+330	INSERT INTO colors VALUES (6,'','74C366','')
+333	INSERT INTO colors VALUES (7,'','6DC8FE','')
+336	INSERT INTO colors VALUES (8,'','EA8F00','')
+339	INSERT INTO colors VALUES (9,'Red','FF0000','on')
+342	INSERT INTO colors VALUES (10,'','4444FF','')
+345	INSERT INTO colors VALUES (11,'Magenta','FF00FF','on')
+348	INSERT INTO colors VALUES (12,'Green','00FF00','on')
+351	INSERT INTO colors VALUES (13,'','8D85F3','')
+354	INSERT INTO colors VALUES (14,'','AD3B6E','')
+357	INSERT INTO colors VALUES (15,'','EACC00','')
+360	INSERT INTO colors VALUES (16,'','12B3B5','')
+363	INSERT INTO colors VALUES (17,'','157419','')
+366	INSERT INTO colors VALUES (18,'','C4FD3D','')
+369	INSERT INTO colors VALUES (19,'','817C4E','')
+372	INSERT INTO colors VALUES (20,'','002A97','')
+375	INSERT INTO colors VALUES (21,'','0000FF','')
+378	INSERT INTO colors VALUES (22,'','00CF00','')
+381	INSERT INTO colors VALUES (24,'','F9FD5F','')
+384	INSERT INTO colors VALUES (25,'','FFF200','')
+387	INSERT INTO colors VALUES (26,'','CCBB00','')
+390	INSERT INTO colors VALUES (27,'','837C04','')
+393	INSERT INTO colors VALUES (28,'','EAAF00','')
+395	INSERT INTO colors VALUES (29,'','FFD660','')
+397	INSERT INTO colors VALUES (30,'','FFC73B','')
+399	INSERT INTO colors VALUES (31,'','FFAB00','')
+401	INSERT INTO colors VALUES (33,'','FF7D00','')
+403	INSERT INTO colors VALUES (34,'','ED7600','')
+405	INSERT INTO colors VALUES (35,'','FF5700','')
+407	INSERT INTO colors VALUES (36,'','EE5019','')
+409	INSERT INTO colors VALUES (37,'','B1441E','')
+411	INSERT INTO colors VALUES (38,'','FFC3C0','')
+413	INSERT INTO colors VALUES (39,'','FF897C','')
+415	INSERT INTO colors VALUES (40,'','FF6044','')
+417	INSERT INTO colors VALUES (41,'','FF4105','')
+419	INSERT INTO colors VALUES (42,'','DA4725','')
+421	INSERT INTO colors VALUES (43,'','942D0C','')
+423	INSERT INTO colors VALUES (44,'','FF3932','')
+425	INSERT INTO colors VALUES (45,'','862F2F','')
+427	INSERT INTO colors VALUES (46,'','FF5576','')
+429	INSERT INTO colors VALUES (47,'','562B29','')
+431	INSERT INTO colors VALUES (48,'','F51D30','')
+433	INSERT INTO colors VALUES (49,'','DE0056','')
+435	INSERT INTO colors VALUES (50,'','ED5394','')
+437	INSERT INTO colors VALUES (51,'','B90054','')
+439	INSERT INTO colors VALUES (52,'','8F005C','')
+441	INSERT INTO colors VALUES (53,'','F24AC8','')
+443	INSERT INTO colors VALUES (54,'','E8CDEF','')
+445	INSERT INTO colors VALUES (55,'','D8ACE0','')
+447	INSERT INTO colors VALUES (56,'','A150AA','')
+449	INSERT INTO colors VALUES (57,'','750F7D','')
+451	INSERT INTO colors VALUES (58,'','8D00BA','')
+453	INSERT INTO colors VALUES (59,'','623465','')
+455	INSERT INTO colors VALUES (60,'','55009D','')
+457	INSERT INTO colors VALUES (61,'','3D168B','')
+459	INSERT INTO colors VALUES (62,'','311F4E','')
+461	INSERT INTO colors VALUES (63,'','D2D8F9','')
+463	INSERT INTO colors VALUES (64,'','9FA4EE','')
+465	INSERT INTO colors VALUES (65,'','6557D0','')
+467	INSERT INTO colors VALUES (66,'','4123A1','')
+469	INSERT INTO colors VALUES (67,'','4668E4','')
+471	INSERT INTO colors VALUES (68,'','0D006A','')
+473	INSERT INTO colors VALUES (69,'','00004D','')
+475	INSERT INTO colors VALUES (70,'','001D61','')
+477	INSERT INTO colors VALUES (71,'','00234B','')
+479	INSERT INTO colors VALUES (72,'','002A8F','')
+481	INSERT INTO colors VALUES (73,'','2175D9','')
+483	INSERT INTO colors VALUES (74,'','7CB3F1','')
+485	INSERT INTO colors VALUES (75,'','005199','')
+487	INSERT INTO colors VALUES (76,'','004359','')
+489	INSERT INTO colors VALUES (77,'','00A0C1','')
+491	INSERT INTO colors VALUES (78,'','007283','')
+493	INSERT INTO colors VALUES (79,'','00BED9','')
+495	INSERT INTO colors VALUES (80,'','AFECED','')
+497	INSERT INTO colors VALUES (81,'','55D6D3','')
+499	INSERT INTO colors VALUES (82,'','00BBB4','')
+501	INSERT INTO colors VALUES (83,'','009485','')
+503	INSERT INTO colors VALUES (84,'','005D57','')
+505	INSERT INTO colors VALUES (85,'','008A77','')
+507	INSERT INTO colors VALUES (86,'','008A6D','')
+509	INSERT INTO colors VALUES (87,'','00B99B','')
+511	INSERT INTO colors VALUES (88,'','009F67','')
+513	INSERT INTO colors VALUES (89,'','00694A','')
+515	INSERT INTO colors VALUES (90,'','00A348','')
+517	INSERT INTO colors VALUES (91,'','00BF47','')
+519	INSERT INTO colors VALUES (92,'','96E78A','')
+521	INSERT INTO colors VALUES (93,'','00BD27','')
+523	INSERT INTO colors VALUES (94,'','35962B','')
+525	INSERT INTO colors VALUES (95,'','7EE600','')
+527	INSERT INTO colors VALUES (96,'','6EA100','')
+529	INSERT INTO colors VALUES (97,'','CAF100','')
+531	INSERT INTO colors VALUES (98,'','F5F800','')
+533	INSERT INTO colors VALUES (99,'','CDCFC4','')
+535	INSERT INTO colors VALUES (100,'','BCBEB3','')
+537	INSERT INTO colors VALUES (101,'','AAABA1','')
+539	INSERT INTO colors VALUES (102,'','8F9286','')
+541	INSERT INTO colors VALUES (103,'','797C6E','')
+543	INSERT INTO colors VALUES (104,'','2E3127','')
+545	INSERT INTO colors VALUES (105,'Night','0C090A','on')
+547	INSERT INTO colors VALUES (106,'Gunmetal','2C3539','on')
+549	INSERT INTO colors VALUES (107,'Midnight','2B1B17','on')
+551	INSERT INTO colors VALUES (108,'Charcoal','34282C','on')
+553	INSERT INTO colors VALUES (109,'Dark Slate Grey','25383C','on')
+555	INSERT INTO colors VALUES (110,'Oil','3B3131','on')
+557	INSERT INTO colors VALUES (111,'Black Cat','413839','on')
+559	INSERT INTO colors VALUES (112,'Iridium','3D3C3A','on')
+561	INSERT INTO colors VALUES (113,'Black Eel','463E3F','on')
+563	INSERT INTO colors VALUES (114,'Black Cow','4C4646','on')
+565	INSERT INTO colors VALUES (115,'Gray Wolf','504A4B','on')
+567	INSERT INTO colors VALUES (116,'Vampire Gray','565051','on')
+569	INSERT INTO colors VALUES (117,'Gray Dolphin','5C5858','on')
+571	INSERT INTO colors VALUES (118,'Carbon Gray','625D5D','on')
+573	INSERT INTO colors VALUES (119,'Ash Gray','666362','on')
+575	INSERT INTO colors VALUES (120,'Cloudy Gray','6D6968','on')
+577	INSERT INTO colors VALUES (121,'Smokey Gray','726E6D','on')
+579	INSERT INTO colors VALUES (122,'Gray','736F6E','on')
+581	INSERT INTO colors VALUES (123,'Granite','837E7C','on')
+583	INSERT INTO colors VALUES (124,'Battleship Gray','848482','on')
+585	INSERT INTO colors VALUES (125,'Gray Cloud','B6B6B4','on')
+587	INSERT INTO colors VALUES (126,'Gray Goose','D1D0CE','on')
+589	INSERT INTO colors VALUES (127,'Platinum','E5E4E2','on')
+591	INSERT INTO colors VALUES (128,'Metallic Silver','BCC6CC','on')
+593	INSERT INTO colors VALUES (129,'Blue Gray','98AFC7','on')
+595	INSERT INTO colors VALUES (130,'Light Slate Gray','6D7B8D','on')
+597	INSERT INTO colors VALUES (131,'Slate Gray','657383','on')
+599	INSERT INTO colors VALUES (132,'Jet Gray','616D7E','on')
+601	INSERT INTO colors VALUES (133,'Mist Blue','646D7E','on')
+603	INSERT INTO colors VALUES (134,'Marble Blue','566D7E','on')
+605	INSERT INTO colors VALUES (135,'Slate Blue','737CA1','on')
+607	INSERT INTO colors VALUES (136,'Steel Blue','4863A0','on')
+609	INSERT INTO colors VALUES (137,'Blue Jay','2B547E','on')
+611	INSERT INTO colors VALUES (138,'Dark Slate Blue','2B3856','on')
+613	INSERT INTO colors VALUES (139,'Midnight Blue','151B54','on')
+615	INSERT INTO colors VALUES (140,'Navy Blue','000080','on')
+617	INSERT INTO colors VALUES (141,'Blue Whale','342D7E','on')
+619	INSERT INTO colors VALUES (142,'Lapis Blue','15317E','on')
+621	INSERT INTO colors VALUES (143,'Cornflower Blue','151B8D','on')
+623	INSERT INTO colors VALUES (144,'Earth Blue','0000A0','on')
+625	INSERT INTO colors VALUES (145,'Cobalt Blue','0020C2','on')
+627	INSERT INTO colors VALUES (146,'Blueberry Blue','0041C2','on')
+629	INSERT INTO colors VALUES (147,'Sapphire Blue','2554C7','on')
+631	INSERT INTO colors VALUES (148,'Blue Eyes','1569C7','on')
+633	INSERT INTO colors VALUES (149,'Royal Blue','2B60DE','on')
+635	INSERT INTO colors VALUES (150,'Blue Orchid','1F45FC','on')
+637	INSERT INTO colors VALUES (151,'Blue Lotus','6960EC','on')
+639	INSERT INTO colors VALUES (152,'Light Slate Blue','736AFF','on')
+641	INSERT INTO colors VALUES (153,'Slate Blue','357EC7','on')
+643	INSERT INTO colors VALUES (154,'Glacial Blue Ice','368BC1','on')
+645	INSERT INTO colors VALUES (155,'Silk Blue','488AC7','on')
+647	INSERT INTO colors VALUES (156,'Blue Ivy','3090C7','on')
+649	INSERT INTO colors VALUES (157,'Blue Koi','659EC7','on')
+651	INSERT INTO colors VALUES (158,'Columbia Blue','87AFC7','on')
+653	INSERT INTO colors VALUES (159,'Baby Blue','95B9C7','on')
+655	INSERT INTO colors VALUES (160,'Light Steel Blue','728FCE','on')
+657	INSERT INTO colors VALUES (161,'Ocean Blue','2B65EC','on')
+659	INSERT INTO colors VALUES (162,'Blue Ribbon','306EFF','on')
+661	INSERT INTO colors VALUES (163,'Blue Dress','157DEC','on')
+663	INSERT INTO colors VALUES (164,'Dodger Blue','1589FF','on')
+665	INSERT INTO colors VALUES (165,'Cornflower Blue','6495ED','on')
+667	INSERT INTO colors VALUES (166,'Sky Blue','6698FF','on')
+669	INSERT INTO colors VALUES (167,'Butterfly Blue','38ACEC','on')
+671	INSERT INTO colors VALUES (168,'Iceberg','56A5EC','on')
+673	INSERT INTO colors VALUES (169,'Crystal Blue','5CB3FF','on')
+675	INSERT INTO colors VALUES (170,'Deep Sky Blue','3BB9FF','on')
+677	INSERT INTO colors VALUES (171,'Denim Blue','79BAEC','on')
+679	INSERT INTO colors VALUES (172,'Light Sky Blue','82CAFA','on')
+681	INSERT INTO colors VALUES (173,'Day Sky Blue','82CAFF','on')
+683	INSERT INTO colors VALUES (174,'Jeans Blue','A0CFEC','on')
+685	INSERT INTO colors VALUES (175,'Blue Angel','B7CEEC','on')
+687	INSERT INTO colors VALUES (176,'Pastel Blue','B4CFEC','on')
+689	INSERT INTO colors VALUES (177,'Sea Blue','C2DFFF','on')
+691	INSERT INTO colors VALUES (178,'Powder Blue','C6DEFF','on')
+693	INSERT INTO colors VALUES (179,'Coral Blue','AFDCEC','on')
+695	INSERT INTO colors VALUES (180,'Light Blue','ADDFFF','on')
+697	INSERT INTO colors VALUES (181,'Robin Egg Blue','BDEDFF','on')
+699	INSERT INTO colors VALUES (182,'Pale Blue Lily','CFECEC','on')
+701	INSERT INTO colors VALUES (183,'Light Cyan','E0FFFF','on')
+703	INSERT INTO colors VALUES (184,'Water','EBF4FA','on')
+705	INSERT INTO colors VALUES (185,'Alice Blue','F0F8FF','on')
+707	INSERT INTO colors VALUES (186,'Azure','F0FFFF','on')
+709	INSERT INTO colors VALUES (187,'Light Slate','CCFFFF','on')
+711	INSERT INTO colors VALUES (188,'Light Aquamarine','93FFE8','on')
+713	INSERT INTO colors VALUES (189,'Electric Blue','9AFEFF','on')
+715	INSERT INTO colors VALUES (190,'Aquamarine','7FFFD4','on')
+717	INSERT INTO colors VALUES (191,'Cyan or Aqua','00FFFF','on')
+719	INSERT INTO colors VALUES (192,'Tron Blue','7DFDFE','on')
+721	INSERT INTO colors VALUES (193,'Blue Zircon','57FEFF','on')
+723	INSERT INTO colors VALUES (194,'Blue Lagoon','8EEBEC','on')
+725	INSERT INTO colors VALUES (195,'Celeste','50EBEC','on')
+727	INSERT INTO colors VALUES (196,'Blue Diamond','4EE2EC','on')
+729	INSERT INTO colors VALUES (197,'Tiffany Blue','81D8D0','on')
+731	INSERT INTO colors VALUES (198,'Cyan Opaque','92C7C7','on')
+733	INSERT INTO colors VALUES (199,'Blue Hosta','77BFC7','on')
+735	INSERT INTO colors VALUES (200,'Northern Lights Blue','78C7C7','on')
+737	INSERT INTO colors VALUES (201,'Medium Turquoise','48CCCD','on')
+739	INSERT INTO colors VALUES (202,'Turquoise','43C6DB','on')
+741	INSERT INTO colors VALUES (203,'Jellyfish','46C7C7','on')
+743	INSERT INTO colors VALUES (204,'Macaw Blue Green','43BFC7','on')
+745	INSERT INTO colors VALUES (205,'Light Sea Green','3EA99F','on')
+747	INSERT INTO colors VALUES (206,'Dark Turquoise','3B9C9C','on')
+749	INSERT INTO colors VALUES (207,'Sea Turtle Green','438D80','on')
+751	INSERT INTO colors VALUES (208,'Medium Aquamarine','348781','on')
+753	INSERT INTO colors VALUES (209,'Greenish Blue','307D7E','on')
+755	INSERT INTO colors VALUES (210,'Grayish Turquoise','5E7D7E','on')
+757	INSERT INTO colors VALUES (211,'Beetle Green','4C787E','on')
+759	INSERT INTO colors VALUES (212,'Teal','008080','on')
+761	INSERT INTO colors VALUES (213,'Sea Green','4E8975','on')
+763	INSERT INTO colors VALUES (214,'Camouflage Green','78866B','on')
+765	INSERT INTO colors VALUES (215,'Sage Green','848b79','on')
+767	INSERT INTO colors VALUES (216,'Hazel Green','617C58','on')
+769	INSERT INTO colors VALUES (217,'Venom Green','728C00','on')
+771	INSERT INTO colors VALUES (218,'Fern Green','667C26','on')
+773	INSERT INTO colors VALUES (219,'Dark Forrest Green','254117','on')
+775	INSERT INTO colors VALUES (220,'Medium Sea Green','306754','on')
+777	INSERT INTO colors VALUES (221,'Medium Forest Green','347235','on')
+779	INSERT INTO colors VALUES (222,'Seaweed Green','437C17','on')
+781	INSERT INTO colors VALUES (223,'Pine Green','387C44','on')
+783	INSERT INTO colors VALUES (224,'Jungle Green','347C2C','on')
+785	INSERT INTO colors VALUES (225,'Shamrock Green','347C17','on')
+787	INSERT INTO colors VALUES (226,'Medium Spring Green','348017','on')
+789	INSERT INTO colors VALUES (227,'Forest Green','4E9258','on')
+791	INSERT INTO colors VALUES (228,'Green Onion','6AA121','on')
+793	INSERT INTO colors VALUES (229,'Spring Green','4AA02C','on')
+795	INSERT INTO colors VALUES (230,'Lime Green','41A317','on')
+797	INSERT INTO colors VALUES (231,'Clover Green','3EA055','on')
+799	INSERT INTO colors VALUES (232,'Green Snake','6CBB3C','on')
+801	INSERT INTO colors VALUES (233,'Alien Green','6CC417','on')
+803	INSERT INTO colors VALUES (234,'Green Apple','4CC417','on')
+805	INSERT INTO colors VALUES (235,'Yellow Green','52D017','on')
+807	INSERT INTO colors VALUES (236,'Kelly Green','4CC552','on')
+809	INSERT INTO colors VALUES (237,'Zombie Green','54C571','on')
+811	INSERT INTO colors VALUES (238,'Frog Green','99C68E','on')
+813	INSERT INTO colors VALUES (239,'Green Peas','89C35C','on')
+815	INSERT INTO colors VALUES (240,'Dollar Bill Green','85BB65','on')
+817	INSERT INTO colors VALUES (241,'Dark Sea Green','8BB381','on')
+819	INSERT INTO colors VALUES (242,'Iguana Green','9CB071','on')
+821	INSERT INTO colors VALUES (243,'Avocado Green','B2C248','on')
+823	INSERT INTO colors VALUES (244,'Pistachio Green','9DC209','on')
+825	INSERT INTO colors VALUES (245,'Salad Green','A1C935','on')
+827	INSERT INTO colors VALUES (246,'Hummingbird Green','7FE817','on')
+829	INSERT INTO colors VALUES (247,'Nebula Green','59E817','on')
+831	INSERT INTO colors VALUES (248,'Stoplight Go Green','57E964','on')
+833	INSERT INTO colors VALUES (249,'Algae Green','64E986','on')
+835	INSERT INTO colors VALUES (250,'Jade Green','5EFB6E','on')
+837	INSERT INTO colors VALUES (251,'Emerald Green','5FFB17','on')
+839	INSERT INTO colors VALUES (252,'Lawn Green','87F717','on')
+841	INSERT INTO colors VALUES (253,'Chartreuse','8AFB17','on')
+843	INSERT INTO colors VALUES (254,'Dragon Green','6AFB92','on')
+845	INSERT INTO colors VALUES (255,'Mint green','98FF98','on')
+847	INSERT INTO colors VALUES (256,'Green Thumb','B5EAAA','on')
+849	INSERT INTO colors VALUES (257,'Light Jade','C3FDB8','on')
+851	INSERT INTO colors VALUES (258,'Tea Green','CCFB5D','on')
+853	INSERT INTO colors VALUES (259,'Green Yellow','B1FB17','on')
+855	INSERT INTO colors VALUES (260,'Slime Green','BCE954','on')
+857	INSERT INTO colors VALUES (261,'Goldenrod','EDDA74','on')
+859	INSERT INTO colors VALUES (262,'Harvest Gold','EDE275','on')
+861	INSERT INTO colors VALUES (263,'Sun Yellow','FFE87C','on')
+863	INSERT INTO colors VALUES (264,'Yellow','FFFF00','on')
+865	INSERT INTO colors VALUES (265,'Corn Yellow','FFF380','on')
+867	INSERT INTO colors VALUES (266,'Parchment','FFFFC2','on')
+869	INSERT INTO colors VALUES (267,'Cream','FFFFCC','on')
+871	INSERT INTO colors VALUES (268,'Lemon Chiffon','FFF8C6','on')
+873	INSERT INTO colors VALUES (269,'Cornsilk','FFF8DC','on')
+875	INSERT INTO colors VALUES (270,'Beige','F5F5DC','on')
+877	INSERT INTO colors VALUES (271,'Blonde','FBF6D9','on')
+879	INSERT INTO colors VALUES (272,'Antique White','FAEBD7','on')
+881	INSERT INTO colors VALUES (273,'Champagne','F7E7CE','on')
+883	INSERT INTO colors VALUES (274,'Blanched Almond','FFEBCD','on')
+885	INSERT INTO colors VALUES (275,'Vanilla','F3E5AB','on')
+887	INSERT INTO colors VALUES (276,'Tan Brown','ECE5B6','on')
+889	INSERT INTO colors VALUES (277,'Peach','FFE5B4','on')
+891	INSERT INTO colors VALUES (278,'Mustard','FFDB58','on')
+893	INSERT INTO colors VALUES (279,'Rubber Ducky Yellow','FFD801','on')
+895	INSERT INTO colors VALUES (280,'Bright Gold','FDD017','on')
+897	INSERT INTO colors VALUES (281,'Golden Brown','EAC117','on')
+899	INSERT INTO colors VALUES (282,'Macaroni and Cheese','F2BB66','on')
+901	INSERT INTO colors VALUES (283,'Saffron','FBB917','on')
+903	INSERT INTO colors VALUES (284,'Beer','FBB117','on')
+905	INSERT INTO colors VALUES (285,'Cantaloupe','FFA62F','on')
+907	INSERT INTO colors VALUES (286,'Bee Yellow','E9AB17','on')
+909	INSERT INTO colors VALUES (287,'Brown Sugar','E2A76F','on')
+911	INSERT INTO colors VALUES (288,'BurlyWood','DEB887','on')
+913	INSERT INTO colors VALUES (289,'Deep Peach','FFCBA4','on')
+915	INSERT INTO colors VALUES (290,'Ginger Brown','C9BE62','on')
+917	INSERT INTO colors VALUES (291,'School Bus Yellow','E8A317','on')
+919	INSERT INTO colors VALUES (292,'Sandy Brown','EE9A4D','on')
+921	INSERT INTO colors VALUES (293,'Fall Leaf Brown','C8B560','on')
+923	INSERT INTO colors VALUES (294,'Orange Gold','D4A017','on')
+925	INSERT INTO colors VALUES (295,'Sand','C2B280','on')
+927	INSERT INTO colors VALUES (296,'Cookie Brown','C7A317','on')
+929	INSERT INTO colors VALUES (297,'Caramel','C68E17','on')
+931	INSERT INTO colors VALUES (298,'Brass','B5A642','on')
+933	INSERT INTO colors VALUES (299,'Khaki','ADA96E','on')
+935	INSERT INTO colors VALUES (300,'Camel Brown','C19A6B','on')
+937	INSERT INTO colors VALUES (301,'Bronze','CD7F32','on')
+939	INSERT INTO colors VALUES (302,'Tiger Orange','C88141','on')
+941	INSERT INTO colors VALUES (303,'Cinnamon','C58917','on')
+943	INSERT INTO colors VALUES (304,'Bullet Shell','AF9B60','on')
+945	INSERT INTO colors VALUES (305,'Dark Goldenrod','AF7817','on')
+947	INSERT INTO colors VALUES (306,'Copper','B87333','on')
+949	INSERT INTO colors VALUES (307,'Wood','966F33','on')
+951	INSERT INTO colors VALUES (308,'Oak Brown','806517','on')
+953	INSERT INTO colors VALUES (309,'Moccasin','827839','on')
+955	INSERT INTO colors VALUES (310,'Army Brown','827B60','on')
+957	INSERT INTO colors VALUES (311,'Sandstone','786D5F','on')
+959	INSERT INTO colors VALUES (312,'Mocha','493D26','on')
+961	INSERT INTO colors VALUES (313,'Taupe','483C32','on')
+963	INSERT INTO colors VALUES (314,'Coffee','6F4E37','on')
+965	INSERT INTO colors VALUES (315,'Brown Bear','835C3B','on')
+967	INSERT INTO colors VALUES (316,'Red Dirt','7F5217','on')
+969	INSERT INTO colors VALUES (317,'Sepia','7F462C','on')
+971	INSERT INTO colors VALUES (318,'Orange Salmon','C47451','on')
+973	INSERT INTO colors VALUES (319,'Rust','C36241','on')
+975	INSERT INTO colors VALUES (320,'Red Fox','C35817','on')
+977	INSERT INTO colors VALUES (321,'Chocolate','C85A17','on')
+979	INSERT INTO colors VALUES (322,'Sedona','CC6600','on')
+981	INSERT INTO colors VALUES (323,'Papaya Orange','E56717','on')
+983	INSERT INTO colors VALUES (324,'Halloween Orange','E66C2C','on')
+985	INSERT INTO colors VALUES (325,'Pumpkin Orange','F87217','on')
+987	INSERT INTO colors VALUES (326,'Construction Cone Orange','F87431','on')
+989	INSERT INTO colors VALUES (327,'Sunrise Orange','E67451','on')
+991	INSERT INTO colors VALUES (328,'Mango Orange','FF8040','on')
+993	INSERT INTO colors VALUES (329,'Dark Orange','F88017','on')
+995	INSERT INTO colors VALUES (330,'Coral','FF7F50','on')
+997	INSERT INTO colors VALUES (331,'Basket Ball Orange','F88158','on')
+999	INSERT INTO colors VALUES (332,'Light Salmon','F9966B','on')
+1001	INSERT INTO colors VALUES (333,'Tangerine','E78A61','on')
+1003	INSERT INTO colors VALUES (334,'Dark Salmon','E18B6B','on')
+1005	INSERT INTO colors VALUES (335,'Light Coral','E77471','on')
+1007	INSERT INTO colors VALUES (336,'Bean Red','F75D59','on')
+1009	INSERT INTO colors VALUES (337,'Valentine Red','E55451','on')
+1011	INSERT INTO colors VALUES (338,'Shocking Orange','E55B3C','on')
+1013	INSERT INTO colors VALUES (339,'Scarlet','FF2400','on')
+1015	INSERT INTO colors VALUES (340,'Ruby Red','F62217','on')
+1017	INSERT INTO colors VALUES (341,'Ferrari Red','F70D1A','on')
+1019	INSERT INTO colors VALUES (342,'Fire Engine Red','F62817','on')
+1021	INSERT INTO colors VALUES (343,'Lava Red','E42217','on')
+1023	INSERT INTO colors VALUES (344,'Love Red','E41B17','on')
+1025	INSERT INTO colors VALUES (345,'Grapefruit','DC381F','on')
+1027	INSERT INTO colors VALUES (346,'Chestnut Red','C34A2C','on')
+1029	INSERT INTO colors VALUES (347,'Cherry Red','C24641','on')
+1031	INSERT INTO colors VALUES (348,'Mahogany','C04000','on')
+1033	INSERT INTO colors VALUES (349,'Chilli Pepper','C11B17','on')
+1035	INSERT INTO colors VALUES (350,'Cranberry','9F000F','on')
+1037	INSERT INTO colors VALUES (351,'Red Wine','990012','on')
+1039	INSERT INTO colors VALUES (352,'Burgundy','8C001A','on')
+1041	INSERT INTO colors VALUES (353,'Chestnut','954535','on')
+1043	INSERT INTO colors VALUES (354,'Blood Red','7E3517','on')
+1045	INSERT INTO colors VALUES (355,'Sienna','8A4117','on')
+1047	INSERT INTO colors VALUES (356,'Sangria','7E3817','on')
+1049	INSERT INTO colors VALUES (357,'Firebrick','800517','on')
+1051	INSERT INTO colors VALUES (358,'Maroon','810541','on')
+1053	INSERT INTO colors VALUES (359,'Plum Pie','7D0541','on')
+1055	INSERT INTO colors VALUES (360,'Velvet Maroon','7E354D','on')
+1057	INSERT INTO colors VALUES (361,'Plum Velvet','7D0552','on')
+1059	INSERT INTO colors VALUES (362,'Rosy Finch','7F4E52','on')
+1061	INSERT INTO colors VALUES (363,'Puce','7F5A58','on')
+1063	INSERT INTO colors VALUES (364,'Dull Purple','7F525D','on')
+1065	INSERT INTO colors VALUES (365,'Rosy Brown','B38481','on')
+1067	INSERT INTO colors VALUES (366,'Khaki Rose','C5908E','on')
+1069	INSERT INTO colors VALUES (367,'Pink Bow','C48189','on')
+1071	INSERT INTO colors VALUES (368,'Lipstick Pink','C48793','on')
+1073	INSERT INTO colors VALUES (369,'Rose','E8ADAA','on')
+1075	INSERT INTO colors VALUES (370,'Desert Sand','EDC9AF','on')
+1077	INSERT INTO colors VALUES (371,'Pig Pink','FDD7E4','on')
+1079	INSERT INTO colors VALUES (372,'Cotton Candy','FCDFFF','on')
+1081	INSERT INTO colors VALUES (373,'Pink Bubblegum','FFDFDD','on')
+1083	INSERT INTO colors VALUES (374,'Misty Rose','FBBBB9','on')
+1085	INSERT INTO colors VALUES (375,'Pink','FAAFBE','on')
+1087	INSERT INTO colors VALUES (376,'Light Pink','FAAFBA','on')
+1089	INSERT INTO colors VALUES (377,'Flamingo Pink','F9A7B0','on')
+1091	INSERT INTO colors VALUES (378,'Pink Rose','E7A1B0','on')
+1093	INSERT INTO colors VALUES (379,'Pink Daisy','E799A3','on')
+1095	INSERT INTO colors VALUES (380,'Cadillac Pink','E38AAE','on')
+1097	INSERT INTO colors VALUES (381,'Carnation Pink','F778A1','on')
+1099	INSERT INTO colors VALUES (382,'Blush Red','E56E94','on')
+1101	INSERT INTO colors VALUES (383,'Hot Pink','F660AB','on')
+1103	INSERT INTO colors VALUES (384,'Watermelon Pink','FC6C85','on')
+1105	INSERT INTO colors VALUES (385,'Violet Red','F6358A','on')
+1107	INSERT INTO colors VALUES (386,'Deep Pink','F52887','on')
+1109	INSERT INTO colors VALUES (387,'Pink Cupcake','E45E9D','on')
+1111	INSERT INTO colors VALUES (388,'Pink Lemonade','E4287C','on')
+1113	INSERT INTO colors VALUES (389,'Neon Pink','F535AA','on')
+1115	INSERT INTO colors VALUES (390,'Dimorphotheca Magenta','E3319D','on')
+1117	INSERT INTO colors VALUES (391,'Bright Neon Pink','F433FF','on')
+1119	INSERT INTO colors VALUES (392,'Pale Violet Red','D16587','on')
+1121	INSERT INTO colors VALUES (393,'Tulip Pink','C25A7C','on')
+1123	INSERT INTO colors VALUES (394,'Medium Violet Red','CA226B','on')
+1125	INSERT INTO colors VALUES (395,'Rogue Pink','C12869','on')
+1127	INSERT INTO colors VALUES (396,'Burnt Pink','C12267','on')
+1129	INSERT INTO colors VALUES (397,'Bashful Pink','C25283','on')
+1131	INSERT INTO colors VALUES (398,'Carnation Pink','C12283','on')
+1133	INSERT INTO colors VALUES (399,'Plum','B93B8F','on')
+1135	INSERT INTO colors VALUES (400,'Viola Purple','7E587E','on')
+1137	INSERT INTO colors VALUES (401,'Purple Iris','571B7E','on')
+1139	INSERT INTO colors VALUES (402,'Plum Purple','583759','on')
+1141	INSERT INTO colors VALUES (403,'Indigo','4B0082','on')
+1143	INSERT INTO colors VALUES (404,'Purple Monster','461B7E','on')
+1145	INSERT INTO colors VALUES (405,'Purple Haze','4E387E','on')
+1147	INSERT INTO colors VALUES (406,'Eggplant','614051','on')
+1149	INSERT INTO colors VALUES (407,'Grape','5E5A80','on')
+1151	INSERT INTO colors VALUES (408,'Purple Jam','6A287E','on')
+1153	INSERT INTO colors VALUES (409,'Dark Orchid','7D1B7E','on')
+1155	INSERT INTO colors VALUES (410,'Purple Flower','A74AC7','on')
+1157	INSERT INTO colors VALUES (411,'Medium Orchid','B048B5','on')
+1159	INSERT INTO colors VALUES (412,'Purple Amethyst','6C2DC7','on')
+1161	INSERT INTO colors VALUES (413,'Dark Violet','842DCE','on')
+1163	INSERT INTO colors VALUES (414,'Violet','8D38C9','on')
+1165	INSERT INTO colors VALUES (415,'Purple Sage Bush','7A5DC7','on')
+1167	INSERT INTO colors VALUES (416,'Lovely Purple','7F38EC','on')
+1169	INSERT INTO colors VALUES (417,'Purple','8E35EF','on')
+1171	INSERT INTO colors VALUES (418,'Aztech Purple','893BFF','on')
+1173	INSERT INTO colors VALUES (419,'Medium Purple','8467D7','on')
+1175	INSERT INTO colors VALUES (420,'Jasmine Purple','A23BEC','on')
+1177	INSERT INTO colors VALUES (421,'Purple Daffodil','B041FF','on')
+1179	INSERT INTO colors VALUES (422,'Tyrian Purple','C45AEC','on')
+1181	INSERT INTO colors VALUES (423,'Crocus Purple','9172EC','on')
+1183	INSERT INTO colors VALUES (424,'Purple Mimosa','9E7BFF','on')
+1185	INSERT INTO colors VALUES (425,'Heliotrope Purple','D462FF','on')
+1187	INSERT INTO colors VALUES (426,'Crimson','E238EC','on')
+1189	INSERT INTO colors VALUES (427,'Purple Dragon','C38EC7','on')
+1191	INSERT INTO colors VALUES (428,'Lilac','C8A2C8','on')
+1193	INSERT INTO colors VALUES (429,'Blush Pink','E6A9EC','on')
+1195	INSERT INTO colors VALUES (430,'Mauve','E0B0FF','on')
+1197	INSERT INTO colors VALUES (431,'Wisteria Purple','C6AEC7','on')
+1199	INSERT INTO colors VALUES (432,'Blossom Pink','F9B7FF','on')
+1201	INSERT INTO colors VALUES (433,'Thistle','D2B9D3','on')
+1203	INSERT INTO colors VALUES (434,'Periwinkle','E9CFEC','on')
+1205	INSERT INTO colors VALUES (435,'Lavender Pinocchio','EBDDE2','on')
+1207	INSERT INTO colors VALUES (436,'Lavender Blue','E3E4FA','on')
+1209	INSERT INTO colors VALUES (437,'Pearl','FDEEF4','on')
+1211	INSERT INTO colors VALUES (438,'SeaShell','FFF5EE','on')
+1213	INSERT INTO colors VALUES (439,'Milk White','FEFCFF','on')
+1215	CREATE TABLE data_input (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  name varchar(200) NOT NULL default '',\n  input_string varchar(512) default NULL,\n  type_id tinyint(3) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  KEY `name_type_id` (`name`(171), `type_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1218	INSERT INTO data_input VALUES (1,'3eb92bb845b9660a7445cf9740726522','Get SNMP Data','',2)
+1221	INSERT INTO data_input VALUES (2,'bf566c869ac6443b0c75d1c32b5a350e','Get SNMP Data (Indexed)','',3)
+1224	INSERT INTO data_input VALUES (3,'274f4685461170b9eb1b98d22567ab5e','Unix - Get Free Disk Space','<path_cacti>/scripts/diskfree.sh <partition>',1)
+1227	INSERT INTO data_input VALUES (4,'95ed0993eb3095f9920d431ac80f4231','Unix - Get Load Average','perl <path_cacti>/scripts/loadavg_multi.pl',1)
+1230	INSERT INTO data_input VALUES (5,'79a284e136bb6b061c6f96ec219ac448','Unix - Get Logged In Users','perl <path_cacti>/scripts/unix_users.pl <username>',1)
+1233	INSERT INTO data_input VALUES (6,'362e6d4768937c4f899dd21b91ef0ff8','Linux - Get Memory Usage','perl <path_cacti>/scripts/linux_memory.pl <grepstr>',1)
+1236	INSERT INTO data_input VALUES (7,'a637359e0a4287ba43048a5fdf202066','Unix - Get System Processes','perl <path_cacti>/scripts/unix_processes.pl',1)
+1239	INSERT INTO data_input VALUES (8,'47d6bfe8be57a45171afd678920bd399','Unix - Get TCP Connections','perl <path_cacti>/scripts/unix_tcp_connections.pl <grepstr>',1)
+1242	INSERT INTO data_input VALUES (9,'cc948e4de13f32b6aea45abaadd287a3','Unix - Get Web Hits','perl <path_cacti>/scripts/webhits.pl <log_path>',1)
+1245	INSERT INTO data_input VALUES (10,'8bd153aeb06e3ff89efc73f35849a7a0','Unix - Ping Host','perl <path_cacti>/scripts/ping.pl <ip>',1)
+1248	INSERT INTO data_input VALUES (11,'80e9e4c4191a5da189ae26d0e237f015','Get Script Data (Indexed)','',4)
+1251	INSERT INTO data_input VALUES (12,'332111d8b54ac8ce939af87a7eac0c06','Get Script Server Data (Indexed)','',6)
+1254	CREATE TABLE data_input_data (\n  data_input_field_id mediumint(8) unsigned NOT NULL default '0',\n  data_template_data_id int(10) unsigned NOT NULL default '0',\n  t_value char(2) default NULL,\n  value text,\n  PRIMARY KEY (data_input_field_id,data_template_data_id),\n  KEY data_template_data_id (data_template_data_id),\n  KEY t_value (t_value)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1257	INSERT INTO `data_input_data` VALUES (1,4,'','')
+1260	INSERT INTO `data_input_data` VALUES (1,5,'','')
+1263	INSERT INTO `data_input_data` VALUES (1,6,'','')
+1266	INSERT INTO `data_input_data` VALUES (1,19,'','')
+1269	INSERT INTO `data_input_data` VALUES (1,20,'','')
+1271	INSERT INTO `data_input_data` VALUES (1,22,'','')
+1273	INSERT INTO `data_input_data` VALUES (1,23,'','')
+1275	INSERT INTO `data_input_data` VALUES (1,24,'','')
+1277	INSERT INTO `data_input_data` VALUES (1,25,'','')
+1279	INSERT INTO `data_input_data` VALUES (1,26,'','')
+1281	INSERT INTO `data_input_data` VALUES (1,27,'','')
+1283	INSERT INTO `data_input_data` VALUES (1,30,'','')
+1285	INSERT INTO `data_input_data` VALUES (1,31,'','')
+1287	INSERT INTO `data_input_data` VALUES (1,32,'','')
+1289	INSERT INTO `data_input_data` VALUES (1,33,'','')
+1291	INSERT INTO `data_input_data` VALUES (1,34,'','')
+1293	INSERT INTO `data_input_data` VALUES (1,58,'','')
+1295	INSERT INTO `data_input_data` VALUES (1,59,'','')
+1297	INSERT INTO `data_input_data` VALUES (1,68,'','')
+1299	INSERT INTO `data_input_data` VALUES (2,4,'','')
+1301	INSERT INTO `data_input_data` VALUES (2,5,'','')
+1303	INSERT INTO `data_input_data` VALUES (2,6,'','')
+1305	INSERT INTO `data_input_data` VALUES (2,19,'','')
+1307	INSERT INTO `data_input_data` VALUES (2,20,'','')
+1309	INSERT INTO `data_input_data` VALUES (2,22,'','')
+1311	INSERT INTO `data_input_data` VALUES (2,23,'','')
+1313	INSERT INTO `data_input_data` VALUES (2,24,'','')
+1315	INSERT INTO `data_input_data` VALUES (2,25,'','')
+1317	INSERT INTO `data_input_data` VALUES (2,26,'','')
+1319	INSERT INTO `data_input_data` VALUES (2,27,'','')
+1321	INSERT INTO `data_input_data` VALUES (2,30,'','')
+1323	INSERT INTO `data_input_data` VALUES (2,31,'','')
+1325	INSERT INTO `data_input_data` VALUES (2,32,'','')
+1327	INSERT INTO `data_input_data` VALUES (2,33,'','')
+1329	INSERT INTO `data_input_data` VALUES (2,34,'','')
+1331	INSERT INTO `data_input_data` VALUES (2,58,'','')
+1333	INSERT INTO `data_input_data` VALUES (2,59,'','')
+1335	INSERT INTO `data_input_data` VALUES (2,68,'','')
+1337	INSERT INTO `data_input_data` VALUES (3,4,'','')
+1339	INSERT INTO `data_input_data` VALUES (3,5,'','')
+1341	INSERT INTO `data_input_data` VALUES (3,6,'','')
+1343	INSERT INTO `data_input_data` VALUES (3,19,'','')
+1345	INSERT INTO `data_input_data` VALUES (3,20,'','')
+1347	INSERT INTO `data_input_data` VALUES (3,22,'','')
+1349	INSERT INTO `data_input_data` VALUES (3,23,'','')
+1351	INSERT INTO `data_input_data` VALUES (3,24,'','')
+1353	INSERT INTO `data_input_data` VALUES (3,25,'','')
+1355	INSERT INTO `data_input_data` VALUES (3,26,'','')
+1357	INSERT INTO `data_input_data` VALUES (3,27,'','')
+1359	INSERT INTO `data_input_data` VALUES (3,30,'','')
+1361	CREATE TABLE data_input_fields (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  data_input_id mediumint(8) unsigned NOT NULL default '0',\n  name varchar(200) NOT NULL default '',\n  data_name varchar(50) NOT NULL default '',\n  input_output char(3) NOT NULL default '',\n  update_rra char(2) default '0',\n  sequence smallint(5) NOT NULL default '0',\n  type_code varchar(40) default NULL,\n  regexp_match varchar(200) default NULL,\n  allow_nulls char(2) default NULL,\n  PRIMARY KEY (id),\n  KEY data_input_id (data_input_id),\n  KEY input_output (input_output),\n  KEY type_code_data_input_id (type_code, data_input_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1364	INSERT INTO `data_input_fields` VALUES (1,'92f5906c8dc0f964b41f4253df582c38',1,'SNMP IP Address','management_ip','in','',0,'hostname','','')
+1367	INSERT INTO `data_input_fields` VALUES (2,'32285d5bf16e56c478f5e83f32cda9ef',1,'SNMP Community','snmp_community','in','',0,'snmp_community','','')
+1370	INSERT INTO `data_input_fields` VALUES (3,'ad14ac90641aed388139f6ba86a2e48b',1,'SNMP Username','snmp_username','in','',0,'snmp_username','','on')
+1373	INSERT INTO `data_input_fields` VALUES (4,'9c55a74bd571b4f00a96fd4b793278c6',1,'SNMP Password','snmp_password','in','',0,'snmp_password','','on')
+1376	INSERT INTO `data_input_fields` VALUES (5,'012ccb1d3687d3edb29c002ea66e72da',1,'SNMP Version (1, 2, or 3)','snmp_version','in','',0,'snmp_version','','on')
+1379	INSERT INTO `data_input_fields` VALUES (6,'4276a5ec6e3fe33995129041b1909762',1,'OID','oid','in','',0,'snmp_oid','','')
+1382	INSERT INTO `data_input_fields` VALUES (7,'617cdc8a230615e59f06f361ef6e7728',2,'SNMP IP Address','management_ip','in','',0,'hostname','','')
+1385	INSERT INTO `data_input_fields` VALUES (8,'acb449d1451e8a2a655c2c99d31142c7',2,'SNMP Community','snmp_community','in','',0,'snmp_community','','')
+1388	INSERT INTO `data_input_fields` VALUES (9,'f4facc5e2ca7ebee621f09bc6d9fc792',2,'SNMP Username (v3)','snmp_username','in','',0,'snmp_username','','on')
+1391	INSERT INTO `data_input_fields` VALUES (10,'1cc1493a6781af2c478fa4de971531cf',2,'SNMP Password (v3)','snmp_password','in','',0,'snmp_password','','on')
+1393	INSERT INTO `data_input_fields` VALUES (11,'b5c23f246559df38662c255f4aa21d6b',2,'SNMP Version (1, 2, or 3)','snmp_version','in','',0,'snmp_version','','')
+1395	INSERT INTO `data_input_fields` VALUES (12,'6027a919c7c7731fbe095b6f53ab127b',2,'Index Type','index_type','in','',0,'index_type','','')
+1397	INSERT INTO `data_input_fields` VALUES (13,'cbbe5c1ddfb264a6e5d509ce1c78c95f',2,'Index Value','index_value','in','',0,'index_value','','')
+1399	INSERT INTO `data_input_fields` VALUES (14,'e6deda7be0f391399c5130e7c4a48b28',2,'Output Type ID','output_type','in','',0,'output_type','','')
+1401	INSERT INTO `data_input_fields` VALUES (15,'edfd72783ad02df128ff82fc9324b4b9',3,'Disk Partition','partition','in','',1,'','','')
+1403	INSERT INTO `data_input_fields` VALUES (16,'8b75fb61d288f0b5fc0bd3056af3689b',3,'Kilobytes Free','kilobytes','out','on',0,'','','')
+1405	INSERT INTO `data_input_fields` VALUES (17,'363588d49b263d30aecb683c52774f39',4,'1 Minute Average','1min','out','on',0,'','','')
+1407	INSERT INTO `data_input_fields` VALUES (18,'ad139a9e1d69881da36fca07889abf58',4,'5 Minute Average','5min','out','on',0,'','','')
+1409	INSERT INTO `data_input_fields` VALUES (19,'5db9fee64824c08258c7ff6f8bc53337',4,'10 Minute Average','10min','out','on',0,'','','')
+1411	INSERT INTO `data_input_fields` VALUES (20,'c0cfd0beae5e79927c5a360076706820',5,'Username (Optional)','username','in','',1,'','','on')
+1413	INSERT INTO `data_input_fields` VALUES (21,'52c58ad414d9a2a83b00a7a51be75a53',5,'Logged In Users','users','out','on',0,'','','')
+1415	INSERT INTO `data_input_fields` VALUES (22,'05eb5d710f0814871b8515845521f8d7',6,'Grep String','grepstr','in','',1,'','','')
+1417	INSERT INTO `data_input_fields` VALUES (23,'86cb1cbfde66279dbc7f1144f43a3219',6,'Result (in Kilobytes)','kilobytes','out','on',0,'','','')
+1419	INSERT INTO `data_input_fields` VALUES (24,'d5a8dd5fbe6a5af11667c0039af41386',7,'Number of Processes','proc','out','on',0,'','','')
+1421	INSERT INTO `data_input_fields` VALUES (25,'8848cdcae831595951a3f6af04eec93b',8,'Grep String','grepstr','in','',1,'','','on')
+1423	INSERT INTO `data_input_fields` VALUES (26,'3d1288d33008430ce354e8b9c162f7ff',8,'Connections','connections','out','on',0,'','','')
+1425	INSERT INTO `data_input_fields` VALUES (27,'c6af570bb2ed9c84abf32033702e2860',9,'(Optional) Log Path','log_path','in','',1,'','','on')
+1427	INSERT INTO `data_input_fields` VALUES (28,'f9389860f5c5340c9b27fca0b4ee5e71',9,'Web Hits','webhits','out','on',0,'','','')
+1429	INSERT INTO `data_input_fields` VALUES (29,'5fbadb91ad66f203463c1187fe7bd9d5',10,'IP Address','ip','in','',1,'hostname','','')
+1431	INSERT INTO `data_input_fields` VALUES (30,'6ac4330d123c69067d36a933d105e89a',10,'Milliseconds','out_ms','out','on',0,'','','')
+1433	INSERT INTO `data_input_fields` VALUES (31,'d39556ecad6166701bfb0e28c5a11108',11,'Index Type','index_type','in','',0,'index_type','','')
+1435	INSERT INTO `data_input_fields` VALUES (32,'3b7caa46eb809fc238de6ef18b6e10d5',11,'Index Value','index_value','in','',0,'index_value','','')
+1437	INSERT INTO `data_input_fields` VALUES (33,'74af2e42dc12956c4817c2ef5d9983f9',11,'Output Type ID','output_type','in','',0,'output_type','','')
+1439	INSERT INTO `data_input_fields` VALUES (34,'8ae57f09f787656bf4ac541e8bd12537',11,'Output Value','output','out','on',0,'','','')
+1441	INSERT INTO `data_input_fields` VALUES (35,'172b4b0eacee4948c6479f587b62e512',12,'Index Type','index_type','in','',0,'index_type','','')
+1443	INSERT INTO `data_input_fields` VALUES (36,'30fb5d5bcf3d66bb5abe88596f357c26',12,'Index Value','index_value','in','',0,'index_value','','')
+1445	INSERT INTO `data_input_fields` VALUES (37,'31112c85ae4ff821d3b288336288818c',12,'Output Type ID','output_type','in','',0,'output_type','','')
+1447	INSERT INTO `data_input_fields` VALUES (38,'5be8fa85472d89c621790b43510b5043',12,'Output Value','output','out','on',0,'','','')
+1449	INSERT INTO `data_input_fields` VALUES (39,'c1f36ee60c3dc98945556d57f26e475b',2,'SNMP Port','snmp_port','in','',0,'snmp_port','','')
+1451	INSERT INTO `data_input_fields` VALUES (40,'fc64b99742ec417cc424dbf8c7692d36',1,'SNMP Port','snmp_port','in','',0,'snmp_port','','')
+1453	INSERT INTO `data_input_fields` VALUES (41,'20832ce12f099c8e54140793a091af90',1,'SNMP Authentication Protocol (v3)','snmp_auth_protocol','in','',0,'snmp_auth_protocol','','')
+1455	INSERT INTO `data_input_fields` VALUES (42,'c60c9aac1e1b3555ea0620b8bbfd82cb',1,'SNMP Privacy Passphrase (v3)','snmp_priv_passphrase','in','',0,'snmp_priv_passphrase','','')
+1457	INSERT INTO `data_input_fields` VALUES (43,'feda162701240101bc74148415ef415a',1,'SNMP Privacy Protocol (v3)','snmp_priv_protocol','in','',0,'snmp_priv_protocol','','')
+1459	INSERT INTO `data_input_fields` VALUES (44,'2cf7129ad3ff819a7a7ac189bee48ce8',2,'SNMP Authentication Protocol (v3)','snmp_auth_protocol','in','',0,'snmp_auth_protocol','','')
+1461	INSERT INTO `data_input_fields` VALUES (45,'6b13ac0a0194e171d241d4b06f913158',2,'SNMP Privacy Passphrase (v3)','snmp_priv_passphrase','in','',0,'snmp_priv_passphrase','','')
+1463	INSERT INTO `data_input_fields` VALUES (46,'3a33d4fc65b8329ab2ac46a36da26b72',2,'SNMP Privacy Protocol (v3)','snmp_priv_protocol','in','',0,'snmp_priv_protocol','','')
+1465	CREATE TABLE data_local (\n  id int(10) unsigned NOT NULL auto_increment,\n  data_template_id mediumint(8) unsigned NOT NULL default '0',\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  snmp_query_id mediumint(8) NOT NULL default '0',\n  snmp_index varchar(255) NOT NULL default '',\n  orphan tinyint(3) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  KEY data_template_id (data_template_id),\n  KEY snmp_query_id (snmp_query_id),\n  KEY snmp_index (snmp_index),\n  KEY host_id_snmp_query_id (host_id, snmp_query_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1468	CREATE TABLE `data_debug` (\n  `id` int(10) unsigned NOT NULL auto_increment,\n  `started` int(10) unsigned NOT NULL default '0',\n  `done` int(10) unsigned NOT NULL default '0',\n  `user` int(10) unsigned NOT NULL default '0',\n  `datasource` int(10) unsigned NOT NULL default '0',\n  `info` text NOT NULL,\n  `issue` text NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `user` (`user`),\n  KEY `done` (`done`),\n  KEY `datasource` (`datasource`),\n  KEY `started` (`started`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Datasource Debugger Information'
+1471	CREATE TABLE `data_source_profiles` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `hash` varchar(32) NOT NULL DEFAULT '',\n  `name` varchar(255) NOT NULL DEFAULT '',\n  `step` int(10) unsigned NOT NULL DEFAULT '300',\n  `heartbeat` int(10) unsigned NOT NULL DEFAULT '600',\n  `x_files_factor` double DEFAULT '0.5',\n  `default` char(2) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores Data Source Profiles'
+1474	INSERT INTO `data_source_profiles` VALUES (1,'d62c52891f4f9688729a5bc9fad91b18','5 Minute Collection',300,600,0.5,'on')
+1477	INSERT INTO `data_source_profiles` VALUES (2,'c0dd0e46b9ca268e7ed4162d329f9215','30 Second Collection',30,1200,0.5,'')
+1480	INSERT INTO `data_source_profiles` VALUES (3,'66d35da8f75c912ede3dbe901fedcae0','1 Minute Collection',60,600,0.5,'')
+1483	CREATE TABLE `data_source_profiles_cf` (\n  `data_source_profile_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `consolidation_function_id` smallint(5) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`data_source_profile_id`,`consolidation_function_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Maps the Data Source Profile Consolidation Functions'
+1486	INSERT INTO `data_source_profiles_cf` VALUES (1,1)
+1489	INSERT INTO `data_source_profiles_cf` VALUES (1,2)
+1492	INSERT INTO `data_source_profiles_cf` VALUES (1,3)
+1495	INSERT INTO `data_source_profiles_cf` VALUES (1,4)
+1498	INSERT INTO `data_source_profiles_cf` VALUES (2,1)
+1501	INSERT INTO `data_source_profiles_cf` VALUES (2,2)
+1504	INSERT INTO `data_source_profiles_cf` VALUES (2,3)
+1507	INSERT INTO `data_source_profiles_cf` VALUES (2,4)
+1510	INSERT INTO `data_source_profiles_cf` VALUES (3,1)
+1513	INSERT INTO `data_source_profiles_cf` VALUES (3,2)
+1516	INSERT INTO `data_source_profiles_cf` VALUES (3,3)
+1519	INSERT INTO `data_source_profiles_cf` VALUES (3,4)
+1522	CREATE TABLE `data_source_profiles_rra` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `data_source_profile_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `name` varchar(255) NOT NULL DEFAULT '',\n  `steps` int(10) unsigned DEFAULT '1',\n  `rows` int(10) unsigned NOT NULL DEFAULT '700',\n  `timespan` int(10) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  KEY `data_source_profile_id` (`data_source_profile_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores RRA Definitions for Data Source Profiles'
+1525	INSERT INTO `data_source_profiles_rra` VALUES (1,1,'Daily (5 Minute Average)',1,600,86400)
+1528	INSERT INTO `data_source_profiles_rra` VALUES (2,1,'Weekly (30 Minute Average)',6,700,604800)
+1531	INSERT INTO `data_source_profiles_rra` VALUES (3,1,'Monthly (2 Hour Average)',24,775,2618784)
+1534	INSERT INTO `data_source_profiles_rra` VALUES (4,1,'Yearly (1 Day Average)',288,797,31536000)
+1537	INSERT INTO `data_source_profiles_rra` VALUES (5,2,'Daily (30 Second Average)',1,2900,86400)
+1540	INSERT INTO `data_source_profiles_rra` VALUES (6,2,'Weekly (15 Minute Average)',30,1346,604800)
+1543	INSERT INTO `data_source_profiles_rra` VALUES (7,2,'Monthly (1 Hour Average)',120,1445,2618784)
+1546	INSERT INTO `data_source_profiles_rra` VALUES (8,2,'Yearly (4 Hour Average)',480,4380,31536000)
+1549	INSERT INTO `data_source_profiles_rra` VALUES (9,3,'Daily (1 Minute Average)',1,2900,86400)
+1552	INSERT INTO `data_source_profiles_rra` VALUES (10,3,'Weekly (15 Minute Average)',15,1440,604800)
+1555	INSERT INTO `data_source_profiles_rra` VALUES (11,3,'Monthly (1 Hour Average)',60,8784,2618784)
+1558	INSERT INTO `data_source_profiles_rra` VALUES (12,3,'Yearly (12 Hour Average)',720,7305,31536000)
+1561	CREATE TABLE `data_source_purge_action` (\n  `id` integer UNSIGNED auto_increment,\n  `name` varchar(128) NOT NULL default '',\n  `local_data_id` int(10) unsigned NOT NULL default '0',\n  `action` tinyint(3) unsigned NOT NULL default 0,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY name (`name`))\n  ENGINE=InnoDB\n  ROW_FORMAT=Dynamic\n  COMMENT='RRD Cleaner File Actions'
+1564	CREATE TABLE `data_source_purge_temp` (\n  `id` integer UNSIGNED auto_increment,\n  `name_cache` varchar(255) NOT NULL default '',\n  `local_data_id` int(10) unsigned NOT NULL default '0',\n  `name` varchar(128) NOT NULL default '',\n  `size` integer UNSIGNED NOT NULL default '0',\n  `last_mod` TIMESTAMP NOT NULL default '0000-00-00 00:00:00',\n  `in_cacti` tinyint(3) unsigned NOT NULL default '0',\n  `data_template_id` mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY name (`name`),\n  KEY local_data_id (`local_data_id`),\n  KEY in_cacti (`in_cacti`),\n  KEY data_template_id (`data_template_id`))\n  ENGINE=InnoDB\n  ROW_FORMAT=Dynamic\n  COMMENT='RRD Cleaner File Repository'
+1567	CREATE TABLE `data_source_stats_daily` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `average` DOUBLE DEFAULT NULL,\n  `peak` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1570	CREATE TABLE `data_source_stats_hourly` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `average` DOUBLE DEFAULT NULL,\n  `peak` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1573	CREATE TABLE `data_source_stats_hourly_cache` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `time` timestamp NOT NULL default '0000-00-00 00:00:00',\n  `value` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`time`,`rrd_name`),\n  KEY `time` USING BTREE (`time`)\n  ) ENGINE=MEMORY
+1576	CREATE TABLE `data_source_stats_hourly_last` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `value` DOUBLE DEFAULT NULL,\n  `calculated` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=MEMORY
+1579	CREATE TABLE `data_source_stats_monthly` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `average` DOUBLE DEFAULT NULL,\n  `peak` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1582	CREATE TABLE `data_source_stats_weekly` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `average` DOUBLE DEFAULT NULL,\n  `peak` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1585	CREATE TABLE `data_source_stats_yearly` (\n  `local_data_id` int(10) unsigned NOT NULL,\n  `rrd_name` varchar(19) NOT NULL,\n  `average` DOUBLE DEFAULT NULL,\n  `peak` DOUBLE DEFAULT NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`)\n  ) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1588	CREATE TABLE data_template (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  name varchar(150) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY `name` (`name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1591	CREATE TABLE data_template_data (\n  id int(10) unsigned NOT NULL auto_increment,\n  local_data_template_data_id int(10) unsigned NOT NULL default '0',\n  local_data_id int(10) unsigned NOT NULL default '0',\n  data_template_id mediumint(8) unsigned NOT NULL default '0',\n  data_input_id mediumint(8) unsigned NOT NULL default '0',\n  t_name char(2) default NULL,\n  name varchar(250) NOT NULL default '',\n  name_cache varchar(255) NOT NULL default '',\n  data_source_path varchar(255) default '',\n  t_active char(2) default '',\n  active char(2) default NULL,\n  t_rrd_step char(2) default '',\n  rrd_step mediumint(8) unsigned NOT NULL default '0',\n  t_data_source_profile_id char(2) default '',\n  data_source_profile_id mediumint(8) unsigned NOT NULL default '1',\n  PRIMARY KEY (id),\n  KEY local_data_id (local_data_id),\n  KEY data_template_id (data_template_id),\n  KEY data_input_id (data_input_id),\n  KEY name_cache (name_cache)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1594	CREATE TABLE data_template_rrd (\n  id int(10) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  local_data_template_rrd_id int(10) unsigned NOT NULL default '0',\n  local_data_id int(10) unsigned NOT NULL default '0',\n  data_template_id mediumint(8) unsigned NOT NULL default '0',\n  t_rrd_maximum char(2) default NULL,\n  rrd_maximum varchar(20) NOT NULL default '0',\n  t_rrd_minimum char(2) default NULL,\n  rrd_minimum varchar(20) NOT NULL default '0',\n  t_rrd_heartbeat char(2) default NULL,\n  rrd_heartbeat mediumint(6) NOT NULL default '0',\n  t_data_source_type_id char(2) default NULL,\n  data_source_type_id smallint(5) NOT NULL default '0',\n  t_data_source_name char(2) default NULL,\n  data_source_name varchar(19) NOT NULL default '',\n  t_data_input_field_id char(2) default NULL,\n  data_input_field_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  UNIQUE KEY `duplicate_dsname_contraint` (`local_data_id`,`data_source_name`,`data_template_id`),\n  KEY data_template_id (data_template_id),\n  KEY local_data_template_rrd_id (local_data_template_rrd_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1597	CREATE TABLE external_links (\n  id int(10) unsigned NOT NULL AUTO_INCREMENT,\n  sortorder int(10) unsigned NOT NULL DEFAULT '0',\n  enabled char(2) DEFAULT 'on',\n  contentfile varchar(255) NOT NULL default '',\n  title varchar(20) NOT NULL default '',\n  style varchar(10) NOT NULL DEFAULT '',\n  extendedstyle varchar(50) NOT NULL DEFAULT '',\n  refresh int unsigned default NULL,\n  PRIMARY KEY (id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Contains external links that are embedded into Cacti'
+1600	CREATE TABLE graph_local (\n  id int(10) unsigned NOT NULL auto_increment,\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  snmp_query_id mediumint(8) NOT NULL default '0',\n  snmp_query_graph_id mediumint(8) NOT NULL default '0',\n  snmp_index varchar(255) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY host_id (host_id),\n  KEY graph_template_id (graph_template_id),\n  KEY snmp_query_id (snmp_query_id),\n  KEY snmp_query_graph_id (snmp_query_graph_id),\n  KEY snmp_index (snmp_index)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Creates a relationship for each item in a custom graph.'
+1603	CREATE TABLE graph_template_input (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  name varchar(255) NOT NULL default '',\n  description text,\n  column_name varchar(50) NOT NULL default '',\n  PRIMARY KEY (id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores the names for graph item input groups.'
+1606	CREATE TABLE graph_template_input_defs (\n  graph_template_input_id int(10) unsigned NOT NULL default '0',\n  graph_template_item_id int(10) unsigned NOT NULL default '0',\n  PRIMARY KEY (graph_template_input_id,graph_template_item_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores the relationship for what graph items are associated'
+1609	CREATE TABLE graph_templates (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `hash` char(32) NOT NULL default '',\n  `name` char(255) NOT NULL default '',\n  `multiple` char(2) NOT NULL default '',\n  `test_source` char(2) NOT NULL default '',\n  PRIMARY KEY (`id`),\n  KEY `multiple_name` (`multiple`, `name`),\n  KEY `name` (`name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Contains each graph template name.'
+1612	CREATE TABLE graph_templates_gprint (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  name varchar(100) NOT NULL default '',\n  gprint_text varchar(255) default NULL,\n  PRIMARY KEY (id),\n  KEY `name` (`name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1615	INSERT INTO graph_templates_gprint VALUES (2,'e9c43831e54eca8069317a2ce8c6f751','Normal','%8.2lf %s')
+1618	INSERT INTO graph_templates_gprint VALUES (3,'19414480d6897c8731c7dc6c5310653e','Exact Numbers','%8.0lf')
+1621	INSERT INTO graph_templates_gprint VALUES (4,'304a778405392f878a6db435afffc1e9','Load Average','%8.2lf')
+1624	CREATE TABLE graph_templates_graph (\n  id int(10) unsigned NOT NULL auto_increment,\n  local_graph_template_graph_id int(10) unsigned NOT NULL default '0',\n  local_graph_id int(10) unsigned NOT NULL default '0',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  t_image_format_id char(2) default '',\n  image_format_id tinyint(3) unsigned NOT NULL default '0',\n  t_title char(2) default '',\n  title varchar(255) NOT NULL default '',\n  title_cache varchar(255) NOT NULL default '',\n  t_height char(2) default '',\n  height mediumint(8) NOT NULL default '0',\n  t_width char(2) default '',\n  width mediumint(8) NOT NULL default '0',\n  t_upper_limit char(2) default '',\n  upper_limit varchar(20) NOT NULL default '0',\n  t_lower_limit char(2) default '',\n  lower_limit varchar(20) NOT NULL default '0',\n  t_vertical_label char(2) default '',\n  vertical_label varchar(200) default NULL,\n  t_slope_mode char(2) default '',\n  slope_mode char(2) default 'on',\n  t_auto_scale char(2) default '',\n  auto_scale char(2) default NULL,\n  t_auto_scale_opts char(2) default '',\n  auto_scale_opts tinyint(3) unsigned NOT NULL default '0',\n  t_auto_scale_log char(2) default '',\n  auto_scale_log char(2) default NULL,\n  t_scale_log_units char(2) default '',\n  scale_log_units char(2) default NULL,\n  t_auto_scale_rigid char(2) default '',\n  auto_scale_rigid char(2) default NULL,\n  t_auto_padding char(2) default '',\n  auto_padding char(2) default NULL,\n  t_base_value char(2) default '',\n  base_value mediumint(8) NOT NULL default '0',\n  `t_grouping` char(2) default '',\n  `grouping` char(2) NOT NULL default '',\n  t_unit_value char(2) default '',\n  unit_value varchar(20) default NULL,\n  t_unit_exponent_value char(2) default '',\n  unit_exponent_value varchar(5) NOT NULL default '',\n  t_alt_y_grid char(2) default '',\n  alt_y_grid char(2) default NULL,\n  t_right_axis char(2) DEFAULT '',\n  right_axis varchar(20) DEFAULT NULL,\n  t_right_axis_label char(2) DEFAULT '',\n  right_axis_label varchar(200) DEFAULT NULL,\n  t_right_axis_format char(2) DEFAULT '',\n  right_axis_format mediumint(8) DEFAULT NULL,\n  t_right_axis_formatter char(2) DEFAULT '',\n  right_axis_formatter varchar(10) DEFAULT NULL,\n  t_left_axis_formatter char(2) DEFAULT '',\n  left_axis_formatter varchar(10) DEFAULT NULL,\n  t_no_gridfit char(2) DEFAULT '',\n  no_gridfit char(2) DEFAULT NULL,\n  t_unit_length char(2) DEFAULT '',\n  unit_length varchar(10) DEFAULT NULL,\n  t_tab_width char(2) DEFAULT '',\n  tab_width varchar(20) DEFAULT '30',\n  t_dynamic_labels char(2) default '',\n  dynamic_labels char(2) default NULL,\n  t_force_rules_legend char(2) DEFAULT '',\n  force_rules_legend char(2) DEFAULT NULL,\n  t_legend_position char(2) DEFAULT '',\n  legend_position varchar(10) DEFAULT NULL,\n  t_legend_direction char(2) DEFAULT '',\n  legend_direction varchar(10) DEFAULT NULL,\n  PRIMARY KEY (id),\n  KEY local_graph_id (local_graph_id),\n  KEY graph_template_id (graph_template_id),\n  KEY title_cache (title_cache)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores the actual graph data.'
+1627	CREATE TABLE graph_templates_item (\n  id int(10) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  local_graph_template_item_id int(10) unsigned NOT NULL default '0',\n  local_graph_id int(10) unsigned NOT NULL default '0',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  task_item_id int(10) unsigned NOT NULL default '0',\n  color_id mediumint(8) unsigned NOT NULL default '0',\n  alpha char(2) default 'FF',\n  graph_type_id tinyint(3) unsigned NOT NULL default '0',\n  line_width DECIMAL(4,2) DEFAULT 0,\n  dashes varchar(20) DEFAULT NULL,\n  dash_offset mediumint(4) DEFAULT NULL,\n  cdef_id mediumint(8) unsigned NOT NULL default '0',\n  vdef_id mediumint(8) unsigned NOT NULL default '0',\n  shift char(2) default NULL,\n  consolidation_function_id tinyint(3) unsigned NOT NULL default '0',\n  textalign varchar(10) default NULL,\n  text_format varchar(255) default NULL,\n  value varchar(255) default NULL,\n  hard_return char(2) default NULL,\n  gprint_id mediumint(8) unsigned NOT NULL default '0',\n  sequence mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  KEY graph_template_id (graph_template_id),\n  KEY local_graph_id_sequence (local_graph_id, sequence),\n  KEY local_graph_template_item_id (local_graph_template_item_id),\n  KEY task_item_id (task_item_id),\n  KEY cdef_id (cdef_id),\n  KEY vdef_id (vdef_id),\n  KEY color_id (color_id),\n  KEY gprint_id (gprint_id),\n  KEY `lgi_gti` (`local_graph_id`,`graph_template_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores the actual graph item data.'
+1630	CREATE TABLE graph_tree (\n  `id` smallint(5) unsigned NOT NULL auto_increment,\n  `enabled` char(2) DEFAULT 'on',\n  `locked` tinyint(3) unsigned DEFAULT '0',\n  `locked_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `sort_type` tinyint(3) unsigned NOT NULL default '1',\n  `name` varchar(255) NOT NULL default '',\n  `sequence` int(10) unsigned DEFAULT '1',\n  `user_id` int(10) unsigned DEFAULT '1',\n  `last_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `modified_by` int(10) unsigned DEFAULT '1',\n  PRIMARY KEY (`id`),\n  KEY `sequence` (`sequence`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1633	INSERT INTO graph_tree VALUES (1,'on',0,'0000-00-00',1,'Default Tree',1,1,'0000-00-00','1')
+1636	CREATE TABLE graph_tree_items (\n  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  parent bigint(20) unsigned DEFAULT NULL,\n  position int(10) unsigned DEFAULT NULL,\n  graph_tree_id smallint(5) unsigned NOT NULL DEFAULT '0',\n  local_graph_id int(10) unsigned NOT NULL DEFAULT '0',\n  title varchar(255) DEFAULT NULL,\n  host_id mediumint(8) unsigned NOT NULL DEFAULT '0',\n  site_id int unsigned DEFAULT '0',\n  host_grouping_type tinyint(3) unsigned NOT NULL DEFAULT '1',\n  sort_children_type tinyint(3) unsigned NOT NULL DEFAULT '0',\n  graph_regex varchar(60) DEFAULT '',\n  host_regex varchar(60) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `graph_tree_id` (`graph_tree_id`),\n  KEY `host_id` (`host_id`),\n  KEY `site_id` (`site_id`),\n  KEY `local_graph_id` (`local_graph_id`),\n  KEY `parent_position`(`parent`, `position`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1639	CREATE TABLE host (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  poller_id int(10) unsigned NOT NULL default '1',\n  site_id int(10) unsigned NOT NULL default '1',\n  host_template_id mediumint(8) unsigned NOT NULL default '0',\n  description varchar(150) NOT NULL default '',\n  hostname varchar(100) default NULL,\n  location varchar(40) default NULL,\n  notes text,\n  external_id varchar(40) default NULL,\n  snmp_community varchar(100) default NULL,\n  snmp_version tinyint(3) unsigned NOT NULL default '1',\n  snmp_username varchar(50) default NULL,\n  snmp_password varchar(50) default NULL,\n  snmp_auth_protocol char(6) default '',\n  snmp_priv_passphrase varchar(200) default '',\n  snmp_priv_protocol char(6) default '',\n  snmp_context varchar(64) default '',\n  snmp_engine_id varchar(64) default '',\n  snmp_port mediumint(8) unsigned NOT NULL default '161',\n  snmp_timeout mediumint(8) unsigned NOT NULL default '500',\n  snmp_sysDescr varchar(300) NOT NULL default '',\n  snmp_sysObjectID varchar(128) NOT NULL default '',\n  snmp_sysUpTimeInstance bigint(20) unsigned NOT NULL default '0',\n  snmp_sysContact varchar(300) NOT NULL default '',\n  snmp_sysName varchar(300) NOT NULL default '',\n  snmp_sysLocation varchar(300) NOT NULL default '',\n  availability_method smallint(5) unsigned NOT NULL default '1',\n  ping_method smallint(5) unsigned default '0',\n  ping_port int(10) unsigned default '0',\n  ping_timeout int(10) unsigned default '500',\n  ping_retries int(10) unsigned default '2',\n  max_oids int(10) unsigned default '10',\n  bulk_walk_size int(11) DEFAULT '-1',\n  device_threads tinyint(3) unsigned NOT NULL DEFAULT '1',\n  deleted char(2) NOT NULL default '',\n  disabled char(2) NOT NULL default '',\n  status tinyint(3) unsigned NOT NULL default '0',\n  status_event_count mediumint(8) unsigned NOT NULL default '0',\n  status_fail_date timestamp NOT NULL default '0000-00-00 00:00:00',\n  status_rec_date timestamp NOT NULL default '0000-00-00 00:00:00',\n  status_last_error varchar(255) default '',\n  min_time decimal(10,5) default '9.99999',\n  max_time decimal(10,5) default '0.00000',\n  cur_time decimal(10,5) default '0.00000',\n  avg_time decimal(10,5) default '0.00000',\n  polling_time DOUBLE default '0',\n  total_polls int(10) unsigned default '0',\n  failed_polls int(10) unsigned default '0',\n  availability decimal(8,5) NOT NULL default '100.00000',\n  last_updated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (id),\n  KEY poller_id_disabled (poller_id, disabled),\n  KEY external_id (external_id),\n  KEY disabled (disabled),\n  KEY status (status),\n  KEY site_id_location (site_id, location),\n  KEY hostname (hostname),\n  KEY poller_id_last_updated (poller_id, last_updated)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1642	CREATE TABLE host_graph (\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (host_id,graph_template_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1645	CREATE TABLE host_snmp_cache (\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  snmp_query_id mediumint(8) unsigned NOT NULL default '0',\n  field_name varchar(50) NOT NULL default '',\n  field_value varchar(512) default NULL,\n  snmp_index varchar(255) NOT NULL default '',\n  oid TEXT NOT NULL,\n  present tinyint(3) unsigned NOT NULL DEFAULT '1',\n  last_updated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (host_id, snmp_query_id, field_name, snmp_index),\n  KEY host_id (host_id, field_name),\n  KEY snmp_index (snmp_index),\n  KEY field_name (field_name),\n  KEY field_value (field_value),\n  KEY snmp_query_id (snmp_query_id),\n  KEY last_updated (last_updated),\n  KEY present (present)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1648	CREATE TABLE host_snmp_query (\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  snmp_query_id mediumint(8) unsigned NOT NULL default '0',\n  sort_field varchar(50) NOT NULL default '',\n  title_format varchar(50) NOT NULL default '',\n  reindex_method tinyint(3) unsigned NOT NULL default '0',\n  PRIMARY KEY (host_id,snmp_query_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1651	CREATE TABLE host_template (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  name varchar(100) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY `name` (`name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1654	CREATE TABLE host_template_graph (\n  host_template_id mediumint(8) unsigned NOT NULL default '0',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (host_template_id,graph_template_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1657	CREATE TABLE host_template_snmp_query (\n  host_template_id mediumint(8) unsigned NOT NULL default '0',\n  snmp_query_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (host_template_id, snmp_query_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1660	CREATE TABLE `plugin_config` (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `directory` varchar(32) NOT NULL default '',\n  `name` varchar(64) NOT NULL default '',\n  `status` tinyint(3) unsigned NOT NULL default '0',\n  `author` varchar(64) NOT NULL default '',\n  `webpage` varchar(255) NOT NULL default '',\n  `version` varchar(10) NOT NULL default '',\n  PRIMARY KEY (`id`),\n  KEY `status` (`status`),\n  KEY `directory` (`directory`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1663	CREATE TABLE `plugin_hooks` (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `name` varchar(32) NOT NULL default '',\n  `hook` varchar(64) NOT NULL default '',\n  `file` varchar(255) NOT NULL default '',\n  `function` varchar(128) NOT NULL default '',\n  `status` int(10) unsigned NOT NULL default '0',\n  PRIMARY KEY (`id`),\n  KEY `hook` (`hook`),\n  KEY `status` (`status`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1666	CREATE TABLE `plugin_realms` (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `plugin` varchar(32) NOT NULL default '',\n  `file` text NOT NULL,\n  `display` varchar(64) NOT NULL default '',\n  PRIMARY KEY (`id`),\n  KEY `plugin` (`plugin`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1669	CREATE TABLE `plugin_db_changes` (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `plugin` varchar(16) NOT NULL default '',\n  `table` varchar(64) NOT NULL default '',\n  `column` varchar(64) NOT NULL,\n  `method` varchar(16) NOT NULL default '',\n  PRIMARY KEY (`id`),\n  KEY `plugin` (`plugin`),\n  KEY `method` (`method`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1672	REPLACE INTO `plugin_realms` VALUES (1, 'internal', 'plugins.php', 'Plugin Management')
+1675	INSERT INTO `plugin_hooks` VALUES (1, 'internal', 'config_arrays', '', 'plugin_config_arrays', 1)
+1678	INSERT INTO `plugin_hooks` VALUES (2, 'internal', 'draw_navigation_text', '', 'plugin_draw_navigation_text', 1)
+1681	CREATE TABLE `poller` (\n  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,\n  `disabled` char(2) DEFAULT '',\n  `name` varchar(30) DEFAULT NULL,\n  `notes` varchar(1024) DEFAULT '',\n  `status` int(10) unsigned NOT NULL DEFAULT '0',\n  `timezone` varchar(40) DEFAULT '',\n  `hostname` varchar(100) NOT NULL DEFAULT '',\n  `dbdefault` varchar(20) NOT NULL DEFAULT '',\n  `dbhost` varchar(64) NOT NULL DEFAULT '',\n  `dbuser` varchar(20) NOT NULL DEFAULT '',\n  `dbpass` varchar(64) NOT NULL DEFAULT '',\n  `dbport` int(10) unsigned DEFAULT '3306',\n  `dbretries` int(10) unsigned DEFAULT '2',\n  `dbssl` char(3) DEFAULT '',\n  `dbsslkey` varchar(255) DEFAULT NULL,\n  `dbsslcert` varchar(255) DEFAULT NULL,\n  `dbsslca` varchar(255) DEFAULT NULL,\n  `total_time` double DEFAULT '0',\n  `max_time` double DEFAULT NULL,\n  `min_time` double DEFAULT NULL,\n  `avg_time` double DEFAULT NULL,\n  `total_polls` int(10) unsigned DEFAULT '0',\n  `processes` int(10) unsigned DEFAULT '1',\n  `threads` int(10) unsigned DEFAULT '1',\n  `sync_interval` int(10) unsigned DEFAULT '7200',\n  `snmp` mediumint(8) unsigned DEFAULT '0',\n  `script` mediumint(8) unsigned DEFAULT '0',\n  `server` mediumint(8) unsigned DEFAULT '0',\n  `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `last_status` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `last_sync` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `requires_sync` char(2) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `name` (`name`),\n  KEY `disabled` (`disabled`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Pollers for Cacti'
+1684	INSERT INTO poller (id,name,hostname) VALUES (1,'Main Poller', 'localhost')
+1687	CREATE TABLE poller_command (\n  poller_id smallint(5) unsigned NOT NULL default '1',\n  time timestamp NOT NULL default '0000-00-00 00:00:00',\n  action tinyint(3) unsigned NOT NULL default '0',\n  command varchar(191) NOT NULL default '',\n  last_updated timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (poller_id, action, command),\n  KEY poller_id_last_updated (poller_id, last_updated)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1690	CREATE TABLE `poller_data_template_field_mappings` (\n  `data_template_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `data_name` varchar(40) NOT NULL DEFAULT '',\n  `data_source_names` varchar(125) NOT NULL DEFAULT '',\n  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`data_template_id`, `data_name`, `data_source_names`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Tracks mapping of Data Templates to their Data Source Names'
+1693	CREATE TABLE poller_item (\n  `local_data_id` int(10) unsigned NOT NULL default '0',\n  `poller_id` int(10) unsigned NOT NULL default '1',\n  `host_id` mediumint(8) unsigned NOT NULL default '0',\n  `action` tinyint(3) unsigned NOT NULL default '1',\n  `present` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `last_updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `hostname` varchar(100) NOT NULL default '',\n  `snmp_community` varchar(100) NOT NULL default '',\n  `snmp_version` tinyint(3) unsigned NOT NULL default '0',\n  `snmp_username` varchar(50) NOT NULL default '',\n  `snmp_password` varchar(50) NOT NULL default '',\n  `snmp_auth_protocol` char(6) NOT NULL default '',\n  `snmp_priv_passphrase` varchar(200) NOT NULL default '',\n  `snmp_priv_protocol` char(6) NOT NULL default '',\n  `snmp_context` varchar(64) default '',\n  `snmp_engine_id` varchar(64) default '',\n  `snmp_port` mediumint(8) unsigned NOT NULL default '161',\n  `snmp_timeout` mediumint(8) unsigned NOT NULL default '0',\n  `rrd_name` varchar(19) NOT NULL default '',\n  `rrd_path` varchar(255) NOT NULL default '',\n  `rrd_num` tinyint(3) unsigned NOT NULL default '0',\n  `rrd_step` mediumint(8) NOT NULL default '300',\n  `rrd_next_step` mediumint(8) NOT NULL default '0',\n  `arg1` TEXT,\n  `arg2` varchar(255) default NULL,\n  `arg3` varchar(255) default NULL,\n  PRIMARY KEY (`local_data_id`,`rrd_name`),\n  KEY `host_id` (`host_id`),\n  KEY `action` (`action`),\n  KEY `present` (`present`),\n  KEY `poller_id_host_id` (`poller_id`,`host_id`),\n  KEY `poller_id_rrd_next_step` (`poller_id`,`rrd_next_step`),\n  KEY `poller_id_action` (`poller_id`,`action`),\n  KEY `poller_id_last_updated` (`poller_id`, `last_updated`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1696	CREATE TABLE poller_output (\n  local_data_id int(10) unsigned NOT NULL default '0',\n  rrd_name varchar(19) NOT NULL default '',\n  time timestamp NOT NULL default '0000-00-00 00:00:00',\n  output varchar(512) NOT NULL default '',\n  PRIMARY KEY (local_data_id, rrd_name, time) /*!50060 USING BTREE */\n) ENGINE=MEMORY
+1699	CREATE TABLE `poller_output_boost` (\n  `local_data_id` int(10) unsigned NOT NULL default '0',\n  `rrd_name` varchar(19) NOT NULL default '',\n  `time` timestamp NOT NULL default '0000-00-00 00:00:00',\n  `output` varchar(512) NOT NULL,\n  PRIMARY KEY USING BTREE (`local_data_id`, `time`, `rrd_name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1702	CREATE TABLE `poller_output_boost_local_data_ids` (\n  `local_data_id` int(10) unsigned NOT NULL DEFAULT 0,\n  `process_handler` int(10) unsigned DEFAULT 0,\n  PRIMARY KEY (`local_data_id`),\n  KEY `process_handler` (`process_handler`)\n) ENGINE=MEMORY
+1705	CREATE TABLE `poller_output_boost_processes` (\n  `sock_int_value` bigint(20) unsigned NOT NULL auto_increment,\n  `status` varchar(255) default NULL,\n  PRIMARY KEY (`sock_int_value`)\n) ENGINE=MEMORY
+1708	CREATE TABLE poller_output_realtime (\n  local_data_id int(10) unsigned NOT NULL default '0',\n  rrd_name varchar(19) NOT NULL default '',\n  `time` timestamp NOT NULL default '0000-00-00 00:00:00',\n  output text NOT NULL,\n  poller_id varchar(256) NOT NULL default '1',\n  PRIMARY KEY (local_data_id, rrd_name, time, poller_id),\n  KEY poller_id (poller_id(191)),\n  KEY `time` (`time`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1711	CREATE TABLE poller_reindex (\n  host_id mediumint(8) unsigned NOT NULL default '0',\n  data_query_id mediumint(8) unsigned NOT NULL default '0',\n  action tinyint(3) unsigned NOT NULL default '0',\n  present tinyint(3) unsigned NOT NULL DEFAULT '1',\n  op char(1) NOT NULL default '',\n  assert_value varchar(100) NOT NULL default '',\n  arg1 varchar(255) NOT NULL default '',\n  PRIMARY KEY (host_id, data_query_id, arg1(187)),\n  KEY present (present)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1714	CREATE TABLE poller_resource_cache (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `resource_type` varchar(20) DEFAULT NULL,\n  `md5sum` varchar(32) DEFAULT NULL,\n  `path` varchar(191) DEFAULT NULL,\n  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  `contents` longblob,\n  `attributes` INT unsigned DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `path` (`path`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Caches all scripts, resources files, and plugins'
+1717	CREATE TABLE poller_time (\n  id bigint(20) unsigned NOT NULL auto_increment,\n  pid int(10) unsigned NOT NULL default '0',\n  poller_id int(10) unsigned NOT NULL default '1',\n  start_time timestamp NOT NULL default '0000-00-00 00:00:00',\n  end_time timestamp NOT NULL default '0000-00-00 00:00:00',\n  PRIMARY KEY (id),\n  KEY `poller_id_end_time` (`poller_id`, `end_time`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1720	CREATE TABLE `processes` (\n  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n  `pid` int(10) unsigned NOT NULL DEFAULT 0,\n  `tasktype` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `taskname` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n  `taskid` int(10) unsigned NOT NULL DEFAULT 0,\n  `timeout` int(10) unsigned DEFAULT 300,\n  `started` timestamp NOT NULL DEFAULT current_timestamp(),\n  `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',\n  PRIMARY KEY (`pid`,`tasktype`,`taskname`,`taskid`),\n  KEY `tasktype` (`tasktype`),\n  KEY `id` (`id`)\n) ENGINE=MEMORY COMMENT='Stores Process Status for Cacti Background Processes'
+1723	CREATE TABLE `reports` (\n  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `name` varchar(100) NOT NULL DEFAULT '',\n  `cformat` char(2) NOT NULL DEFAULT '',\n  `format_file` varchar(255) NOT NULL DEFAULT '',\n  `font_size` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `alignment` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `graph_linked` char(2) NOT NULL DEFAULT '',\n  `intrvl` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `count` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `offset` int(10) unsigned NOT NULL DEFAULT '0',\n  `mailtime` bigint(20) unsigned NOT NULL DEFAULT '0',\n  `subject` varchar(64) NOT NULL DEFAULT '',\n  `from_name` varchar(40) NOT NULL,\n  `from_email` text NOT NULL,\n  `email` text NOT NULL,\n  `bcc` text NOT NULL,\n  `attachment_type` smallint(2) unsigned NOT NULL DEFAULT '1',\n  `graph_height` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `graph_width` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `graph_columns` smallint(2) unsigned NOT NULL DEFAULT '0',\n  `thumbnails` char(2) NOT NULL DEFAULT '',\n  `lastsent` bigint(20) unsigned NOT NULL DEFAULT '0',\n  `enabled` char(2) DEFAULT '',\n  PRIMARY KEY (`id`),\n  KEY `mailtime` (`mailtime`)) \n  ENGINE=InnoDB \n  ROW_FORMAT=Dynamic\n  COMMENT='Cacti Reporting Reports'
+1726	CREATE TABLE `reports_items` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `report_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `item_type` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `tree_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `branch_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `tree_cascade` char(2) NOT NULL DEFAULT '',\n  `graph_name_regexp` varchar(128) NOT NULL DEFAULT '',\n  `site_id` int(11) NOT NULL DEFAULT '-1',\n  `host_template_id` int(11) NOT NULL DEFAULT '-1',\n  `host_id` int(11) NOT NULL DEFAULT '-1',\n  `graph_template_id` int(11) NOT NULL DEFAULT '-1',\n  `local_graph_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `timespan` int(10) unsigned NOT NULL DEFAULT '0',\n  `align` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `item_text` text NOT NULL,\n  `font_size` smallint(2) unsigned NOT NULL DEFAULT '10',\n  `sequence` smallint(5) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  KEY `report_id` (`report_id`)) \n  ENGINE=InnoDB \n  ROW_FORMAT=Dynamic\n  COMMENT='Cacti Reporting Items'
+1729	CREATE TABLE settings (\n  name varchar(50) NOT NULL default '',\n  value varchar(2048) NOT NULL default '',\n  PRIMARY KEY (name)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1732	INSERT INTO settings VALUES ('auth_method', 1)
+1735	INSERT INTO settings VALUES ('selected_theme', 'modern')
+1738	CREATE TABLE settings_user (\n  user_id smallint(8) unsigned NOT NULL default '0',\n  name varchar(50) NOT NULL default '',\n  value varchar(2048) NOT NULL default '',\n  PRIMARY KEY (user_id, name)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1741	CREATE TABLE settings_user_group (\n  group_id smallint(8) unsigned NOT NULL DEFAULT '0',\n  name varchar(50) NOT NULL DEFAULT '',\n  value varchar(2048) NOT NULL DEFAULT '',\n  PRIMARY KEY (group_id, name)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Stores the Default User Group Graph Settings'
+1744	CREATE TABLE settings_tree (\n  user_id mediumint(8) unsigned NOT NULL default '0',\n  graph_tree_item_id int(10) unsigned NOT NULL default '0',\n  status tinyint(4) NOT NULL default '0',\n  PRIMARY KEY (user_id, graph_tree_item_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1747	CREATE TABLE snmp_query (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  xml_path varchar(255) NOT NULL default '',\n  name varchar(100) NOT NULL default '',\n  description varchar(255) default NULL,\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  data_input_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  KEY name (name)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1750	CREATE TABLE snmp_query_graph (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  snmp_query_id mediumint(8) unsigned NOT NULL default '0',\n  name varchar(100) NOT NULL default '',\n  graph_template_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (id),\n  KEY `graph_template_id_name` (`graph_template_id`, `name`),\n  KEY `snmp_query_id_name` (`snmp_query_id`, `name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1753	CREATE TABLE snmp_query_graph_rrd (\n  snmp_query_graph_id mediumint(8) unsigned NOT NULL default '0',\n  data_template_id mediumint(8) unsigned NOT NULL default '0',\n  data_template_rrd_id int(10) unsigned NOT NULL default '0',\n  snmp_field_name varchar(50) NOT NULL default '0',\n  PRIMARY KEY (snmp_query_graph_id,data_template_id,data_template_rrd_id),\n  KEY data_template_rrd_id (data_template_rrd_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1756	CREATE TABLE snmp_query_graph_rrd_sv (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  snmp_query_graph_id mediumint(8) unsigned NOT NULL default '0',\n  data_template_id mediumint(8) unsigned NOT NULL default '0',\n  sequence mediumint(8) unsigned NOT NULL default '0',\n  field_name varchar(100) NOT NULL default '',\n  text varchar(255) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY snmp_query_graph_id (snmp_query_graph_id),\n  KEY data_template_id (data_template_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1759	CREATE TABLE snmp_query_graph_sv (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  snmp_query_graph_id mediumint(8) unsigned NOT NULL default '0',\n  sequence mediumint(8) unsigned NOT NULL default '0',\n  field_name varchar(100) NOT NULL default '',\n  text varchar(255) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY snmp_query_graph_id (snmp_query_graph_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1762	CREATE TABLE user_auth (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `username` varchar(50) NOT NULL default '0',\n  `password` varchar(256) NOT NULL default '',\n  `realm` mediumint(8) NOT NULL default '0',\n  `full_name` varchar(100) default '0',\n  `email_address` varchar(128) NULL,\n  `must_change_password` char(2) default NULL,\n  `password_change` char(2) default 'on',\n  `show_tree` char(2) default 'on',\n  `show_list` char(2) default 'on',\n  `show_preview` char(2) NOT NULL default 'on',\n  `graph_settings` char(2) default NULL,\n  `login_opts` tinyint(3) unsigned NOT NULL default '1',\n  `policy_graphs` tinyint(3) unsigned NOT NULL default '1',\n  `policy_trees` tinyint(3) unsigned NOT NULL default '1',\n  `policy_hosts` tinyint(3) unsigned NOT NULL default '1',\n  `policy_graph_templates` tinyint(3) unsigned NOT NULL default '1',\n  `enabled` char(2) NOT NULL DEFAULT 'on',\n  `lastchange` int(11) NOT NULL DEFAULT '-1',\n  `lastlogin` int(11) NOT NULL DEFAULT '-1',\n  `password_history` varchar(4096) NOT NULL DEFAULT '-1',\n  `locked` varchar(3) NOT NULL DEFAULT '',\n  `failed_attempts` int(5) NOT NULL DEFAULT '0',\n  `lastfail` int(10) unsigned NOT NULL DEFAULT '0',\n  `reset_perms` int(10) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  KEY `username` (`username`),\n  KEY `realm` (`realm`),\n  KEY `enabled` (`enabled`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1765	INSERT INTO user_auth VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3',0,'Administrator','','on','on','on','on','on','on',2,1,1,1,1,'on',-1,-1,'-1','',0,0,0)
+1768	INSERT INTO user_auth VALUES (3,'guest','43e9a4ab75570f5b',0,'Guest Account','','on','on','on','on','on',3,1,1,1,1,1,'',-1,-1,'-1','',0,0,0)
+1771	CREATE TABLE `user_auth_cache` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `hostname` varchar(100) NOT NULL DEFAULT '',\n  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `token` varchar(191) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `tokenkey` (`token`),\n  KEY `hostname` (`hostname`),\n  KEY `user_id` (`user_id`),\n  KEY `last_update` (`last_update`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Caches Remember Me Details'
+1774	CREATE TABLE `user_auth_group` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL,\n  `description` varchar(255) NOT NULL DEFAULT '',\n  `graph_settings` varchar(2) DEFAULT NULL,\n  `login_opts` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `show_tree` varchar(2) DEFAULT 'on',\n  `show_list` varchar(2) DEFAULT 'on',\n  `show_preview` varchar(2) NOT NULL DEFAULT 'on',\n  `policy_graphs` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `policy_trees` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `policy_hosts` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `policy_graph_templates` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `enabled` char(2) NOT NULL DEFAULT 'on',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table that Contains User Groups'
+1777	CREATE TABLE `user_auth_group_members` (\n  `group_id` int(10) unsigned NOT NULL,\n  `user_id` int(10) unsigned NOT NULL,\n  PRIMARY KEY (`group_id`,`user_id`),\n  KEY `realm_id` (`user_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table that Contains User Group Members'
+1780	CREATE TABLE `user_auth_group_perms` (\n  `group_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `item_id` mediumint(8) unsigned NOT NULL DEFAULT '0',\n  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`group_id`,`item_id`,`type`),\n  KEY `group_id` (`group_id`,`type`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table that Contains User Group Permissions'
+1783	CREATE TABLE `user_auth_group_realm` (\n  `group_id` int(10) unsigned NOT NULL,\n  `realm_id` int(10) unsigned NOT NULL,\n  PRIMARY KEY (`group_id`,`realm_id`),\n  KEY `realm_id` (`realm_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table that Contains User Group Realm Permissions'
+1786	CREATE TABLE user_auth_perms (\n  user_id mediumint(8) unsigned NOT NULL default '0',\n  item_id mediumint(8) unsigned NOT NULL default '0',\n  type tinyint(3) unsigned NOT NULL default '0',\n  PRIMARY KEY (user_id,item_id,type),\n  KEY user_id (user_id,type)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1789	CREATE TABLE user_auth_realm (\n  realm_id mediumint(8) unsigned NOT NULL default '0',\n  user_id mediumint(8) unsigned NOT NULL default '0',\n  PRIMARY KEY (realm_id,user_id),\n  KEY user_id (user_id)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1792	INSERT INTO user_auth_realm VALUES (1,1)
+1795	INSERT INTO user_auth_realm VALUES (2,1)
+1798	INSERT INTO user_auth_realm VALUES (3,1)
+1801	INSERT INTO user_auth_realm VALUES (4,1)
+1804	INSERT INTO user_auth_realm VALUES (5,1)
+1807	INSERT INTO user_auth_realm VALUES (7,1)
+1810	INSERT INTO user_auth_realm VALUES (7,3)
+1813	INSERT INTO user_auth_realm VALUES (8,1)
+1816	INSERT INTO user_auth_realm VALUES (9,1)
+1819	INSERT INTO user_auth_realm VALUES (10,1)
+1822	INSERT INTO user_auth_realm VALUES (11,1)
+1825	INSERT INTO user_auth_realm VALUES (12,1)
+1828	INSERT INTO user_auth_realm VALUES (13,1)
+1831	INSERT INTO user_auth_realm VALUES (14,1)
+1834	INSERT INTO user_auth_realm VALUES (15,1)
+1837	INSERT INTO user_auth_realm VALUES (16,1)
+1840	INSERT INTO user_auth_realm VALUES (17,1)
+1843	INSERT INTO user_auth_realm VALUES (18,1)
+1846	INSERT INTO user_auth_realm VALUES (19,1)
+1849	INSERT INTO user_auth_realm VALUES (20,1)
+1852	INSERT INTO user_auth_realm VALUES (21,1)
+1854	INSERT INTO user_auth_realm VALUES (22,1)
+1856	INSERT INTO user_auth_realm VALUES (23,1)
+1858	INSERT INTO user_auth_realm VALUES (24,1)
+1860	INSERT INTO user_auth_realm VALUES (25,1)
+1862	INSERT INTO user_auth_realm VALUES (26,1)
+1864	INSERT INTO user_auth_realm VALUES (27,1)
+1866	INSERT INTO user_auth_realm VALUES (28,1)
+1868	INSERT INTO user_auth_realm VALUES (101,1)
+1870	INSERT INTO user_auth_realm VALUES (1043,1)
+1872	CREATE TABLE user_log (\n  `username` varchar(50) NOT NULL default '0',\n  `user_id` mediumint(8) NOT NULL default '0',\n  `time` timestamp NOT NULL default '0000-00-00 00:00:00',\n  `result` tinyint(3) unsigned NOT NULL default '0',\n  `ip` varchar(40) NOT NULL default '',\n  PRIMARY KEY (`username`,`user_id`,`time`),\n  KEY user_id (`user_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1875	CREATE TABLE `user_domains` (\n  `domain_id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `domain_name` varchar(20) NOT NULL,\n  `type` int(10) unsigned NOT NULL DEFAULT '0',\n  `enabled` char(2) NOT NULL DEFAULT 'on',\n  `defdomain` tinyint(3) unsigned NOT NULL DEFAULT '0',\n  `user_id` int(10) unsigned NOT NULL DEFAULT '0',\n  PRIMARY KEY (`domain_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table to Hold Login Domains'
+1878	CREATE TABLE `user_domains_ldap` (\n  `domain_id` int(10) unsigned NOT NULL,\n  `server` varchar(128) NOT NULL,\n  `port` int(10) unsigned NOT NULL,\n  `port_ssl` int(10) unsigned NOT NULL,\n  `proto_version` tinyint(3) unsigned NOT NULL,\n  `encryption` tinyint(3) unsigned NOT NULL,\n  `referrals` tinyint(3) unsigned NOT NULL,\n  `mode` tinyint(3) unsigned NOT NULL,\n  `dn` varchar(128) NOT NULL,\n  `group_require` char(2) NOT NULL,\n  `group_dn` varchar(128) NOT NULL,\n  `group_attrib` varchar(128) NOT NULL,\n  `group_member_type` tinyint(3) unsigned NOT NULL,\n  `search_base` varchar(128) NOT NULL,\n  `search_filter` varchar(512) NOT NULL,\n  `specific_dn` varchar(128) NOT NULL,\n  `specific_password` varchar(128) NOT NULL,\n  `cn_full_name` varchar(50) NULL DEFAULT '',\n  `cn_email` varchar (50) NULL DEFAULT '',\n  PRIMARY KEY (`domain_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Table to Hold Login Domains for LDAP'
+1881	CREATE TABLE `sessions` (\n  `id` varchar(32) NOT NULL,\n  `remote_addr` varchar(25) NOT NULL DEFAULT '',\n  `access` int(10) unsigned DEFAULT NULL,\n  `data` mediumblob,\n  `user_id` int(10) unsigned NOT NULL DEFAULT '0',\n  `user_agent` varchar(128) NOT NULL DEFAULT '',\n  `start_time` timestamp NOT NULL DEFAULT current_timestamp,\n  `transactions` int(10) unsigned NOT NULL DEFAULT '1',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Used for Database based Session Storage'
+1884	CREATE TABLE `sites` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(100) NOT NULL DEFAULT '',\n  `address1` varchar(100) DEFAULT '',\n  `address2` varchar(100) DEFAULT '',\n  `city` varchar(50) DEFAULT '',\n  `state` varchar(20) DEFAULT NULL,\n  `postal_code` varchar(20) DEFAULT '',\n  `country` varchar(30) DEFAULT '',\n  `timezone` varchar(40) DEFAULT '',\n  `latitude` decimal(13,10) NOT NULL DEFAULT '0.0000000000',\n  `longitude` decimal(13,10) NOT NULL DEFAULT '0.0000000000',\n  `zoom` tinyint(3) unsigned DEFAULT NULL,\n  `alternate_id` varchar(30) DEFAULT '',\n  `notes` varchar(1024),\n  PRIMARY KEY (`id`),\n  KEY `name` (`name`),\n  KEY `city` (`city`),\n  KEY `state` (`state`),\n  KEY `postal_code` (`postal_code`),\n  KEY `country` (`country`),\n  KEY `alternate_id` (`alternate_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Contains information about customer sites'
+1887	INSERT INTO `sites` VALUES (1,'Edge','','','','','','','',0.0000000000,0.0000000000,'','','')
+1890	INSERT INTO `sites` VALUES (2,'Core','','','','','','','',0.0000000000,0.0000000000,'','','')
+1893	CREATE TABLE `snmpagent_cache` (\n  `oid` varchar(50) NOT NULL,\n  `name` varchar(50) NOT NULL,\n  `mib` varchar(50) NOT NULL,\n  `type` varchar(50) NOT NULL DEFAULT '',\n  `otype` varchar(50) NOT NULL DEFAULT '',\n  `kind` varchar(50) NOT NULL DEFAULT '',\n  `max-access` varchar(50) NOT NULL DEFAULT 'not-accessible',\n  `value` varchar(255) NOT NULL DEFAULT '',\n  `description` varchar(5000) NOT NULL DEFAULT '',\n  PRIMARY KEY (`oid`),\n  KEY `name` (`name`),\n  KEY `mib_name` (`mib`,`name`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='SNMP MIB CACHE'
+1896	CREATE TABLE `snmpagent_mibs` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(50) NOT NULL DEFAULT '',\n  `file` varchar(255) NOT NULL DEFAULT '',\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Registered MIB files'
+1899	CREATE TABLE `snmpagent_cache_notifications` (\n  `name` varchar(50) NOT NULL,\n  `mib` varchar(50) NOT NULL,\n  `attribute` varchar(50) NOT NULL,\n  `sequence_id` smallint(6) NOT NULL,\n  PRIMARY KEY (`name`,`mib`,`attribute`,`sequence_id`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Notifications and related attributes'
+1902	CREATE TABLE `snmpagent_cache_textual_conventions` (\n  `name` varchar(50) NOT NULL,\n  `mib` varchar(50) NOT NULL,\n  `type` varchar(50) NOT NULL DEFAULT '',\n  `description` varchar(5000) NOT NULL DEFAULT '',\n  PRIMARY KEY (`name`,`mib`,`type`),\n  KEY `mib` (`mib`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='Textual conventions'
+1905	CREATE TABLE `snmpagent_managers` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `hostname` varchar(100) NOT NULL,\n  `description` varchar(255) NOT NULL,\n  `disabled` char(2) DEFAULT NULL,\n  `max_log_size` tinyint(4) NOT NULL,\n  `snmp_version` tinyint(3) unsigned NOT NULL DEFAULT '1',\n  `snmp_community` varchar(100) NOT NULL DEFAULT '',\n  `snmp_username` varchar(50) NOT NULL,\n  `snmp_password` varchar(50) NOT NULL,\n  `snmp_auth_protocol` char(6) NOT NULL,\n  `snmp_priv_passphrase` varchar(200) NOT NULL,\n  `snmp_priv_protocol` char(6) NOT NULL,\n  `snmp_engine_id` varchar(64) DEFAULT NULL,\n  `snmp_port` mediumint(8) unsigned NOT NULL DEFAULT '161',\n  `snmp_message_type` tinyint(4) NOT NULL,\n  `notes` text,\n  PRIMARY KEY (`id`),\n  KEY `hostname` (`hostname`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='snmp notification receivers'
+1908	CREATE TABLE `snmpagent_managers_notifications` (\n  `manager_id` int(10) unsigned NOT NULL,\n  `notification` varchar(50) NOT NULL,\n  `mib` varchar(50) NOT NULL,\n  PRIMARY KEY(`manager_id`,`notification`,`mib`),\n  KEY `mib` (`mib`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='snmp notifications to receivers'
+1911	CREATE TABLE `snmpagent_notifications_log` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `time` int(24) NOT NULL,\n  `severity` tinyint(4) NOT NULL,\n  `manager_id` int(10) unsigned NOT NULL,\n  `notification` varchar(190) NOT NULL,\n  `mib` varchar(50) NOT NULL,\n  `varbinds` varchar(5000) NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `time` (`time`),\n  KEY `severity` (`severity`),\n  KEY `manager_id_notification` (`manager_id`,`notification`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='logs snmp notifications to receivers'
+1914	CREATE TABLE vdef (\n  id mediumint(8) unsigned NOT NULL auto_increment,\n  hash varchar(32) NOT NULL default '',\n  name varchar(255) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY `hash` (`hash`),\n  KEY `name` (`name`(171))\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='vdef'
+1917	INSERT INTO vdef VALUES(1, 'e06ed529238448773038601afb3cf278', 'Maximum')
+1920	INSERT INTO vdef VALUES(2, 'e4872dda82092393d6459c831a50dc3b', 'Minimum')
+1923	INSERT INTO vdef VALUES(3, '5ce1061a46bb62f36840c80412d2e629', 'Average')
+1926	INSERT INTO vdef VALUES(4, '06bd3cbe802da6a0745ea5ba93af554a', 'Last (Current)')
+1929	INSERT INTO vdef VALUES(5, '631c1b9086f3979d6dcf5c7a6946f104', 'First')
+1932	INSERT INTO vdef VALUES(6, '6b5335843630b66f858ce6b7c61fc493', 'Total: Current Data Source')
+1935	INSERT INTO vdef VALUES(7, 'c80d12b0f030af3574da68b28826cd39', '95th Percentage: Current Data Source')
+1938	CREATE TABLE vdef_items (\n  `id` mediumint(8) unsigned NOT NULL auto_increment,\n  `hash` varchar(32) NOT NULL default '',\n  `vdef_id` mediumint(8) unsigned NOT NULL default '0',\n  `sequence` mediumint(8) unsigned NOT NULL default '0',\n  `type` tinyint(3) unsigned NOT NULL default '0',\n  `value` varchar(150) NOT NULL default '',\n  PRIMARY KEY (id),\n  KEY `vdef_id_sequence` (`vdef_id`,`sequence`)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic COMMENT='vdef items'
+1941	INSERT INTO vdef_items VALUES(1, '88d33bf9271ac2bdf490cf1784a342c1', 1, 1, 4, 'CURRENT_DATA_SOURCE')
+1944	INSERT INTO vdef_items VALUES(2, 'a307afab0c9b1779580039e3f7c4f6e5', 1, 2, 1, '1')
+1947	INSERT INTO vdef_items VALUES(3, '0945a96068bb57c80bfbd726cf1afa02', 2, 1, 4, 'CURRENT_DATA_SOURCE')
+1950	INSERT INTO vdef_items VALUES(4, '95a8df2eac60a89e8a8ca3ea3d019c44', 2, 2, 1, '2')
+1953	INSERT INTO vdef_items VALUES(5, 'cc2e1c47ec0b4f02eb13708cf6dac585', 3, 1, 4, 'CURRENT_DATA_SOURCE')
+1956	INSERT INTO vdef_items VALUES(6, 'a2fd796335b87d9ba54af6a855689507', 3, 2, 1, '3')
+1959	INSERT INTO vdef_items VALUES(7, 'a1d7974ee6018083a2053e0d0f7cb901', 4, 1, 4, 'CURRENT_DATA_SOURCE')
+1962	INSERT INTO vdef_items VALUES(8, '26fccba1c215439616bc1b83637ae7f3', 4, 2, 1, '5')
+1965	INSERT INTO vdef_items VALUES(9, 'a8993b265f4c5398f4a47c44b5b37a07', 5, 1, 4, 'CURRENT_DATA_SOURCE')
+1968	INSERT INTO vdef_items VALUES(10, '5a380d469d611719057c3695ce1e4eee', 5, 2, 1, '6')
+1971	INSERT INTO vdef_items VALUES(11, '65cfe546b17175fad41fcca98c057feb', 6, 1, 4, 'CURRENT_DATA_SOURCE')
+1974	INSERT INTO vdef_items VALUES(12, 'f330b5633c3517d7c62762cef091cc9e', 6, 2, 1, '7')
+1977	INSERT INTO vdef_items VALUES(13, 'f1bf2ecf54ca0565cf39c9c3f7e5394b', 7, 1, 4, 'CURRENT_DATA_SOURCE')
+1979	INSERT INTO vdef_items VALUES(14, '11a26f18feba3919be3af426670cba95', 7, 2, 6, '95')
+1981	INSERT INTO vdef_items VALUES(15, 'e7ae90275bc1efada07c19ca3472d9db', 7, 3, 1, '8')
+1983	CREATE TABLE version (\n  cacti char(20) default '',\n  PRIMARY KEY (cacti)\n) ENGINE=InnoDB ROW_FORMAT=Dynamic
+1986	INSERT INTO version VALUES ('new_install')
+2002	UPDATE user_auth SET must_change_password='' WHERE username = 'admin'
+2020	SET GLOBAL time_zone = 'UTC'
+
+
+
+---
+

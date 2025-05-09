@@ -1,0 +1,1174 @@
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 6379\" -T fields -e data"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 6379" -T fields -e data'}:  No output found for the given command.
+
+---
+
+TOOL CALL:
+- tool name: manual_search
+- args: {
+  "searchString": "tcp.port filter syntax"
+}
+
+---
+
+**Similarity: 0.27**
+tcp.port in {443, 4430..4434}
+ip.addr in {10.0.0.5 .. 10.0.0.9, 192.168.1.1..192.168.1.9}
+frame.time_delta in {10 .. 10.5}
+Implicit type conversions
+Fields which are sequences of bytes, including protocols, are implicitly
+converted to strings for comparisons against (double quoted) literal strings
+and raw strings.
+So, for instance, the following filters are equivalent:
+tcp.payload contains "GET"
+tcp.payload contains 47.45.54
+As noted above, a slice can also be compared in either way:
+frame[60:2] gt 50.51
+
+---
+
+**Similarity: 0.29**
+tcp.port == 80 and ip.src == 192.168.2.1
+not llc
+http and frame[100-199] contains "wireshark"
+(ipx.src.net == 0xbad && ipx.src.node == 0.0.0.0.0.1) || ip
+Remember that whenever a protocol or field name occurs in an expression, the
+"exists" operator is implicitly called. The "exists" operator has the highest
+priority. This means that the first filter expression must be read as "show me
+the packets for which tcp.port exists and equals 80, and ip.src exists and
+
+---
+
+**Similarity: 0.32**
+equal by one to the source port with the expression:
+udp.dstport >= udp.srcport + 1
+It is possible to group arithmetic expressions using curly brackets (parenthesis
+will not work for this):
+tcp.dstport >= 4 * {tcp.srcport + 3}
+Do not confuse this usage of curly brackets with set membership.
+An unfortunate quirk in the filter syntax is that the subtraction operator
+must be preceded by a space character, so "A-B" must be written as "A -B"
+or "A - B".
+Protocol field references
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 6379 && data\" -T fields -e data"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 6379 && data" -T fields -e data'}:  No output found for the given command.
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 6379\" -T fields -e data.data"
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 6379" -T fields -e data.data'}:  No output found for the given command.
+
+---
+
+TOOL CALL:
+- tool name: command_executor
+- args: {
+  "tshark_command": "-Y \"tcp.port == 6379\""
+}
+
+---
+
+
+Result of command {'tshark_command': '-Y "tcp.port == 6379"'}:      1   0.000000   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+    2   0.001622   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+    3   0.001724   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=6 Ack=93 Win=507 Len=0 TSval=1966859630 TSecr=2878650005
+    4   0.684324   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+    5   0.684600   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+    6   0.684667   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=762 Ack=5 Win=502 Len=0 TSval=2878650688 TSecr=1966860313
+    7   0.684892   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+    8   0.684950   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=790 Win=501 Len=0 TSval=2878650689 TSecr=1966860314
+    9   0.685401   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   10   0.685476   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=783 Win=501 Len=0 TSval=2753846260 TSecr=102552281
+   11   1.184102   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   12   1.184565   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   13   1.184650   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=516 Ack=5 Win=502 Len=0 TSval=2753846759 TSecr=102552780
+   14   1.184809   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   15   1.184879   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=540 Win=501 Len=0 TSval=2878651189 TSecr=1966860814
+   16   1.223921   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   17   1.224443   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   18   1.224523   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=11 Ack=185 Win=507 Len=0 TSval=1966860853 TSecr=2878651228
+   19   2.546341   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   20   2.547605   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   21   2.547731   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=16 Ack=277 Win=507 Len=0 TSval=1966862176 TSecr=2878652551
+   22   2.688728   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   23   2.689664   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   24   2.689757   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=1523 Ack=9 Win=502 Len=0 TSval=2878652693 TSecr=1966862318
+   25   2.690057   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   26   2.690140   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=1579 Win=501 Len=0 TSval=2878652694 TSecr=1966862319
+   27   2.690623   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   28   2.690710   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=1565 Win=501 Len=0 TSval=2753848265 TSecr=102554286
+   29   3.768222   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   30   3.769905   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   31   3.770107   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=21 Ack=369 Win=507 Len=0 TSval=1966863399 TSecr=2878653774
+   32   4.692340   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   33   4.692885   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   34   4.693038   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=2284 Ack=13 Win=502 Len=0 TSval=2878654697 TSecr=1966864322
+   35   4.693155   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   36   4.693242   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=2368 Win=501 Len=0 TSval=2878654697 TSecr=1966864322
+   37   4.693351   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   38   4.693442   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=2347 Win=501 Len=0 TSval=2753850268 TSecr=102556289
+   39   5.087431   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   40   5.088082   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   41   5.088168   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=26 Ack=461 Win=507 Len=0 TSval=1966864717 TSecr=2878655092
+   42   6.185223   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   43   6.185676   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   44   6.185749   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=1031 Ack=9 Win=502 Len=0 TSval=2753851760 TSecr=102557781
+   45   6.185872   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   46   6.185954   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=1079 Win=501 Len=0 TSval=2878656190 TSecr=1966865815
+   47   6.301181   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   48   6.301719   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   49   6.301795   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=31 Ack=553 Win=507 Len=0 TSval=1966865931 TSecr=2878656305
+   50   6.695244   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   51   6.695476   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   52   6.695538   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=3045 Ack=17 Win=502 Len=0 TSval=2878656699 TSecr=1966866324
+   53   6.695608   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   54   6.695666   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=3157 Win=501 Len=0 TSval=2878656699 TSecr=1966866324
+   55   6.695737   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   56   6.695824   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=3129 Win=501 Len=0 TSval=2753852271 TSecr=102558291
+   57   7.518601   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   58   7.519801   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   59   7.519918   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=36 Ack=645 Win=507 Len=0 TSval=1966867149 TSecr=2878657524
+   70   8.701255   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   71   8.701651   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   72   8.701777   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=3806 Ack=21 Win=502 Len=0 TSval=2878658705 TSecr=1966868330
+   73   8.701920   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   74   8.702034   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=3946 Win=501 Len=0 TSval=2878658706 TSecr=1966868331
+   75   8.702178   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   76   8.702297   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=3911 Win=501 Len=0 TSval=2753854277 TSecr=102560298
+   77   8.835941   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   78   8.836732   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   79   8.836873   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=41 Ack=737 Win=507 Len=0 TSval=1966868466 TSecr=2878658840
+   80  10.055329   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   81  10.055839   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   82  10.055921   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=46 Ack=829 Win=507 Len=0 TSval=1966869685 TSecr=2878660060
+   83  10.705654   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   84  10.706133   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   85  10.706278   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=4567 Ack=25 Win=502 Len=0 TSval=2878660710 TSecr=1966870335
+   86  10.706367   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   87  10.706435   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=4735 Win=501 Len=0 TSval=2878660710 TSecr=1966870335
+   88  10.706541   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   89  10.706613   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=4693 Win=501 Len=0 TSval=2753856281 TSecr=102562302
+   90  11.185188   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   91  11.185557   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   92  11.185640   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=1546 Ack=13 Win=502 Len=0 TSval=2753856760 TSecr=102562781
+   93  11.185770   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   94  11.185841   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=1618 Win=501 Len=0 TSval=2878661190 TSecr=1966870814
+   95  11.375209   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   96  11.375904   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   97  11.375990   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=51 Ack=921 Win=507 Len=0 TSval=1966871005 TSecr=2878661380
+   98  12.599672   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   99  12.600389   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  100  12.600464   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=56 Ack=1013 Win=507 Len=0 TSval=1966872229 TSecr=2878662604
+  158  12.707965   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  159  12.708347   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  160  12.708464   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=5328 Ack=29 Win=502 Len=0 TSval=2878662712 TSecr=1966872337
+  161  12.708553   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  162  12.708638   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=5524 Win=501 Len=0 TSval=2878662712 TSecr=1966872337
+  163  12.708726   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  164  12.708816   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=5475 Win=501 Len=0 TSval=2753858284 TSecr=102564304
+  170  13.820663   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  171  13.821347   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  172  13.821422   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=61 Ack=1105 Win=507 Len=0 TSval=1966873450 TSecr=2878663825
+  173  14.711973   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  174  14.712464   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  175  14.712590   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=6089 Ack=33 Win=502 Len=0 TSval=2878664716 TSecr=1966874341
+  176  14.712678   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  177  14.712757   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=6313 Win=501 Len=0 TSval=2878664716 TSecr=1966874341
+  178  14.712859   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  179  14.712933   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=6257 Win=501 Len=0 TSval=2753860288 TSecr=102566309
+  180  15.142190   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  181  15.143452   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  182  15.143560   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=66 Ack=1197 Win=507 Len=0 TSval=1966874772 TSecr=2878665147
+  183  16.185085   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  184  16.185542   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  185  16.185613   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=2061 Ack=17 Win=502 Len=0 TSval=2753861760 TSecr=102567781
+  186  16.186018   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  187  16.186085   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=2157 Win=501 Len=0 TSval=2878666190 TSecr=1966875815
+  188  16.368454   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  189  16.368961   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  190  16.369039   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=71 Ack=1289 Win=507 Len=0 TSval=1966875998 TSecr=2878666373
+  191  16.715438   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  192  16.715694   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  193  16.715773   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=6850 Ack=37 Win=502 Len=0 TSval=2878666719 TSecr=1966876344
+  194  16.715865   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  195  16.715937   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=7102 Win=501 Len=0 TSval=2878666720 TSecr=1966876345
+  196  16.716035   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  197  16.716111   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=7039 Win=501 Len=0 TSval=2753862291 TSecr=102568312
+  200  17.242050   172.18.0.1 â†’ 172.18.0.3   TCP 74 60000 â†’ 6379 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3768791546 TSecr=0 WS=128
+  201  17.242181   172.18.0.3 â†’ 172.18.0.1   TCP 74 6379 â†’ 60000 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=2601154648 TSecr=3768791546 WS=128
+  202  17.242241   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=3768791546 TSecr=2601154648
+  203  17.242495   172.18.0.1 â†’ 172.18.0.3   RESP 123 Request: CLIENT SETINFO LIB-NAME redis-py
+  204  17.242575   172.18.0.3 â†’ 172.18.0.1   TCP 66 6379 â†’ 60000 [ACK] Seq=1 Ack=58 Win=65152 Len=0 TSval=2601154648 TSecr=3768791546
+  205  17.243684   172.18.0.3 â†’ 172.18.0.1   RESP 151 Response: Error: ERR Unknown subcommand or wrong number of arguments for 'SETINFO'. Try CLIENT HELP
+  206  17.243723   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=58 Ack=86 Win=64256 Len=0 TSval=3768791547 TSecr=2601154649
+  207  17.244598   172.18.0.1 â†’ 172.18.0.3   RESP 119 Request: CLIENT SETINFO LIB-VER 5.2.1
+  208  17.245235   172.18.0.3 â†’ 172.18.0.1   RESP 151 Response: Error: ERR Unknown subcommand or wrong number of arguments for 'SETINFO'. Try CLIENT HELP
+  209  17.246072   172.18.0.1 â†’ 172.18.0.3   RESP 1006 Request: LPUSH default BulkString(904)
+  210  17.247394   172.18.0.3 â†’ 172.18.0.6   RESP 995 Response: Array(2)
+  211  17.247489   172.18.0.3 â†’ 172.18.0.1   RESP 70 Response: 1
+  212  17.248780   172.18.0.6 â†’ 172.18.0.3   RESP 80 Request: PING
+  213  17.248957   172.18.0.3 â†’ 172.18.0.6   RESP 73 Response: PONG
+  214  17.249021   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=15 Ack=8 Win=502 Len=0 TSval=2878667253 TSecr=1966876878
+  215  17.249176   172.18.0.6 â†’ 172.18.0.3   RESP 1195 Request: MULTI ZADD unacked_index 1738159197.9404595 f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 HSET unacked f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 BulkString(920) EXEC
+  216  17.249493   172.18.0.3 â†’ 172.18.0.6   RESP 101 Response: OK QUEUED QUEUED Array(2)
+  217  17.251743   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  218  17.251916   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1000 Ack=1381 Win=507 Len=0 TSval=1966876881 TSecr=2878667255
+  219  17.252708   172.18.0.6 â†’ 172.18.0.3   RESP 979 Request: PUBLISH /0.celeryev/task.multi BulkString(859)
+  220  17.252895   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  221  17.252957   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=7763 Ack=41 Win=502 Len=0 TSval=2878667257 TSecr=1966876882
+  222  17.253081   172.18.0.3 â†’ 172.18.0.8   RESP 1000 Response: Array(4)
+  223  17.253145   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=7973 Win=501 Len=0 TSval=2753862828 TSecr=102568849
+  224  17.253304   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [FIN, ACK] Seq=1051 Ack=175 Win=64256 Len=0 TSval=3768791557 TSecr=2601154653
+  225  17.253988   172.18.0.3 â†’ 172.18.0.1   TCP 66 6379 â†’ 60000 [FIN, ACK] Seq=175 Ack=1052 Win=64256 Len=0 TSval=2601154660 TSecr=3768791557
+  226  17.254024   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=1052 Ack=176 Win=64256 Len=0 TSval=3768791558 TSecr=2601154660
+  227  17.258102   172.18.0.6 â†’ 172.18.0.3   RESP 695 Request: PUBLISH /0.celeryev/task.multi BulkString(575)
+  228  17.258342   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  229  17.258432   172.18.0.3 â†’ 172.18.0.8   RESP 716 Response: Array(4)
+  230  17.258499   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=8623 Win=501 Len=0 TSval=2753862833 TSecr=102568854
+  233  17.291131   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1144 Ack=43 Win=502 Len=0 TSval=2878667295 TSecr=1966876878
+  247  17.299375   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=8392 Ack=45 Win=502 Len=0 TSval=2878667303 TSecr=1966876887
+  308  17.391866   172.18.0.6 â†’ 172.18.0.3   RESP 242 Request: MULTI ZREM unacked_index f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 HDEL unacked f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 EXEC
+  309  17.392117   172.18.0.3 â†’ 172.18.0.6   RESP 101 Response: OK QUEUED QUEUED Array(2)
+  310  17.392176   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1320 Ack=78 Win=502 Len=0 TSval=2878667396 TSecr=1966877021
+  311  17.392771   172.18.0.6 â†’ 172.18.0.3   RESP 763 Request: PUBLISH /0.celeryev/task.multi BulkString(643)
+  312  17.392942   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  313  17.393000   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=9089 Ack=49 Win=502 Len=0 TSval=2878667397 TSecr=1966877022
+  314  17.393070   172.18.0.3 â†’ 172.18.0.8   RESP 784 Response: Array(4)
+  315  17.393130   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=9341 Win=501 Len=0 TSval=2753862968 TSecr=102568989
+  317  18.301952   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  318  18.302402   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  319  18.302474   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1005 Ack=1473 Win=507 Len=0 TSval=1966877931 TSecr=2878668306
+  330  18.718657   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  331  18.719489   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  332  18.719656   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=9850 Ack=53 Win=502 Len=0 TSval=2878668723 TSecr=1966878348
+  333  18.719769   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  334  18.719844   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=7891 Win=501 Len=0 TSval=2878668724 TSecr=1966878348
+  335  18.719937   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  336  18.720017   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=10123 Win=501 Len=0 TSval=2753864295 TSecr=102570316
+  337  19.521485   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  338  19.523406   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  339  19.523561   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1010 Ack=1565 Win=507 Len=0 TSval=1966879152 TSecr=2878669527
+  340  20.724667   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  341  20.725601   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  342  20.725872   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=10611 Ack=57 Win=502 Len=0 TSval=2878670729 TSecr=1966880354
+  343  20.726065   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  344  20.726223   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=8680 Win=501 Len=0 TSval=2878670730 TSecr=1966880355
+  345  20.726405   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  346  20.726545   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=10905 Win=501 Len=0 TSval=2753866301 TSecr=102572322
+  347  20.839392   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  348  20.840897   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  349  20.841023   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1015 Ack=1657 Win=507 Len=0 TSval=1966880470 TSecr=2878670845
+  350  21.185311   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  351  21.186101   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  352  21.186210   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=2576 Ack=21 Win=502 Len=0 TSval=2753866761 TSecr=102572782
+  353  21.186395   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  354  21.186499   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=2696 Win=501 Len=0 TSval=2878671190 TSecr=1966880815
+  355  22.058099   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  356  22.059478   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  357  22.059581   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1020 Ack=1749 Win=507 Len=0 TSval=1966881688 TSecr=2878672063
+  362  22.728765   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  363  22.729555   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  364  22.729958   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=11372 Ack=61 Win=502 Len=0 TSval=2878672733 TSecr=1966882358
+  365  22.730241   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  366  22.730322   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=9469 Win=501 Len=0 TSval=2878672734 TSecr=1966882359
+  367  22.730464   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  368  22.730547   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=11687 Win=501 Len=0 TSval=2753868305 TSecr=102574326
+  369  23.276059   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  370  23.277343   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  371  23.277510   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1025 Ack=1841 Win=507 Len=0 TSval=1966882906 TSecr=2878673281
+  372  24.591543   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  373  24.592233   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  374  24.592317   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1030 Ack=1933 Win=507 Len=0 TSval=1966884221 TSecr=2878674596
+  375  24.732165   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  376  24.732568   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  377  24.732689   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=12133 Ack=65 Win=502 Len=0 TSval=2878674736 TSecr=1966884361
+  378  24.732780   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  379  24.732846   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=10258 Win=501 Len=0 TSval=2878674737 TSecr=1966884361
+  380  24.732949   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  381  24.733022   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=12469 Win=501 Len=0 TSval=2753870308 TSecr=102576329
+  382  25.809715   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  383  25.811639   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  384  25.811822   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1035 Ack=2025 Win=507 Len=0 TSval=1966885441 TSecr=2878675815
+  385  26.185685   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  386  26.186344   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  387  26.186491   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=3091 Ack=25 Win=502 Len=0 TSval=2753871761 TSecr=102577782
+  388  26.186742   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  389  26.187300   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=3235 Win=501 Len=0 TSval=2878676191 TSecr=1966885815
+  390  26.631255   172.18.0.6 â†’ 172.18.0.3   RESP 144 Request: SETNX unacked_mutex 1e098ea5-2a0b-4052-90b8-aa96e59edd8a
+  391  26.631593   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  392  26.631674   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1398 Ack=82 Win=502 Len=0 TSval=2878676635 TSecr=1966886260
+  393  26.631986   172.18.0.6 â†’ 172.18.0.3   RESP 111 Request: EXPIRE unacked_mutex 300
+  394  26.632248   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  395  26.632431   172.18.0.6 â†’ 172.18.0.3   RESP 162 Request: ZREVRANGEBYSCORE unacked_index 1738137607.3227947 0 WITHSCORES
+  396  26.632636   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response:
+  397  26.632811   172.18.0.6 â†’ 172.18.0.3   RESP 101 Request: WATCH unacked_mutex
+  398  26.633009   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response: OK
+  399  26.633165   172.18.0.6 â†’ 172.18.0.3   RESP 99 Request: GET unacked_mutex
+  400  26.633375   172.18.0.3 â†’ 172.18.0.6   RESP 109 Response: 1e098ea5-2a0b-4052-90b8-aa96e59edd8a
+  401  26.633537   172.18.0.6 â†’ 172.18.0.3   RESP 128 Request: MULTI DEL unacked_mutex EXEC
+  402  26.633783   172.18.0.3 â†’ 172.18.0.6   RESP 88 Response: OK QUEUED Array(1)
+  403  26.633994   172.18.0.6 â†’ 172.18.0.3   RESP 83 Request: UNWATCH
+  404  26.634223   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response: OK
+  405  26.675150   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1686 Ack=165 Win=502 Len=0 TSval=2878676679 TSecr=1966886263
+  406  26.734737   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  407  26.735323   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  408  26.735398   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=12894 Ack=69 Win=502 Len=0 TSval=2878676739 TSecr=1966886364
+  409  26.735642   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  410  26.735709   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=11047 Win=501 Len=0 TSval=2878676739 TSecr=1966886364
+  411  26.736155   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  412  26.736227   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=13251 Win=501 Len=0 TSval=2753872311 TSecr=102578332
+  413  27.126690   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  414  27.127623   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  415  27.127723   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1040 Ack=2117 Win=507 Len=0 TSval=1966886756 TSecr=2878677131
+  416  28.341853   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  417  28.342319   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  418  28.342384   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1045 Ack=2209 Win=507 Len=0 TSval=1966887971 TSecr=2878678346
+  429  28.740966   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  430  28.741525   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  431  28.741705   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=13655 Ack=73 Win=502 Len=0 TSval=2878678745 TSecr=1966888370
+  432  28.741858   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  433  28.741975   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=11836 Win=501 Len=0 TSval=2878678746 TSecr=1966888371
+  434  28.742122   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  435  28.742241   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=14033 Win=501 Len=0 TSval=2753874317 TSecr=102580338
+  436  29.560519   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  437  29.561077   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  438  29.561177   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1050 Ack=2301 Win=507 Len=0 TSval=1966889190 TSecr=2878679565
+  439  30.745531   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  440  30.745879   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  441  30.745979   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=14416 Ack=77 Win=502 Len=0 TSval=2878680750 TSecr=1966890375
+  442  30.746056   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  443  30.746116   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=12625 Win=501 Len=0 TSval=2878680750 TSecr=1966890375
+  444  30.746189   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  445  30.746250   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=14815 Win=501 Len=0 TSval=2753876321 TSecr=102582342
+  446  30.884342   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  447  30.885979   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  448  30.886170   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1055 Ack=2393 Win=507 Len=0 TSval=1966890515 TSecr=2878680890
+  449  31.184083   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  450  31.184910   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  451  31.185078   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=3605 Ack=29 Win=502 Len=0 TSval=2753876760 TSecr=102582781
+  452  31.185329   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  453  31.185483   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=3773 Win=501 Len=0 TSval=2878681189 TSecr=1966890814
+  454  32.109933   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  455  32.111483   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  456  32.111735   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1060 Ack=2485 Win=507 Len=0 TSval=1966891740 TSecr=2878682115
+  457  32.750727   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  458  32.752326   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  459  32.752430   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=15177 Ack=81 Win=502 Len=0 TSval=2878682756 TSecr=1966892381
+  460  32.752736   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  461  32.752824   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=13414 Win=501 Len=0 TSval=2878682757 TSecr=1966892381
+  462  32.753387   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  463  32.753480   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=15597 Win=501 Len=0 TSval=2753878328 TSecr=102584349
+  464  33.442075   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  465  33.443778   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  466  33.443983   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1065 Ack=2577 Win=507 Len=0 TSval=1966893073 TSecr=2878683447
+  467  34.670703   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  468  34.672438   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  469  34.672688   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1070 Ack=2669 Win=507 Len=0 TSval=1966894301 TSecr=2878684676
+  470  34.758679   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  471  34.759191   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  472  34.759269   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=15938 Ack=85 Win=502 Len=0 TSval=2878684763 TSecr=1966894388
+  473  34.759347   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  474  34.759404   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=14203 Win=501 Len=0 TSval=2878684763 TSecr=1966894388
+  475  34.759481   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  476  34.759568   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=16379 Win=501 Len=0 TSval=2753880334 TSecr=102586355
+  477  35.895718   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  478  35.897342   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  479  35.897488   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1075 Ack=2761 Win=507 Len=0 TSval=1966895526 TSecr=2878685901
+  480  36.185689   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  481  36.186280   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  482  36.186467   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=4120 Ack=33 Win=502 Len=0 TSval=2753881761 TSecr=102587782
+  483  36.186724   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  484  36.187681   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=4312 Win=501 Len=0 TSval=2878686191 TSecr=1966895815
+  485  36.763013   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  486  36.763432   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  487  36.763550   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=16699 Ack=89 Win=502 Len=0 TSval=2878686767 TSecr=1966896392
+  488  36.763637   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  489  36.763695   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=14992 Win=501 Len=0 TSval=2878686767 TSecr=1966896392
+  490  36.763766   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  491  36.763827   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=17161 Win=501 Len=0 TSval=2753882339 TSecr=102588359
+  492  37.217387   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  493  37.218108   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  494  37.218177   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1080 Ack=2853 Win=507 Len=0 TSval=1966896847 TSecr=2878687222
+  495  38.434738   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  496  38.435756   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  497  38.435840   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1085 Ack=2945 Win=507 Len=0 TSval=1966898065 TSecr=2878688439
+  498  38.765638   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  499  38.768062   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  500  38.768289   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=17460 Ack=93 Win=502 Len=0 TSval=2878688772 TSecr=1966898397
+  501  38.768389   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  502  38.768460   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=15781 Win=501 Len=0 TSval=2878688772 TSecr=1966898397
+  503  38.768548   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  504  38.768629   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=17943 Win=501 Len=0 TSval=2753884343 TSecr=102590364
+  515  39.748067   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  516  39.749013   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  517  39.749097   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1090 Ack=3037 Win=507 Len=0 TSval=1966899378 TSecr=2878689753
+  518  40.772365   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  519  40.772897   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  520  40.773002   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=18221 Ack=97 Win=502 Len=0 TSval=2878690777 TSecr=1966900402
+  521  40.773319   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  522  40.773415   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=16570 Win=501 Len=0 TSval=2878690777 TSecr=1966900402
+  523  40.773906   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  524  40.773983   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=18725 Win=501 Len=0 TSval=2753886349 TSecr=102592370
+  525  40.964532   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  526  40.965069   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  527  40.965154   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1095 Ack=3129 Win=507 Len=0 TSval=1966900594 TSecr=2878690969
+  528  41.183214   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  529  41.183539   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  530  41.183618   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=4634 Ack=37 Win=502 Len=0 TSval=2753886758 TSecr=102592779
+  531  41.183744   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  532  41.183814   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=4850 Win=501 Len=0 TSval=2878691188 TSecr=1966900812
+  533  42.181791   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  534  42.182323   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  535  42.182413   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1100 Ack=3221 Win=507 Len=0 TSval=1966901811 TSecr=2878692186
+  536  42.776546   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  537  42.776964   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  538  42.777414   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=18982 Ack=101 Win=502 Len=0 TSval=2878692781 TSecr=1966902406
+  539  42.778055   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  540  42.778180   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=17359 Win=501 Len=0 TSval=2878692782 TSecr=1966902407
+  541  42.779298   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  542  42.779403   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=19507 Win=501 Len=0 TSval=2753888354 TSecr=102594375
+  543  43.495764   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  544  43.496286   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  545  43.496358   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1105 Ack=3313 Win=507 Len=0 TSval=1966903125 TSecr=2878693500
+  604  44.710517   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  605  44.711370   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  606  44.711460   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1110 Ack=3405 Win=507 Len=0 TSval=1966904340 TSecr=2878694715
+  607  44.780461   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  608  44.780764   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  609  44.780856   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=19743 Ack=105 Win=502 Len=0 TSval=2878694785 TSecr=1966904409
+  610  44.781184   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  611  44.781271   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=18148 Win=501 Len=0 TSval=2878694785 TSecr=1966904410
+  612  44.781797   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  613  44.781887   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=20289 Win=501 Len=0 TSval=2753890357 TSecr=102596378
+  618  46.026975   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  619  46.027640   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  620  46.027735   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1115 Ack=3497 Win=507 Len=0 TSval=1966905656 TSecr=2878696031
+  621  46.185268   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  622  46.186142   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  623  46.186364   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=5149 Ack=41 Win=502 Len=0 TSval=2753891761 TSecr=102597782
+  624  46.186544   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  625  46.186682   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=5389 Win=501 Len=0 TSval=2878696190 TSecr=1966905815
+  626  46.783941   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  627  46.784316   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  628  46.784418   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=20504 Ack=109 Win=502 Len=0 TSval=2878696788 TSecr=1966906413
+  629  46.784735   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  630  46.784806   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=18937 Win=501 Len=0 TSval=2878696789 TSecr=1966906413
+  631  46.785281   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  632  46.785356   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=21071 Win=501 Len=0 TSval=2753892360 TSecr=102598381
+  633  47.245192   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  634  47.245873   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  635  47.245967   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1120 Ack=3589 Win=507 Len=0 TSval=1966906875 TSecr=2878697250
+  636  48.460868   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  637  48.461425   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  638  48.461511   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1125 Ack=3681 Win=507 Len=0 TSval=1966908090 TSecr=2878698465
+  639  48.786255   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  640  48.786527   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  641  48.786663   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=21265 Ack=113 Win=502 Len=0 TSval=2878698790 TSecr=1966908415
+  642  48.787220   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  643  48.787295   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=19726 Win=501 Len=0 TSval=2878698791 TSecr=1966908416
+  644  48.787995   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  645  48.788071   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=21853 Win=501 Len=0 TSval=2753894363 TSecr=102600384
+  656  49.783469   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  657  49.783985   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  658  49.784069   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1130 Ack=3773 Win=507 Len=0 TSval=1966909413 TSecr=2878699788
+  659  50.790631   172.18.0.6 â†’ 172.18.0.3   RESP 823 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(697)
+  660  50.791320   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  661  50.791441   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=22022 Ack=117 Win=502 Len=0 TSval=2878700795 TSecr=1966910420
+  662  50.791532   172.18.0.3 â†’ 172.18.0.6   RESP 851 Response: Array(4)
+  663  50.791599   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=20511 Win=501 Len=0 TSval=2878700795 TSecr=1966910420
+  664  50.791681   172.18.0.3 â†’ 172.18.0.8   RESP 844 Response: Array(4)
+  665  50.791750   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=22631 Win=501 Len=0 TSval=2753896366 TSecr=102602387
+  666  51.000948   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  667  51.002193   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  668  51.002361   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1135 Ack=3865 Win=507 Len=0 TSval=1966910631 TSecr=2878701006
+  669  51.183203   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  670  51.183527   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  671  51.183606   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=5664 Ack=45 Win=502 Len=0 TSval=2753896758 TSecr=102602779
+  672  51.183736   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  673  51.183806   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=5928 Win=501 Len=0 TSval=2878701188 TSecr=1966910812
+  674  52.314467   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  675  52.315442   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  676  52.315530   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1140 Ack=3957 Win=507 Len=0 TSval=1966911944 TSecr=2878702319
+  677  52.795986   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  678  52.796694   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  679  52.796863   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=22783 Ack=121 Win=502 Len=0 TSval=2878702801 TSecr=1966912425
+  680  52.796994   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  681  52.797094   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=21300 Win=501 Len=0 TSval=2878702801 TSecr=1966912426
+  682  52.797239   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  683  52.797324   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=23413 Win=501 Len=0 TSval=2753898372 TSecr=102604393
+  684  53.533420   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  685  53.534727   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  686  53.535397   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1145 Ack=4049 Win=507 Len=0 TSval=1966913164 TSecr=2878703538
+  687  54.754196   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  688  54.755657   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  689  54.755765   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1150 Ack=4141 Win=507 Len=0 TSval=1966914384 TSecr=2878704759
+  690  54.800175   172.18.0.6 â†’ 172.18.0.3   RESP 823 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(697)
+  691  54.800598   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  692  54.800751   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=23540 Ack=125 Win=502 Len=0 TSval=2878704804 TSecr=1966914429
+  693  54.800850   172.18.0.3 â†’ 172.18.0.6   RESP 851 Response: Array(4)
+  694  54.800911   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=22085 Win=501 Len=0 TSval=2878704805 TSecr=1966914430
+  695  54.800987   172.18.0.3 â†’ 172.18.0.8   RESP 844 Response: Array(4)
+  696  54.801051   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=24191 Win=501 Len=0 TSval=2753900376 TSecr=102606397
+  697  56.078714   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  698  56.080786   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  699  56.080910   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1155 Ack=4233 Win=507 Len=0 TSval=1966915710 TSecr=2878706084
+  700  56.184547   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  701  56.185004   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  702  56.185098   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=6179 Ack=49 Win=502 Len=0 TSval=2753901760 TSecr=102607781
+  703  56.185242   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  704  56.185420   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=6467 Win=501 Len=0 TSval=2878706189 TSecr=1966915814
+  705  56.803172   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  706  56.803519   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  707  56.803619   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=24301 Ack=129 Win=502 Len=0 TSval=2878706807 TSecr=1966916432
+  708  56.803695   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  709  56.803755   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=22874 Win=501 Len=0 TSval=2878706807 TSecr=1966916432
+  710  56.803873   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  711  56.803946   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=24973 Win=501 Len=0 TSval=2753902379 TSecr=102608400
+  712  57.298601   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  713  57.300137   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  714  57.300259   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1160 Ack=4325 Win=507 Len=0 TSval=1966916929 TSecr=2878707304
+  715  58.627602   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  716  58.628162   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  717  58.628244   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1165 Ack=4417 Win=507 Len=0 TSval=1966918257 TSecr=2878708632
+  718  58.805804   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  719  58.806022   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  720  58.806084   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=25062 Ack=133 Win=502 Len=0 TSval=2878708810 TSecr=1966918435
+  721  58.806155   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  722  58.806212   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=23663 Win=501 Len=0 TSval=2878708810 TSecr=1966918435
+  723  58.806284   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  724  58.806345   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=25755 Win=501 Len=0 TSval=2753904381 TSecr=102610402
+  735  59.849913   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  736  59.850465   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  737  59.850545   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1170 Ack=4509 Win=507 Len=0 TSval=1966919479 TSecr=2878709854
+  738  60.808804   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  739  60.809047   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  740  60.809110   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=25823 Ack=137 Win=502 Len=0 TSval=2878710813 TSecr=1966920438
+  741  60.809181   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  742  60.809238   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=24452 Win=501 Len=0 TSval=2878710813 TSecr=1966920438
+  743  60.809311   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  744  60.809371   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=26537 Win=501 Len=0 TSval=2753906384 TSecr=102612405
+  745  61.064171   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  746  61.065095   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  747  61.065270   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1175 Ack=4601 Win=507 Len=0 TSval=1966920694 TSecr=2878711069
+  748  61.183902   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  749  61.184633   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  750  61.184743   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=6694 Ack=53 Win=502 Len=0 TSval=2753906759 TSecr=102612780
+  751  61.184928   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  752  61.185031   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=7006 Win=501 Len=0 TSval=2878711189 TSecr=1966920814
+  753  62.389096   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  754  62.390085   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  755  62.390190   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1180 Ack=4693 Win=507 Len=0 TSval=1966922019 TSecr=2878712394
+  756  62.812471   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  757  62.813718   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  758  62.813832   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=26584 Ack=141 Win=502 Len=0 TSval=2878712818 TSecr=1966922442
+  759  62.814187   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  760  62.814283   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=25241 Win=501 Len=0 TSval=2878712818 TSecr=1966922443
+  761  62.815613   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  762  62.815728   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=27319 Win=501 Len=0 TSval=2753908390 TSecr=102614411
+  763  63.611320   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  764  63.611837   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  765  63.611917   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1185 Ack=4785 Win=507 Len=0 TSval=1966923241 TSecr=2878713616
+  766  64.820019   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  767  64.820453   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  768  64.820562   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=27345 Ack=145 Win=502 Len=0 TSval=2878714824 TSecr=1966924449
+  769  64.820901   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  770  64.821003   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=26030 Win=501 Len=0 TSval=2878714825 TSecr=1966924450
+  771  64.821649   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  772  64.821757   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=28101 Win=501 Len=0 TSval=2753910396 TSecr=102616417
+  773  64.933136   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  774  64.933630   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  775  64.933713   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1190 Ack=4877 Win=507 Len=0 TSval=1966924562 TSecr=2878714937
+  776  66.153753   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  777  66.154416   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  778  66.154534   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1195 Ack=4969 Win=507 Len=0 TSval=1966925783 TSecr=2878716158
+  779  66.183548   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  780  66.184041   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  781  66.184110   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=7208 Ack=57 Win=502 Len=0 TSval=2753911759 TSecr=102617780
+  782  66.184224   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  783  66.184289   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=7544 Win=501 Len=0 TSval=2878716188 TSecr=1966925813
+  784  66.823528   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  785  66.823896   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  786  66.823974   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=28106 Ack=149 Win=502 Len=0 TSval=2878716828 TSecr=1966926453
+  787  66.824067   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  788  66.824155   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=26819 Win=501 Len=0 TSval=2878716828 TSecr=1966926453
+  789  66.824243   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  790  66.824318   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=28883 Win=501 Len=0 TSval=2753912399 TSecr=102618420
+  791  67.378368   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  792  67.379599   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  793  67.379729   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1200 Ack=5061 Win=507 Len=0 TSval=1966927008 TSecr=2878717383
+
+
+---
+
+TOOL CALL:
+- tool name: final_answer_formatter
+- args: {
+  "report": "The analysis of TCP packets on port 6379 revealed several Redis commands and responses. Commands such as BRPOP, PUBLISH, CLIENT SETINFO, LPUSH, PING, MULTI, ZADD, HSET, EXEC, SETNX, EXPIRE, ZREVRANGEBYSCORE, WATCH, GET, DEL, and UNWATCH were observed. Notably, the CLIENT SETINFO command resulted in errors, indicating unknown subcommands or incorrect arguments, which could be suspicious. The presence of these commands suggests typical Redis operations, but the errors might indicate an attempt to execute unsupported or incorrect commands.",
+  "executed_command": "-Y \"tcp.port == 6379\""
+}
+
+---
+
+Final report from the forensic expert:
+The analysis of TCP packets on port 6379 revealed several Redis commands and responses. Commands such as BRPOP, PUBLISH, CLIENT SETINFO, LPUSH, PING, MULTI, ZADD, HSET, EXEC, SETNX, EXPIRE, ZREVRANGEBYSCORE, WATCH, GET, DEL, and UNWATCH were observed. Notably, the CLIENT SETINFO command resulted in errors, indicating unknown subcommands or incorrect arguments, which could be suspicious. The presence of these commands suggests typical Redis operations, but the errors might indicate an attempt to execute unsupported or incorrect commands.
+Executed command: -Y "tcp.port == 6379"
+
+Command output:     1   0.000000   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+    2   0.001622   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+    3   0.001724   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=6 Ack=93 Win=507 Len=0 TSval=1966859630 TSecr=2878650005
+    4   0.684324   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+    5   0.684600   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+    6   0.684667   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=762 Ack=5 Win=502 Len=0 TSval=2878650688 TSecr=1966860313
+    7   0.684892   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+    8   0.684950   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=790 Win=501 Len=0 TSval=2878650689 TSecr=1966860314
+    9   0.685401   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   10   0.685476   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=783 Win=501 Len=0 TSval=2753846260 TSecr=102552281
+   11   1.184102   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   12   1.184565   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   13   1.184650   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=516 Ack=5 Win=502 Len=0 TSval=2753846759 TSecr=102552780
+   14   1.184809   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   15   1.184879   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=540 Win=501 Len=0 TSval=2878651189 TSecr=1966860814
+   16   1.223921   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   17   1.224443   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   18   1.224523   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=11 Ack=185 Win=507 Len=0 TSval=1966860853 TSecr=2878651228
+   19   2.546341   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   20   2.547605   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   21   2.547731   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=16 Ack=277 Win=507 Len=0 TSval=1966862176 TSecr=2878652551
+   22   2.688728   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   23   2.689664   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   24   2.689757   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=1523 Ack=9 Win=502 Len=0 TSval=2878652693 TSecr=1966862318
+   25   2.690057   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   26   2.690140   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=1579 Win=501 Len=0 TSval=2878652694 TSecr=1966862319
+   27   2.690623   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   28   2.690710   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=1565 Win=501 Len=0 TSval=2753848265 TSecr=102554286
+   29   3.768222   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   30   3.769905   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   31   3.770107   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=21 Ack=369 Win=507 Len=0 TSval=1966863399 TSecr=2878653774
+   32   4.692340   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   33   4.692885   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   34   4.693038   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=2284 Ack=13 Win=502 Len=0 TSval=2878654697 TSecr=1966864322
+   35   4.693155   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   36   4.693242   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=2368 Win=501 Len=0 TSval=2878654697 TSecr=1966864322
+   37   4.693351   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   38   4.693442   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=2347 Win=501 Len=0 TSval=2753850268 TSecr=102556289
+   39   5.087431   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   40   5.088082   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   41   5.088168   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=26 Ack=461 Win=507 Len=0 TSval=1966864717 TSecr=2878655092
+   42   6.185223   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   43   6.185676   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   44   6.185749   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=1031 Ack=9 Win=502 Len=0 TSval=2753851760 TSecr=102557781
+   45   6.185872   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   46   6.185954   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=1079 Win=501 Len=0 TSval=2878656190 TSecr=1966865815
+   47   6.301181   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   48   6.301719   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   49   6.301795   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=31 Ack=553 Win=507 Len=0 TSval=1966865931 TSecr=2878656305
+   50   6.695244   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   51   6.695476   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   52   6.695538   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=3045 Ack=17 Win=502 Len=0 TSval=2878656699 TSecr=1966866324
+   53   6.695608   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   54   6.695666   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=3157 Win=501 Len=0 TSval=2878656699 TSecr=1966866324
+   55   6.695737   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   56   6.695824   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=3129 Win=501 Len=0 TSval=2753852271 TSecr=102558291
+   57   7.518601   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   58   7.519801   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   59   7.519918   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=36 Ack=645 Win=507 Len=0 TSval=1966867149 TSecr=2878657524
+   70   8.701255   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   71   8.701651   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   72   8.701777   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=3806 Ack=21 Win=502 Len=0 TSval=2878658705 TSecr=1966868330
+   73   8.701920   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   74   8.702034   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=3946 Win=501 Len=0 TSval=2878658706 TSecr=1966868331
+   75   8.702178   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   76   8.702297   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=3911 Win=501 Len=0 TSval=2753854277 TSecr=102560298
+   77   8.835941   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   78   8.836732   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   79   8.836873   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=41 Ack=737 Win=507 Len=0 TSval=1966868466 TSecr=2878658840
+   80  10.055329   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   81  10.055839   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   82  10.055921   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=46 Ack=829 Win=507 Len=0 TSval=1966869685 TSecr=2878660060
+   83  10.705654   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+   84  10.706133   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+   85  10.706278   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=4567 Ack=25 Win=502 Len=0 TSval=2878660710 TSecr=1966870335
+   86  10.706367   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+   87  10.706435   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=4735 Win=501 Len=0 TSval=2878660710 TSecr=1966870335
+   88  10.706541   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+   89  10.706613   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=4693 Win=501 Len=0 TSval=2753856281 TSecr=102562302
+   90  11.185188   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+   91  11.185557   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+   92  11.185640   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=1546 Ack=13 Win=502 Len=0 TSval=2753856760 TSecr=102562781
+   93  11.185770   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+   94  11.185841   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=1618 Win=501 Len=0 TSval=2878661190 TSecr=1966870814
+   95  11.375209   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   96  11.375904   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+   97  11.375990   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=51 Ack=921 Win=507 Len=0 TSval=1966871005 TSecr=2878661380
+   98  12.599672   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+   99  12.600389   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  100  12.600464   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=56 Ack=1013 Win=507 Len=0 TSval=1966872229 TSecr=2878662604
+  158  12.707965   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  159  12.708347   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  160  12.708464   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=5328 Ack=29 Win=502 Len=0 TSval=2878662712 TSecr=1966872337
+  161  12.708553   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  162  12.708638   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=5524 Win=501 Len=0 TSval=2878662712 TSecr=1966872337
+  163  12.708726   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  164  12.708816   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=5475 Win=501 Len=0 TSval=2753858284 TSecr=102564304
+  170  13.820663   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  171  13.821347   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  172  13.821422   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=61 Ack=1105 Win=507 Len=0 TSval=1966873450 TSecr=2878663825
+  173  14.711973   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  174  14.712464   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  175  14.712590   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=6089 Ack=33 Win=502 Len=0 TSval=2878664716 TSecr=1966874341
+  176  14.712678   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  177  14.712757   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=6313 Win=501 Len=0 TSval=2878664716 TSecr=1966874341
+  178  14.712859   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  179  14.712933   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=6257 Win=501 Len=0 TSval=2753860288 TSecr=102566309
+  180  15.142190   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  181  15.143452   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  182  15.143560   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=66 Ack=1197 Win=507 Len=0 TSval=1966874772 TSecr=2878665147
+  183  16.185085   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  184  16.185542   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  185  16.185613   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=2061 Ack=17 Win=502 Len=0 TSval=2753861760 TSecr=102567781
+  186  16.186018   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  187  16.186085   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=2157 Win=501 Len=0 TSval=2878666190 TSecr=1966875815
+  188  16.368454   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  189  16.368961   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  190  16.369039   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=71 Ack=1289 Win=507 Len=0 TSval=1966875998 TSecr=2878666373
+  191  16.715438   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  192  16.715694   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  193  16.715773   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=6850 Ack=37 Win=502 Len=0 TSval=2878666719 TSecr=1966876344
+  194  16.715865   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  195  16.715937   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=7102 Win=501 Len=0 TSval=2878666720 TSecr=1966876345
+  196  16.716035   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  197  16.716111   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=7039 Win=501 Len=0 TSval=2753862291 TSecr=102568312
+  200  17.242050   172.18.0.1 â†’ 172.18.0.3   TCP 74 60000 â†’ 6379 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3768791546 TSecr=0 WS=128
+  201  17.242181   172.18.0.3 â†’ 172.18.0.1   TCP 74 6379 â†’ 60000 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM TSval=2601154648 TSecr=3768791546 WS=128
+  202  17.242241   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=3768791546 TSecr=2601154648
+  203  17.242495   172.18.0.1 â†’ 172.18.0.3   RESP 123 Request: CLIENT SETINFO LIB-NAME redis-py
+  204  17.242575   172.18.0.3 â†’ 172.18.0.1   TCP 66 6379 â†’ 60000 [ACK] Seq=1 Ack=58 Win=65152 Len=0 TSval=2601154648 TSecr=3768791546
+  205  17.243684   172.18.0.3 â†’ 172.18.0.1   RESP 151 Response: Error: ERR Unknown subcommand or wrong number of arguments for 'SETINFO'. Try CLIENT HELP
+  206  17.243723   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=58 Ack=86 Win=64256 Len=0 TSval=3768791547 TSecr=2601154649
+  207  17.244598   172.18.0.1 â†’ 172.18.0.3   RESP 119 Request: CLIENT SETINFO LIB-VER 5.2.1
+  208  17.245235   172.18.0.3 â†’ 172.18.0.1   RESP 151 Response: Error: ERR Unknown subcommand or wrong number of arguments for 'SETINFO'. Try CLIENT HELP
+  209  17.246072   172.18.0.1 â†’ 172.18.0.3   RESP 1006 Request: LPUSH default BulkString(904)
+  210  17.247394   172.18.0.3 â†’ 172.18.0.6   RESP 995 Response: Array(2)
+  211  17.247489   172.18.0.3 â†’ 172.18.0.1   RESP 70 Response: 1
+  212  17.248780   172.18.0.6 â†’ 172.18.0.3   RESP 80 Request: PING
+  213  17.248957   172.18.0.3 â†’ 172.18.0.6   RESP 73 Response: PONG
+  214  17.249021   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=15 Ack=8 Win=502 Len=0 TSval=2878667253 TSecr=1966876878
+  215  17.249176   172.18.0.6 â†’ 172.18.0.3   RESP 1195 Request: MULTI ZADD unacked_index 1738159197.9404595 f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 HSET unacked f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 BulkString(920) EXEC
+  216  17.249493   172.18.0.3 â†’ 172.18.0.6   RESP 101 Response: OK QUEUED QUEUED Array(2)
+  217  17.251743   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  218  17.251916   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1000 Ack=1381 Win=507 Len=0 TSval=1966876881 TSecr=2878667255
+  219  17.252708   172.18.0.6 â†’ 172.18.0.3   RESP 979 Request: PUBLISH /0.celeryev/task.multi BulkString(859)
+  220  17.252895   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  221  17.252957   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=7763 Ack=41 Win=502 Len=0 TSval=2878667257 TSecr=1966876882
+  222  17.253081   172.18.0.3 â†’ 172.18.0.8   RESP 1000 Response: Array(4)
+  223  17.253145   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=7973 Win=501 Len=0 TSval=2753862828 TSecr=102568849
+  224  17.253304   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [FIN, ACK] Seq=1051 Ack=175 Win=64256 Len=0 TSval=3768791557 TSecr=2601154653
+  225  17.253988   172.18.0.3 â†’ 172.18.0.1   TCP 66 6379 â†’ 60000 [FIN, ACK] Seq=175 Ack=1052 Win=64256 Len=0 TSval=2601154660 TSecr=3768791557
+  226  17.254024   172.18.0.1 â†’ 172.18.0.3   TCP 66 60000 â†’ 6379 [ACK] Seq=1052 Ack=176 Win=64256 Len=0 TSval=3768791558 TSecr=2601154660
+  227  17.258102   172.18.0.6 â†’ 172.18.0.3   RESP 695 Request: PUBLISH /0.celeryev/task.multi BulkString(575)
+  228  17.258342   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  229  17.258432   172.18.0.3 â†’ 172.18.0.8   RESP 716 Response: Array(4)
+  230  17.258499   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=8623 Win=501 Len=0 TSval=2753862833 TSecr=102568854
+  233  17.291131   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1144 Ack=43 Win=502 Len=0 TSval=2878667295 TSecr=1966876878
+  247  17.299375   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=8392 Ack=45 Win=502 Len=0 TSval=2878667303 TSecr=1966876887
+  308  17.391866   172.18.0.6 â†’ 172.18.0.3   RESP 242 Request: MULTI ZREM unacked_index f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 HDEL unacked f29d2b4f-b9d6-4b9a-9ec3-029f9b46e066 EXEC
+  309  17.392117   172.18.0.3 â†’ 172.18.0.6   RESP 101 Response: OK QUEUED QUEUED Array(2)
+  310  17.392176   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1320 Ack=78 Win=502 Len=0 TSval=2878667396 TSecr=1966877021
+  311  17.392771   172.18.0.6 â†’ 172.18.0.3   RESP 763 Request: PUBLISH /0.celeryev/task.multi BulkString(643)
+  312  17.392942   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  313  17.393000   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=9089 Ack=49 Win=502 Len=0 TSval=2878667397 TSecr=1966877022
+  314  17.393070   172.18.0.3 â†’ 172.18.0.8   RESP 784 Response: Array(4)
+  315  17.393130   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=9341 Win=501 Len=0 TSval=2753862968 TSecr=102568989
+  317  18.301952   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  318  18.302402   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  319  18.302474   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1005 Ack=1473 Win=507 Len=0 TSval=1966877931 TSecr=2878668306
+  330  18.718657   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  331  18.719489   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  332  18.719656   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=9850 Ack=53 Win=502 Len=0 TSval=2878668723 TSecr=1966878348
+  333  18.719769   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  334  18.719844   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=7891 Win=501 Len=0 TSval=2878668724 TSecr=1966878348
+  335  18.719937   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  336  18.720017   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=10123 Win=501 Len=0 TSval=2753864295 TSecr=102570316
+  337  19.521485   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  338  19.523406   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  339  19.523561   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1010 Ack=1565 Win=507 Len=0 TSval=1966879152 TSecr=2878669527
+  340  20.724667   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  341  20.725601   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  342  20.725872   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=10611 Ack=57 Win=502 Len=0 TSval=2878670729 TSecr=1966880354
+  343  20.726065   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  344  20.726223   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=8680 Win=501 Len=0 TSval=2878670730 TSecr=1966880355
+  345  20.726405   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  346  20.726545   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=10905 Win=501 Len=0 TSval=2753866301 TSecr=102572322
+  347  20.839392   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  348  20.840897   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  349  20.841023   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1015 Ack=1657 Win=507 Len=0 TSval=1966880470 TSecr=2878670845
+  350  21.185311   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  351  21.186101   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  352  21.186210   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=2576 Ack=21 Win=502 Len=0 TSval=2753866761 TSecr=102572782
+  353  21.186395   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  354  21.186499   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=2696 Win=501 Len=0 TSval=2878671190 TSecr=1966880815
+  355  22.058099   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  356  22.059478   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  357  22.059581   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1020 Ack=1749 Win=507 Len=0 TSval=1966881688 TSecr=2878672063
+  362  22.728765   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  363  22.729555   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  364  22.729958   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=11372 Ack=61 Win=502 Len=0 TSval=2878672733 TSecr=1966882358
+  365  22.730241   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  366  22.730322   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=9469 Win=501 Len=0 TSval=2878672734 TSecr=1966882359
+  367  22.730464   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  368  22.730547   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=11687 Win=501 Len=0 TSval=2753868305 TSecr=102574326
+  369  23.276059   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  370  23.277343   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  371  23.277510   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1025 Ack=1841 Win=507 Len=0 TSval=1966882906 TSecr=2878673281
+  372  24.591543   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  373  24.592233   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  374  24.592317   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1030 Ack=1933 Win=507 Len=0 TSval=1966884221 TSecr=2878674596
+  375  24.732165   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  376  24.732568   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  377  24.732689   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=12133 Ack=65 Win=502 Len=0 TSval=2878674736 TSecr=1966884361
+  378  24.732780   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  379  24.732846   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=10258 Win=501 Len=0 TSval=2878674737 TSecr=1966884361
+  380  24.732949   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  381  24.733022   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=12469 Win=501 Len=0 TSval=2753870308 TSecr=102576329
+  382  25.809715   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  383  25.811639   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  384  25.811822   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1035 Ack=2025 Win=507 Len=0 TSval=1966885441 TSecr=2878675815
+  385  26.185685   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  386  26.186344   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  387  26.186491   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=3091 Ack=25 Win=502 Len=0 TSval=2753871761 TSecr=102577782
+  388  26.186742   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  389  26.187300   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=3235 Win=501 Len=0 TSval=2878676191 TSecr=1966885815
+  390  26.631255   172.18.0.6 â†’ 172.18.0.3   RESP 144 Request: SETNX unacked_mutex 1e098ea5-2a0b-4052-90b8-aa96e59edd8a
+  391  26.631593   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  392  26.631674   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1398 Ack=82 Win=502 Len=0 TSval=2878676635 TSecr=1966886260
+  393  26.631986   172.18.0.6 â†’ 172.18.0.3   RESP 111 Request: EXPIRE unacked_mutex 300
+  394  26.632248   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 1
+  395  26.632431   172.18.0.6 â†’ 172.18.0.3   RESP 162 Request: ZREVRANGEBYSCORE unacked_index 1738137607.3227947 0 WITHSCORES
+  396  26.632636   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response:
+  397  26.632811   172.18.0.6 â†’ 172.18.0.3   RESP 101 Request: WATCH unacked_mutex
+  398  26.633009   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response: OK
+  399  26.633165   172.18.0.6 â†’ 172.18.0.3   RESP 99 Request: GET unacked_mutex
+  400  26.633375   172.18.0.3 â†’ 172.18.0.6   RESP 109 Response: 1e098ea5-2a0b-4052-90b8-aa96e59edd8a
+  401  26.633537   172.18.0.6 â†’ 172.18.0.3   RESP 128 Request: MULTI DEL unacked_mutex EXEC
+  402  26.633783   172.18.0.3 â†’ 172.18.0.6   RESP 88 Response: OK QUEUED Array(1)
+  403  26.633994   172.18.0.6 â†’ 172.18.0.3   RESP 83 Request: UNWATCH
+  404  26.634223   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response: OK
+  405  26.675150   172.18.0.6 â†’ 172.18.0.3   TCP 66 58682 â†’ 6379 [ACK] Seq=1686 Ack=165 Win=502 Len=0 TSval=2878676679 TSecr=1966886263
+  406  26.734737   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  407  26.735323   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  408  26.735398   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=12894 Ack=69 Win=502 Len=0 TSval=2878676739 TSecr=1966886364
+  409  26.735642   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  410  26.735709   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=11047 Win=501 Len=0 TSval=2878676739 TSecr=1966886364
+  411  26.736155   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  412  26.736227   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=13251 Win=501 Len=0 TSval=2753872311 TSecr=102578332
+  413  27.126690   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  414  27.127623   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  415  27.127723   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1040 Ack=2117 Win=507 Len=0 TSval=1966886756 TSecr=2878677131
+  416  28.341853   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  417  28.342319   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  418  28.342384   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1045 Ack=2209 Win=507 Len=0 TSval=1966887971 TSecr=2878678346
+  429  28.740966   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  430  28.741525   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  431  28.741705   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=13655 Ack=73 Win=502 Len=0 TSval=2878678745 TSecr=1966888370
+  432  28.741858   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  433  28.741975   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=11836 Win=501 Len=0 TSval=2878678746 TSecr=1966888371
+  434  28.742122   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  435  28.742241   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=14033 Win=501 Len=0 TSval=2753874317 TSecr=102580338
+  436  29.560519   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  437  29.561077   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  438  29.561177   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1050 Ack=2301 Win=507 Len=0 TSval=1966889190 TSecr=2878679565
+  439  30.745531   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  440  30.745879   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  441  30.745979   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=14416 Ack=77 Win=502 Len=0 TSval=2878680750 TSecr=1966890375
+  442  30.746056   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  443  30.746116   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=12625 Win=501 Len=0 TSval=2878680750 TSecr=1966890375
+  444  30.746189   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  445  30.746250   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=14815 Win=501 Len=0 TSval=2753876321 TSecr=102582342
+  446  30.884342   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  447  30.885979   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  448  30.886170   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1055 Ack=2393 Win=507 Len=0 TSval=1966890515 TSecr=2878680890
+  449  31.184083   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  450  31.184910   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  451  31.185078   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=3605 Ack=29 Win=502 Len=0 TSval=2753876760 TSecr=102582781
+  452  31.185329   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  453  31.185483   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=3773 Win=501 Len=0 TSval=2878681189 TSecr=1966890814
+  454  32.109933   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  455  32.111483   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  456  32.111735   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1060 Ack=2485 Win=507 Len=0 TSval=1966891740 TSecr=2878682115
+  457  32.750727   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  458  32.752326   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  459  32.752430   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=15177 Ack=81 Win=502 Len=0 TSval=2878682756 TSecr=1966892381
+  460  32.752736   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  461  32.752824   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=13414 Win=501 Len=0 TSval=2878682757 TSecr=1966892381
+  462  32.753387   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  463  32.753480   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=15597 Win=501 Len=0 TSval=2753878328 TSecr=102584349
+  464  33.442075   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  465  33.443778   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  466  33.443983   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1065 Ack=2577 Win=507 Len=0 TSval=1966893073 TSecr=2878683447
+  467  34.670703   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  468  34.672438   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  469  34.672688   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1070 Ack=2669 Win=507 Len=0 TSval=1966894301 TSecr=2878684676
+  470  34.758679   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  471  34.759191   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  472  34.759269   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=15938 Ack=85 Win=502 Len=0 TSval=2878684763 TSecr=1966894388
+  473  34.759347   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  474  34.759404   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=14203 Win=501 Len=0 TSval=2878684763 TSecr=1966894388
+  475  34.759481   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  476  34.759568   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=16379 Win=501 Len=0 TSval=2753880334 TSecr=102586355
+  477  35.895718   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  478  35.897342   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  479  35.897488   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1075 Ack=2761 Win=507 Len=0 TSval=1966895526 TSecr=2878685901
+  480  36.185689   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  481  36.186280   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  482  36.186467   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=4120 Ack=33 Win=502 Len=0 TSval=2753881761 TSecr=102587782
+  483  36.186724   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  484  36.187681   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=4312 Win=501 Len=0 TSval=2878686191 TSecr=1966895815
+  485  36.763013   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  486  36.763432   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  487  36.763550   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=16699 Ack=89 Win=502 Len=0 TSval=2878686767 TSecr=1966896392
+  488  36.763637   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  489  36.763695   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=14992 Win=501 Len=0 TSval=2878686767 TSecr=1966896392
+  490  36.763766   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  491  36.763827   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=17161 Win=501 Len=0 TSval=2753882339 TSecr=102588359
+  492  37.217387   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  493  37.218108   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  494  37.218177   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1080 Ack=2853 Win=507 Len=0 TSval=1966896847 TSecr=2878687222
+  495  38.434738   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  496  38.435756   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  497  38.435840   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1085 Ack=2945 Win=507 Len=0 TSval=1966898065 TSecr=2878688439
+  498  38.765638   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  499  38.768062   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  500  38.768289   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=17460 Ack=93 Win=502 Len=0 TSval=2878688772 TSecr=1966898397
+  501  38.768389   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  502  38.768460   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=15781 Win=501 Len=0 TSval=2878688772 TSecr=1966898397
+  503  38.768548   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  504  38.768629   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=17943 Win=501 Len=0 TSval=2753884343 TSecr=102590364
+  515  39.748067   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  516  39.749013   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  517  39.749097   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1090 Ack=3037 Win=507 Len=0 TSval=1966899378 TSecr=2878689753
+  518  40.772365   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  519  40.772897   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  520  40.773002   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=18221 Ack=97 Win=502 Len=0 TSval=2878690777 TSecr=1966900402
+  521  40.773319   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  522  40.773415   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=16570 Win=501 Len=0 TSval=2878690777 TSecr=1966900402
+  523  40.773906   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  524  40.773983   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=18725 Win=501 Len=0 TSval=2753886349 TSecr=102592370
+  525  40.964532   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  526  40.965069   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  527  40.965154   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1095 Ack=3129 Win=507 Len=0 TSval=1966900594 TSecr=2878690969
+  528  41.183214   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  529  41.183539   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  530  41.183618   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=4634 Ack=37 Win=502 Len=0 TSval=2753886758 TSecr=102592779
+  531  41.183744   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  532  41.183814   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=4850 Win=501 Len=0 TSval=2878691188 TSecr=1966900812
+  533  42.181791   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  534  42.182323   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  535  42.182413   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1100 Ack=3221 Win=507 Len=0 TSval=1966901811 TSecr=2878692186
+  536  42.776546   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  537  42.776964   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  538  42.777414   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=18982 Ack=101 Win=502 Len=0 TSval=2878692781 TSecr=1966902406
+  539  42.778055   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  540  42.778180   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=17359 Win=501 Len=0 TSval=2878692782 TSecr=1966902407
+  541  42.779298   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  542  42.779403   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=19507 Win=501 Len=0 TSval=2753888354 TSecr=102594375
+  543  43.495764   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  544  43.496286   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  545  43.496358   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1105 Ack=3313 Win=507 Len=0 TSval=1966903125 TSecr=2878693500
+  604  44.710517   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  605  44.711370   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  606  44.711460   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1110 Ack=3405 Win=507 Len=0 TSval=1966904340 TSecr=2878694715
+  607  44.780461   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  608  44.780764   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  609  44.780856   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=19743 Ack=105 Win=502 Len=0 TSval=2878694785 TSecr=1966904409
+  610  44.781184   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  611  44.781271   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=18148 Win=501 Len=0 TSval=2878694785 TSecr=1966904410
+  612  44.781797   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  613  44.781887   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=20289 Win=501 Len=0 TSval=2753890357 TSecr=102596378
+  618  46.026975   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  619  46.027640   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  620  46.027735   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1115 Ack=3497 Win=507 Len=0 TSval=1966905656 TSecr=2878696031
+  621  46.185268   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  622  46.186142   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  623  46.186364   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=5149 Ack=41 Win=502 Len=0 TSval=2753891761 TSecr=102597782
+  624  46.186544   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  625  46.186682   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=5389 Win=501 Len=0 TSval=2878696190 TSecr=1966905815
+  626  46.783941   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  627  46.784316   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  628  46.784418   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=20504 Ack=109 Win=502 Len=0 TSval=2878696788 TSecr=1966906413
+  629  46.784735   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  630  46.784806   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=18937 Win=501 Len=0 TSval=2878696789 TSecr=1966906413
+  631  46.785281   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  632  46.785356   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=21071 Win=501 Len=0 TSval=2753892360 TSecr=102598381
+  633  47.245192   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  634  47.245873   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  635  47.245967   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1120 Ack=3589 Win=507 Len=0 TSval=1966906875 TSecr=2878697250
+  636  48.460868   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  637  48.461425   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  638  48.461511   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1125 Ack=3681 Win=507 Len=0 TSval=1966908090 TSecr=2878698465
+  639  48.786255   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  640  48.786527   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  641  48.786663   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=21265 Ack=113 Win=502 Len=0 TSval=2878698790 TSecr=1966908415
+  642  48.787220   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  643  48.787295   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=19726 Win=501 Len=0 TSval=2878698791 TSecr=1966908416
+  644  48.787995   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  645  48.788071   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=21853 Win=501 Len=0 TSval=2753894363 TSecr=102600384
+  656  49.783469   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  657  49.783985   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  658  49.784069   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1130 Ack=3773 Win=507 Len=0 TSval=1966909413 TSecr=2878699788
+  659  50.790631   172.18.0.6 â†’ 172.18.0.3   RESP 823 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(697)
+  660  50.791320   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  661  50.791441   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=22022 Ack=117 Win=502 Len=0 TSval=2878700795 TSecr=1966910420
+  662  50.791532   172.18.0.3 â†’ 172.18.0.6   RESP 851 Response: Array(4)
+  663  50.791599   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=20511 Win=501 Len=0 TSval=2878700795 TSecr=1966910420
+  664  50.791681   172.18.0.3 â†’ 172.18.0.8   RESP 844 Response: Array(4)
+  665  50.791750   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=22631 Win=501 Len=0 TSval=2753896366 TSecr=102602387
+  666  51.000948   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  667  51.002193   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  668  51.002361   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1135 Ack=3865 Win=507 Len=0 TSval=1966910631 TSecr=2878701006
+  669  51.183203   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  670  51.183527   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  671  51.183606   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=5664 Ack=45 Win=502 Len=0 TSval=2753896758 TSecr=102602779
+  672  51.183736   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  673  51.183806   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=5928 Win=501 Len=0 TSval=2878701188 TSecr=1966910812
+  674  52.314467   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  675  52.315442   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  676  52.315530   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1140 Ack=3957 Win=507 Len=0 TSval=1966911944 TSecr=2878702319
+  677  52.795986   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  678  52.796694   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  679  52.796863   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=22783 Ack=121 Win=502 Len=0 TSval=2878702801 TSecr=1966912425
+  680  52.796994   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  681  52.797094   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=21300 Win=501 Len=0 TSval=2878702801 TSecr=1966912426
+  682  52.797239   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  683  52.797324   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=23413 Win=501 Len=0 TSval=2753898372 TSecr=102604393
+  684  53.533420   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  685  53.534727   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  686  53.535397   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1145 Ack=4049 Win=507 Len=0 TSval=1966913164 TSecr=2878703538
+  687  54.754196   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  688  54.755657   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  689  54.755765   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1150 Ack=4141 Win=507 Len=0 TSval=1966914384 TSecr=2878704759
+  690  54.800175   172.18.0.6 â†’ 172.18.0.3   RESP 823 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(697)
+  691  54.800598   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  692  54.800751   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=23540 Ack=125 Win=502 Len=0 TSval=2878704804 TSecr=1966914429
+  693  54.800850   172.18.0.3 â†’ 172.18.0.6   RESP 851 Response: Array(4)
+  694  54.800911   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=22085 Win=501 Len=0 TSval=2878704805 TSecr=1966914430
+  695  54.800987   172.18.0.3 â†’ 172.18.0.8   RESP 844 Response: Array(4)
+  696  54.801051   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=24191 Win=501 Len=0 TSval=2753900376 TSecr=102606397
+  697  56.078714   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  698  56.080786   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  699  56.080910   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1155 Ack=4233 Win=507 Len=0 TSval=1966915710 TSecr=2878706084
+  700  56.184547   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  701  56.185004   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  702  56.185098   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=6179 Ack=49 Win=502 Len=0 TSval=2753901760 TSecr=102607781
+  703  56.185242   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  704  56.185420   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=6467 Win=501 Len=0 TSval=2878706189 TSecr=1966915814
+  705  56.803172   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  706  56.803519   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  707  56.803619   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=24301 Ack=129 Win=502 Len=0 TSval=2878706807 TSecr=1966916432
+  708  56.803695   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  709  56.803755   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=22874 Win=501 Len=0 TSval=2878706807 TSecr=1966916432
+  710  56.803873   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  711  56.803946   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=24973 Win=501 Len=0 TSval=2753902379 TSecr=102608400
+  712  57.298601   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  713  57.300137   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  714  57.300259   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1160 Ack=4325 Win=507 Len=0 TSval=1966916929 TSecr=2878707304
+  715  58.627602   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  716  58.628162   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  717  58.628244   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1165 Ack=4417 Win=507 Len=0 TSval=1966918257 TSecr=2878708632
+  718  58.805804   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  719  58.806022   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  720  58.806084   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=25062 Ack=133 Win=502 Len=0 TSval=2878708810 TSecr=1966918435
+  721  58.806155   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  722  58.806212   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=23663 Win=501 Len=0 TSval=2878708810 TSecr=1966918435
+  723  58.806284   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  724  58.806345   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=25755 Win=501 Len=0 TSval=2753904381 TSecr=102610402
+  735  59.849913   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  736  59.850465   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  737  59.850545   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1170 Ack=4509 Win=507 Len=0 TSval=1966919479 TSecr=2878709854
+  738  60.808804   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  739  60.809047   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  740  60.809110   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=25823 Ack=137 Win=502 Len=0 TSval=2878710813 TSecr=1966920438
+  741  60.809181   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  742  60.809238   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=24452 Win=501 Len=0 TSval=2878710813 TSecr=1966920438
+  743  60.809311   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  744  60.809371   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=26537 Win=501 Len=0 TSval=2753906384 TSecr=102612405
+  745  61.064171   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  746  61.065095   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  747  61.065270   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1175 Ack=4601 Win=507 Len=0 TSval=1966920694 TSecr=2878711069
+  748  61.183902   172.18.0.8 â†’ 172.18.0.3   RESP 581 Request: PUBLISH /0.celery.pidbox BulkString(467)
+  749  61.184633   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  750  61.184743   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=6694 Ack=53 Win=502 Len=0 TSval=2753906759 TSecr=102612780
+  751  61.184928   172.18.0.3 â†’ 172.18.0.6   RESP 605 Response: Array(4)
+  752  61.185031   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=7006 Win=501 Len=0 TSval=2878711189 TSecr=1966920814
+  753  62.389096   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  754  62.390085   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  755  62.390190   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1180 Ack=4693 Win=507 Len=0 TSval=1966922019 TSecr=2878712394
+  756  62.812471   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  757  62.813718   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  758  62.813832   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=26584 Ack=141 Win=502 Len=0 TSval=2878712818 TSecr=1966922442
+  759  62.814187   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  760  62.814283   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=25241 Win=501 Len=0 TSval=2878712818 TSecr=1966922443
+  761  62.815613   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  762  62.815728   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=27319 Win=501 Len=0 TSval=2753908390 TSecr=102614411
+  763  63.611320   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  764  63.611837   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  765  63.611917   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1185 Ack=4785 Win=507 Len=0 TSval=1966923241 TSecr=2878713616
+  766  64.820019   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  767  64.820453   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  768  64.820562   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=27345 Ack=145 Win=502 Len=0 TSval=2878714824 TSecr=1966924449
+  769  64.820901   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  770  64.821003   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=26030 Win=501 Len=0 TSval=2878714825 TSecr=1966924450
+  771  64.821649   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  772  64.821757   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=28101 Win=501 Len=0 TSval=2753910396 TSecr=102616417
+  773  64.933136   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  774  64.933630   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  775  64.933713   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1190 Ack=4877 Win=507 Len=0 TSval=1966924562 TSecr=2878714937
+  776  66.153753   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  777  66.154416   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  778  66.154534   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1195 Ack=4969 Win=507 Len=0 TSval=1966925783 TSecr=2878716158
+  779  66.183548   172.18.0.8 â†’ 172.18.0.3   RESP 580 Request: PUBLISH /0.celery.pidbox BulkString(466)
+  780  66.184041   172.18.0.3 â†’ 172.18.0.8   RESP 70 Response: 1
+  781  66.184110   172.18.0.8 â†’ 172.18.0.3   TCP 66 36964 â†’ 6379 [ACK] Seq=7208 Ack=57 Win=502 Len=0 TSval=2753911759 TSecr=102617780
+  782  66.184224   172.18.0.3 â†’ 172.18.0.6   RESP 604 Response: Array(4)
+  783  66.184289   172.18.0.6 â†’ 172.18.0.3   TCP 66 41664 â†’ 6379 [ACK] Seq=1 Ack=7544 Win=501 Len=0 TSval=2878716188 TSecr=1966925813
+  784  66.823528   172.18.0.6 â†’ 172.18.0.3   RESP 827 Request: PUBLISH /0.celeryev/worker.heartbeat BulkString(701)
+  785  66.823896   172.18.0.3 â†’ 172.18.0.6   RESP 70 Response: 2
+  786  66.823974   172.18.0.6 â†’ 172.18.0.3   TCP 66 41690 â†’ 6379 [ACK] Seq=28106 Ack=149 Win=502 Len=0 TSval=2878716828 TSecr=1966926453
+  787  66.824067   172.18.0.3 â†’ 172.18.0.6   RESP 855 Response: Array(4)
+  788  66.824155   172.18.0.6 â†’ 172.18.0.3   TCP 66 41704 â†’ 6379 [ACK] Seq=1 Ack=26819 Win=501 Len=0 TSval=2878716828 TSecr=1966926453
+  789  66.824243   172.18.0.3 â†’ 172.18.0.8   RESP 848 Response: Array(4)
+  790  66.824318   172.18.0.8 â†’ 172.18.0.3   TCP 66 36900 â†’ 6379 [ACK] Seq=1 Ack=28883 Win=501 Len=0 TSval=2753912399 TSecr=102618420
+  791  67.378368   172.18.0.3 â†’ 172.18.0.6   RESP 71 Response:
+  792  67.379599   172.18.0.6 â†’ 172.18.0.3   RESP 158 Request: BRPOP default {default}\x06\x163 {default}\x06\x166 {default}\x06\x169 1
+  793  67.379729   172.18.0.3 â†’ 172.18.0.6   TCP 66 6379 â†’ 58668 [ACK] Seq=1200 Ack=5061 Win=507 Len=0 TSval=1966927008 TSecr=2878717383
+
+
+
+---
+

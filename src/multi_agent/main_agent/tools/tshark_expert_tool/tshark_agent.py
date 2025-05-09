@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from langchain_core.tools import Tool
 
-from multi_agent.common.tshark_expert_state import State
+from multi_agent.common.tshark_expert_state import State_tshark_expert
 from multi_agent.tshark_expert import build_graph
 
 import uuid
@@ -28,7 +28,7 @@ def tshark_expert_func(
     graph = build_graph()
 
     # Prepare the initial state for the sub-agent
-    initial_state = State(
+    initial_state = State_tshark_expert(
         pcap_path=pcap_path,
         task=task,
         messages=[],

@@ -1,9 +1,9 @@
 from multi_agent.tshark_expert.tools.pcap import commandExecutor_func
 from multi_agent.tshark_expert.tools.tshark_manual import manualSearch_func
-from multi_agent.common.tshark_expert_state import State
+from multi_agent.common.tshark_expert_state import State_tshark_expert
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter_func
 
-def tools(state: State) -> dict:
+def tools(state: State_tshark_expert) -> dict:
     """
     Executes the tools called by the LLM.
     """

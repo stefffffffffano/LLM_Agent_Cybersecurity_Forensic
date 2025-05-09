@@ -8,15 +8,14 @@ from typing_extensions import Annotated
 
 
 @dataclass(kw_only=True)
-class State:
+class State_global:
     """Main graph state."""
-    messages: Annotated[list[AnyMessage], add_messages]
-    """The messages in the conversation."""
+    messages: Annotated[list[AnyMessage], add_messages] #messages in the conversation
     steps: int #Maximum number of steps for the autonomous agent
     pcap_path: str #Path to the pcap file
-    log_path: str #Path to the log file
+    log_dir: str #Path to the directory where the logs are saved
     done: bool = False #Flag to indicate if the agent has finished its task providing an answer
     event_id: int #Event ID for the task
     call_number: int = 0 #Number of calls to the subagent
-    inputTokens: int = 0
-    outputTokens: int = 0
+    inputTokens: int = 0 #counter for the input tokens
+    outputTokens: int = 0 #counter for the output tokens

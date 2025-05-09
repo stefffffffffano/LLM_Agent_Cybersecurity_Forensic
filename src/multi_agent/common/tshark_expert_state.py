@@ -8,8 +8,8 @@ from typing_extensions import Annotated
 
 
 @dataclass(kw_only=True)
-class State:
-    """Main graph state."""
+class State_tshark_expert:
+    """Tshark expert graph state."""
     messages: Annotated[list[AnyMessage], add_messages] #messages in the conversation
     steps: int #Maximum number of steps for the autonomous agent
     pcap_path: str #Path to the pcap file

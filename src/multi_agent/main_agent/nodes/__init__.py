@@ -1,4 +1,4 @@
-from .llm_agent import main_agent
+from .main_agent import main_agent
 from .tools import tools
 from .router import route_message
 

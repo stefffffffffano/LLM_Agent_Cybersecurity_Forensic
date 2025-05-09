@@ -5,7 +5,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks import BaseCallbackHandler
 
-from multi_agent.common.tshark_expert_state import State
+from multi_agent.common.tshark_expert_state import State_tshark_expert
 from multi_agent.common.utils import count_tokens
 from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import split_model_and_provider
@@ -29,7 +29,7 @@ class PromptDebugHandler(BaseCallbackHandler):
 
 
 
-def tshark_expert(state: State, config: RunnableConfig) -> dict:
+def tshark_expert(state: State_tshark_expert, config: RunnableConfig) -> dict:
     """Extract the user's state from the conversation and update the memory."""
     configurable = Configuration.from_runnable_config(config)
 

@@ -12,7 +12,7 @@ from multi_agent.main_agent.tools.browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary 
 from multi_agent.main_agent.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert
-from multi_agent.common.main_agent_state import State
+from multi_agent.common.global_state import State_global
 from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
 
@@ -29,7 +29,7 @@ class PromptDebugHandler(BaseCallbackHandler):
 
 
 
-async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> dict:
+async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseStore) -> dict:
     """
     Main graph node: calls the LLM with the current state. It manages the context window and the memory.
     Context window is divided into three sections following MEMGPT approach: system messages, working
@@ -102,7 +102,7 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         queue=queue_str
     )
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=20)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,tshark_expert,finalAnswerFormatter])#,file_reader,frameDataExtractor])
     #When it's the last iteration, concatenate a message saying that it has to provide an 
@@ -113,17 +113,21 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     length_exceeded = False
     
     try:
-        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=20) #10s timeout
-    except asyncio.TimeoutError:
-        print("TimeoutError: LLM call took too long!")
-        return {"messages": [], #No message is added
-            "steps": state.steps, #the step is not counted
-            "done": length_exceeded,
-        }
+        msg = await llm_with_tools.ainvoke(messages, config=debug_config)
     except BadRequestError as e:
+        #The input prompt is too long->specific for gpt
         length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
+    except Exception as e:
+        #general exception for other errors or models
+        final_msg = f"An unexpected error occurred: {str(e)}"
+        return {"messages": [{"role": "system", "content": final_msg}],
+            "length_exceeded": length_exceeded,
+            "steps": state.steps,
+            "event_id": state.event_id,
+        }
+
     if not length_exceeded:
         input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
         output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
@@ -136,4 +140,4 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
             "done": length_exceeded,
             "inputTokens": input_token_count,
             "outputTokens": output_token_count
-            }
+    }

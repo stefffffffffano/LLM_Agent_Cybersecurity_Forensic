@@ -1,9 +1,8 @@
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 
-
 from multi_agent.tshark_expert.nodes import tools, route_message,tshark_expert
-from multi_agent.common.tshark_expert_state import State  
+from multi_agent.common.tshark_expert_state import State_tshark_expert  
 
 def build_graph() -> StateGraph:
     """
@@ -12,7 +11,7 @@ def build_graph() -> StateGraph:
     """
     
     memory = MemorySaver()
-    builder = StateGraph(State)
+    builder = StateGraph(State_tshark_expert)
 
     builder.add_node("tshark_expert", tshark_expert)
     builder.add_node("tools", tools)
