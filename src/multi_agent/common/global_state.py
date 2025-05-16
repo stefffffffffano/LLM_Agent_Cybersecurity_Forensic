@@ -19,3 +19,4 @@ class State_global:
     call_number: int = 0 #Number of calls to the subagent
     inputTokens: int = 0 #counter for the input tokens
     outputTokens: int = 0 #counter for the output tokens
+    strategy: str = "LLM_summary" #Strategy used for the web search

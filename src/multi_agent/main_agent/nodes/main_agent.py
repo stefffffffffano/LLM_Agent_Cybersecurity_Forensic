@@ -7,7 +7,7 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks import BaseCallbackHandler
 
 from multi_agent.main_agent.tools.memory import upsert_memory
-from multi_agent.main_agent.tools.browser import web_quick_search
+from multi_agent.common.browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary 
 from multi_agent.main_agent.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert

@@ -6,7 +6,7 @@ from langchain_core.runnables import RunnableConfig
 
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.main_agent.tools.memory import upsert_memory_func
-from multi_agent.main_agent.tools.browser import web_quick_search_func
+from multi_agent.common.browser import web_quick_search_func
 from multi_agent.main_agent.tools.report import finalAnswerFormatter_func
 from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert_func
 from multi_agent.common.global_state import State_global
@@ -19,7 +19,8 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
     Executes the tools called by the LLM.
     Allows multiple tool calls, but only one `web_quick_search` per step.
     If more than one `web_quick_search` is requested, only the first is executed,
-    and an informative message is returned.
+    and an informative message is returned. 
+    In case a web call is made together with a tshark_expert call, the web call is skipped.
     """
     tool_calls = state.messages[-1].tool_calls
     done = False
@@ -53,10 +54,12 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
     if web_calls and not tshark_calls:
         first_web_call = web_calls[0]
         configurable = Configuration.from_runnable_config(config)
-        llm = init_chat_model(**split_model_and_provider(configurable.model))
+        llm = init_chat_model(**split_model_and_provider(configurable.model),timeout=100)
         query_used = first_web_call["args"].get("query", "unknown")
         
-        response = web_quick_search_func(**first_web_call["args"], llm_model=llm)
+        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, strategy=state.strategy)
+        input_tokens_count += inCount
+        output_tokens_count += outCount 
         response_with_query = (
             f"Search result for query: '{query_used}'\n{response}"
         )
@@ -107,7 +110,7 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
         if not state.pcap_path:
                 result_content = "Error: No PCAP file available for Tshark Expert analysis."
         else:
-            (result_content,inTokens,outTokens) = tshark_expert_func(task=task_input, pcap_path=state.pcap_path,event_id=state.event_id, call_number=state.call_number)
+            (result_content,inTokens,outTokens) = tshark_expert_func(task=task_input, pcap_path=state.pcap_path,event_id=state.event_id, call_number=state.call_number,strategy=state.strategy)
             results.append({
                 "role": "tool",
                 "content": result_content,
@@ -137,9 +140,6 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
                         f"Skipped call(s): {skipped_calls_content}",
                 "tool_call_id": web_calls[0]["id"]  
             })
-
-    
-    
         
     return {
         "messages": results,

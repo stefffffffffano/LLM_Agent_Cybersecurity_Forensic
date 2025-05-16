@@ -92,7 +92,7 @@ def load_data():
     Returns:
         list: collection of tasks
     """
-    with open('data/tasks/data.json', 'r') as file: 
+    with open('src/data/tasks/data.json', 'r') as file: 
         games = json.loads(file.read())
     return games['tasks']
 
@@ -109,8 +109,8 @@ def get_artifact_paths(entry: dict) -> dict:
     Given a task entry from data.json, returns string paths to the associated pcap file and log files directory.
     """
     event_id = entry["event"]
-    event_pcap_files = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.pcap')]
-    base_dir = f'data/raw/eventID_{event_id}'
+    event_pcap_files = [f for f in os.listdir(f'src/data/raw/eventID_{event_id}') if f.endswith('.pcap')]
+    base_dir = f'src/data/raw/eventID_{event_id}'
     return {
         "log_dir": base_dir + "/", #directory of the log files
         "pcap_path": base_dir + "/" + event_pcap_files[0],
@@ -122,7 +122,8 @@ async def run_forensic_example(
     event_id: int,
     pcap_path: str,
     log_dir: str,
-    max_steps: int = 25
+    max_steps: int = 25,
+    strategy: str = "LLM_summary", #or chuncking
 ):
     #Initial state
     state = State_global(
@@ -131,6 +132,7 @@ async def run_forensic_example(
         messages=[],  
         steps=max_steps,
         event_id=event_id,
+        strategy=strategy,
     )
     thread_id = str(uuid.uuid4())
     #Call the graph
@@ -163,6 +165,7 @@ async def main():
     os.makedirs("log_steps", exist_ok=True) #trace agent's steps
 
     for i, game in enumerate(pcaps):
+        i,game = 1,pcaps[1]
         paths = get_artifact_paths(game)
         store = init_store()
         graph = build_graph(store)

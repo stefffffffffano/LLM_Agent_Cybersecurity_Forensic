@@ -16,6 +16,7 @@ def tshark_expert_func(
     pcap_path: str,
     event_id: int,
     call_number: int,
+    strategy: str = "LLM_summary",
 ) -> str:
     """
     Run a forensic analysis on a given PCAP file based on a specified task.
@@ -33,6 +34,7 @@ def tshark_expert_func(
         task=task,
         messages=[],
         steps=15,  # Default maximum number of steps
+        strategy = strategy,
     )
 
     # Assign a unique thread ID for the session

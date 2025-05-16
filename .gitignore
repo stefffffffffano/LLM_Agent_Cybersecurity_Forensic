@@ -1,2 +1,4 @@
 venv/
 .env
+#subagent_logs/
+#log_steps/

@@ -10,8 +10,8 @@ from multi_agent.common.utils import count_tokens
 from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.tshark_expert.tools.pcap import commandExecutor
-from multi_agent.tshark_expert.tools.tshark_manual import manualSearch
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
+from multi_agent.common.browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary
 
 MAX_TOKENS = 120000
@@ -30,7 +30,10 @@ class PromptDebugHandler(BaseCallbackHandler):
 
 
 def tshark_expert(state: State_tshark_expert, config: RunnableConfig) -> dict:
-    """Extract the user's state from the conversation and update the memory."""
+    """Main node of the tshark expert agent. Its purpose is to 
+    execute tshark commands in the most effectuve way based on a request coming from the main agent.
+    It prepares the prompt for the LLM, invokes it, and handles the response.
+    """
     configurable = Configuration.from_runnable_config(config)
 
     #Count how many messages you can include, in order not to overcome the context window
@@ -60,7 +63,7 @@ def tshark_expert(state: State_tshark_expert, config: RunnableConfig) -> dict:
     #Define the LLM with the model and the provider, temperature=0 to reduce randomness
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,request_timeout=30)
     #Add the tools to the LLM
-    llm = llm.bind_tools([commandExecutor, manualSearch,finalAnswerFormatter]) 
+    llm = llm.bind_tools([commandExecutor,finalAnswerFormatter,web_quick_search]) 
     #Invoke the LLM with the prepared prompt (and debug config to observe the prompt)
     length_exceeded = False
     try:

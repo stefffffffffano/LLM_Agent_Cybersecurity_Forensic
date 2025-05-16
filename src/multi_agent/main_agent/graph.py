@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.store.base import BaseStore
 
-from multi_agent.main_agent.nodes import tools, route_message,main_agent
+from multi_agent.main_agent.nodes import tools, route_message,main_agent,pcap_flows_reporter
 from multi_agent.common.global_state import State_global  
 from multi_agent.log_reporter.log_reporter import log_reporter
 
@@ -18,9 +18,12 @@ def build_graph(store: BaseStore) -> StateGraph:
     builder.add_node("main_agent", main_agent)
     builder.add_node("tools", tools)
     builder.add_node("log_reporter", log_reporter)
+    builder.add_node("pcap_flows_reporter", pcap_flows_reporter)
+
 
     builder.add_edge(START, "log_reporter")
-    builder.add_edge("log_reporter", "main_agent")
+    builder.add_edge("log_reporter", "pcap_flows_reporter")
+    builder.add_edge("pcap_flows_reporter", "main_agent")
 
     builder.add_conditional_edges(
         "main_agent",

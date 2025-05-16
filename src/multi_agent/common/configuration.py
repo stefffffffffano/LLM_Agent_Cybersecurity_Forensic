@@ -1,5 +1,4 @@
 """Define the configurable parameters for the agent."""
-
 import os
 from dataclasses import dataclass, field, fields
 from typing import Any, Optional
@@ -12,7 +11,7 @@ from multi_agent.tshark_expert.prompts import REACT_TEMPLATE_TSHARK_EXPERT
 
 @dataclass(kw_only=True)
 class Configuration:
-    """Main configuration class for the chatbot agent."""
+    """Main configuration class for the agent."""
 
     model: Annotated[str, {"__template_metadata__": {"kind": "llm"}}] = field(
         default="openai/gpt-4o",
@@ -23,19 +22,21 @@ class Configuration:
     )
     react_template: str = REACT_TEMPLATE
     tshark_expert_template: str = REACT_TEMPLATE_TSHARK_EXPERT
+
     max_fifo_tokens: int = field(
-        default=int(os.getenv("MAX_FIFO_TOKENS", "6000")),
+    default=int(os.getenv("MAX_FIFO_TOKENS", "6000")),
         metadata={
-            "description": "Maximum number of tokens allowed in the FIFO message queue before flushin."
+            "description": "Maximum number of tokens allowed in the FIFO message queue before flushing."
         }
     )
 
-    max_working_context_tokens : int = field(
+    max_working_context_tokens: int = field(
         default=int(os.getenv("MAX_WORKING_CONTEXT_TOKENS", "1500")),
         metadata={
             "description": "Maximum number of tokens allowed in the working context."
         }
     )
+
 
     @classmethod
     def from_runnable_config(

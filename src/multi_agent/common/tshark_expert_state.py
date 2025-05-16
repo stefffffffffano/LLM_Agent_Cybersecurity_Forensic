@@ -17,3 +17,4 @@ class State_tshark_expert:
     done: bool=False #Done flag
     inputTokens: int = 0
     outputTokens: int = 0
+    strategy: str = "LLM_summary" #Strategy used for the web search
