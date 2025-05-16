@@ -3,4 +3,4 @@ venv/
 **/subagent_logs/
 **/log_steps/
 **/result.txt
-#**/__pycache__/
+**/__pycache__/
