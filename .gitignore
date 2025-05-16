@@ -1,4 +1,5 @@
 venv/
 .env
-#subagent_logs/
-#log_steps/
+**/subagent_logs/
+**/log_steps/
+**/result.txt
