@@ -97,7 +97,7 @@ class Context_generator:
             if not items:
                 break
 
-            for item in tqdm(items, disable=not self.verbose):
+            for item in tqdm(items, disable=not self.verbose,leave=False):
                 url = item.get("link")
                 if not url:
                     continue
@@ -200,7 +200,7 @@ class Context_generator:
         output_token_count = 0
         if self.strategy == "LLM_summary":
             summary_dict = {}
-            for url, doc in tqdm(results, desc="Summarizing", disable=not self.verbose):
+            for url, doc in tqdm(results, desc="Summarizing", disable=not self.verbose,leave=False):
                 (summary,inputCount,outputCount) = self.summarize_with_llm(doc, query)
                 input_token_count += inputCount
                 output_token_count += outputCount
@@ -225,7 +225,7 @@ class Context_generator:
             ranked_pairs = [(url, summary_dict[url]) for url in urls if summary_dict[url] in ranked_summaries]
             ranked_output = [f"{url}: {summary}" for url, summary in ranked_pairs if summary in ranked_summaries]
 
-            return ("\n".join(ranked_output[:self.context_length],input_token_count,output_token_count))
+            return ("\n".join(ranked_output[:self.context_length]),input_token_count,output_token_count)
 
         else:  # strategy == "chunking"
             chunks = []
@@ -269,6 +269,8 @@ def web_quick_search_func(
     research: str = "CVE", #It could be CVE or tshark based on which agent is calling it (the prompt changes) 
     strategy: str = "LLM_summary", #It could be LLM_summary or chuncking
 ) -> str:
+    inCount = 0
+    outCount = 0
     try:
         rag_model = Context_generator(
             llm=llm_model,
@@ -277,10 +279,10 @@ def web_quick_search_func(
             research=research,
             strategy=strategy,
         )
-        response = rag_model.invoke(query)
+        (response,inCount,outCount) = rag_model.invoke(query)
     except Exception as e:
         response = f"An error occurred during the web search: {str(e)}"
-    return response
+    return (response,inCount,outCount)
 
 # Tool used for binding
 web_quick_search = Tool(
