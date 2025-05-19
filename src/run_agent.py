@@ -123,7 +123,7 @@ async def run_forensic_example(
     pcap_path: str,
     log_dir: str,
     max_steps: int = 25,
-    strategy: str = "chuncking", #or LLM_summary
+    strategy: str = "LLM_summary", #or chuncking
 ):
     #Initial state
     state = State_global(

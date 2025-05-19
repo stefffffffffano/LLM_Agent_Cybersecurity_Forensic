@@ -115,9 +115,10 @@ class Context_generator:
         if self.research == "CVE":
             prompt = (
                 f"You are an AI assistant tasked with summarizing content relevant to '{query}' for a forensic analyst\
-                that is trying to identify the CVE related to a specific service/application. "
+                that is trying to identify the CVE related to a specific service/application under analysis. "
                 f"Please provide a concise summary in {character_limit} characters or less where you highlight your findings\
-                for each CVE detected in the web page."
+                for each CVE detected in the web page. The summary should be in the following form for each CVE identified:\
+                'CVE-XXXX-YYYY: Description of the CVE and its relevance to the service/application under analysis.'"
             )
         else: 
             prompt = (
