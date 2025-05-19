@@ -15,7 +15,7 @@
             "TBD"
         ]
     },{
-        "event":"3","cve":"CVE-2021-42013", "service":"apache http server", "success":true, "vulnerable":true, 
+        "event":"3","cve":"CVE-2021-42013", "service":"apache http server", "success":false, "vulnerable":true, 
         "pcap_ref":[
             "TBD"
         ]

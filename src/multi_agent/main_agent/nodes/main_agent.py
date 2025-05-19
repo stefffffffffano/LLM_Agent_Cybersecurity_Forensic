@@ -103,7 +103,7 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
 
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
-    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,tshark_expert,finalAnswerFormatter])#,file_reader,frameDataExtractor])
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,finalAnswerFormatter])#,file_reader,frameDataExtractor,tshark_expert])
     #When it's the last iteration, concatenate a message saying that it has to provide an 
     #answer
     if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
