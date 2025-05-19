@@ -111,7 +111,7 @@ class Context_generator:
 
         return documents
 
-    def summarize_with_llm(self, content: str, query: str, character_limit: int = 600) -> str:
+    def summarize_with_llm(self, content: str, query: str, character_limit: int = 600,max_chars: int = 450000) -> str:
         if self.research == "CVE":
             prompt = (
                 f"You are an AI assistant tasked with summarizing content relevant to '{query}' for a forensic analyst\
@@ -126,10 +126,22 @@ class Context_generator:
                 that is trying to execute tshark commands in the most effective way, trying to solve errors and applying filters. "
                 f"Please provide a concise summary in {character_limit} characters or less where you highlight your findings."
             )
+
+        #Log when the content is too long, to evaluate how many times it happens and what you are losing
+        if len(content) > max_chars:
+            try:
+                with open("long_web_pages.log", "a", encoding="utf-8") as logf:
+                    logf.write(f"\n\n========== [URL EXCEEDED LIMIT] ==========\n")
+                    logf.write(f"Query: {query}\n")
+                    logf.write(f"Content length: {len(content)} characters\n")
+                    logf.write(f"Content \n\n\n:\n{content}\n")
+            except Exception as log_error:
+                if self.verbose:
+                    print(f"[LOGGING ERROR] {log_error}")
         try:
             messages = [
                 HumanMessage(role="system", content=prompt),
-                HumanMessage(role="user", content=content[:300000])
+                HumanMessage(role="user", content=content[:max_chars])
             ]
             response = self.llm.invoke(messages)
             #Count input and output tokens
