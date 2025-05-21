@@ -17,6 +17,7 @@ When you find something relevant, you have to:
 2. Report the specific exploitation the attacker is trying to perform. (e.g.: remote command execution, privilege escalation, etc.)
 3. Report all other relevant information you find in the traffic, such as answers from the web service that could be useful for the 
 forensic analyst to correlate findings.
+4. If a malicious request got a successful response and the attack succeeded, report it. 
 If you are able to find also the version of the affected service, please report it. 
 
 This report will be used by a forensic analyst to determine the nature and severity of a potential breach by 

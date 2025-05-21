@@ -15,10 +15,9 @@ You are provided with:
 2- Two forensic reports from:
   - A log analyzer
   - A PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
-3- Tools to search online specific CVEs and to store relevant information in a memory database.
-In order to perform a web search as much meaningful as possible, focus on providing as much details as possible among those that are
-given to you by the two experts, so that the research is as precise as possible.
-
+3- Tools to search online and to store relevant information in a memory database.
+In order to perform a web search as much meaningful as possible, provide the service identified as vulnerable (the version, if present)
+and the type of attack the attacker is trtying to exploit. 
 Older steps are discarded when the queue limit is reached. You must store relevant information early in your reasoning. 
  
 By thinking in a step by step manner, provide only one single reasoning \
