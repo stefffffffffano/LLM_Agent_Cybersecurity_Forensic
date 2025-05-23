@@ -1,7 +1,7 @@
 venv/
 .env
 **/subagent_logs/
-**/log_steps/
-**/result.txt
+**/log**/
+**/result**
 **/__pycache__/
 **/*.log

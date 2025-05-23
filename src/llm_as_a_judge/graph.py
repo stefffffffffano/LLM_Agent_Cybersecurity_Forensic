@@ -1,20 +1,18 @@
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 
-from llm_as_a_judge.nodes import tools, route_message, judge
+from llm_as_a_judge.nodes import tools, route_message, judge_agent
 from llm_as_a_judge.state import State  
 
 def build_graph() -> StateGraph:
     """
     Build the state graph for the agent. This function creates a directed graph with nodes and edges.
     """
-    
     memory = MemorySaver()
     builder = StateGraph(State)
 
-    builder.add_node("judge", judge)
+    builder.add_node("judge", judge_agent)
     builder.add_node("tools", tools)
-
 
     builder.add_edge(START, "judge")
 

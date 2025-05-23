@@ -7,13 +7,11 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks import BaseCallbackHandler
 
 
-from multi_agent.common.browser import web_quick_search
+from browser import web_quick_search
 from llm_as_a_judge.tools.report import judgeEvaluationFormatter
-
-
 from llm_as_a_judge.state import State
 from llm_as_a_judge.prompts import LLM_JUDGE_TEMPLATE
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
 
 
@@ -29,7 +27,7 @@ class PromptDebugHandler(BaseCallbackHandler):
 
 
 
-async def judge(state: State, config: RunnableConfig) -> dict:
+async def judge_agent(state: State, config: RunnableConfig) -> dict:
     """
     Main graph node: calls the LLM with the current state. It manages the context window to ensure not overcoming it.
      
@@ -101,4 +99,4 @@ async def judge(state: State, config: RunnableConfig) -> dict:
             "outputTokens": output_token_count
     }
 
-__all__ = ["judge"]
+__all__ = ["judge_agent"]

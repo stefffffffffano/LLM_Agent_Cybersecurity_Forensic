@@ -6,11 +6,11 @@ from langchain_core.runnables import RunnableConfig
 
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.main_agent.tools.memory import upsert_memory_func
-from multi_agent.common.browser import web_quick_search_func
+from browser import web_quick_search_func
 from multi_agent.main_agent.tools.report import finalAnswerFormatter_func
 from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert_func
 from multi_agent.common.global_state import State_global
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 
 
 

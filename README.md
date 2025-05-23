@@ -36,7 +36,9 @@ The LLM should return three outputs:
 
 
 # TODO: 
-# Web search to be modified: we need a prompt for this agent (for the summarization) and a modified description.
-# Write the run_judge function to call the graph, check the entire code
 # Verify that everything adapts to the context length that you can set through the .env file
-# Adjust character limit that is set in the web search file
+
+llm_as_a_judge already manages the context length
+main_agent manages context length
+pcap_flow_analyzer -> management of context length to be added
+browser -> management of context length to be added

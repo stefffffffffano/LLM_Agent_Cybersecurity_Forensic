@@ -1,5 +1,5 @@
-from .judge import judge
-from .tools import tools
+from .judge import judge_agent
+from .tool import tools
 from .router import route_message
 
-__all__ = ["judge", "tools", "route_message"]
+__all__ = ["judge_agent", "tools", "route_message"]

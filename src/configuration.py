@@ -6,9 +6,6 @@ from typing import Any, Optional
 from langchain_core.runnables import RunnableConfig
 from typing_extensions import Annotated
 
-from multi_agent.main_agent.prompts import  REACT_TEMPLATE
-from multi_agent.tshark_expert.prompts import REACT_TEMPLATE_TSHARK_EXPERT
-
 @dataclass(kw_only=True)
 class Configuration:
     """Main configuration class for the agent."""
@@ -20,8 +17,6 @@ class Configuration:
             "Should be in the form: provider/model-name."
         },
     )
-    react_template: str = REACT_TEMPLATE
-    tshark_expert_template: str = REACT_TEMPLATE_TSHARK_EXPERT
 
     max_fifo_tokens: int = field(
     default=int(os.getenv("MAX_FIFO_TOKENS", "6000")),

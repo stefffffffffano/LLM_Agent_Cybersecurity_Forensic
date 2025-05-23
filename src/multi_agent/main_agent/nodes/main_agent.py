@@ -7,13 +7,14 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks import BaseCallbackHandler
 
 from multi_agent.main_agent.tools.memory import upsert_memory
-from multi_agent.common.browser import web_quick_search
+from browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary 
 from multi_agent.main_agent.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert
 from multi_agent.common.global_state import State_global
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
+from multi_agent.main_agent.prompts import REACT_TEMPLATE
 
 
 class PromptDebugHandler(BaseCallbackHandler):
@@ -95,7 +96,7 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
     queue_str = "\n".join(queue_lines)
 
     # Final prompt
-    system_prompt = configurable.react_template.format(
+    system_prompt = REACT_TEMPLATE.format(
         pcap_content=pcap_content,
         memories=memories_str,
         queue=queue_str

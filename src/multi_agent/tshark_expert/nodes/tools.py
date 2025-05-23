@@ -5,8 +5,8 @@ from multi_agent.tshark_expert.tools.pcap import commandExecutor_func
 from multi_agent.common.tshark_expert_state import State_tshark_expert
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter_func
 from multi_agent.common.utils import split_model_and_provider
-from multi_agent.common.browser import web_quick_search_func
-from multi_agent.common.configuration import Configuration
+from browser import web_quick_search_func
+from configuration import Configuration
 
 def tools(state: State_tshark_expert,config: RunnableConfig,) -> dict:
     """

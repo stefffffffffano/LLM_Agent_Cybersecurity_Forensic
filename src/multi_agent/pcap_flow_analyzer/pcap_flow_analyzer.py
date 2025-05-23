@@ -6,7 +6,7 @@ from langchain_core.runnables import RunnableConfig
 
 
 from multi_agent.pcap_flow_analyzer.prompts import PCAP_FLOW_ANALYZER_PROMPT
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 from multi_agent.pcap_flow_analyzer.flow_extractor import get_flow
 from multi_agent.common.utils import split_model_and_provider
 

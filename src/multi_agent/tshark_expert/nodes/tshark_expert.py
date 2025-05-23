@@ -7,12 +7,13 @@ from langchain_core.callbacks import BaseCallbackHandler
 
 from multi_agent.common.tshark_expert_state import State_tshark_expert
 from multi_agent.common.utils import count_tokens
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.tshark_expert.tools.pcap import commandExecutor
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
-from multi_agent.common.browser import web_quick_search
+from browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary
+from multi_agent.tshark_expert.prompts import REACT_TEMPLATE_TSHARK_EXPERT
 
 MAX_TOKENS = 120000
  
@@ -51,7 +52,7 @@ def tshark_expert(state: State_tshark_expert, config: RunnableConfig) -> dict:
     queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
     queue_str = "\n".join(queue_lines)
 
-    sys = configurable.tshark_expert_template.format(
+    sys = REACT_TEMPLATE_TSHARK_EXPERT.format(
         pcap_content=generate_summary(state.pcap_path),
         task=state.task,
         steps=queue_str

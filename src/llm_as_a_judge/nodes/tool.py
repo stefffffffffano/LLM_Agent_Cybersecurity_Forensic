@@ -2,11 +2,11 @@ from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 
 from multi_agent.common.utils import split_model_and_provider
-from multi_agent.common.browser import web_quick_search_func
+from browser import web_quick_search_func
 from llm_as_a_judge.tools.report import judgeEvaluationFormatter_func
 
 from llm_as_a_judge.state import State
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 
 
 async def tools(state: State, config: RunnableConfig):
@@ -36,7 +36,8 @@ async def tools(state: State, config: RunnableConfig):
         llm = init_chat_model(**split_model_and_provider(configurable.model),timeout=100)
         query_used = first_web_call["args"].get("query", "unknown")
         
-        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, strategy=state.strategy)
+        # In this case we consider only LLM summary as strategy, chunking not considered
+        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, research="judge")
         input_tokens_count += inCount
         output_tokens_count += outCount 
         response_with_query = (

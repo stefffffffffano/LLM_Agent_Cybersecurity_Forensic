@@ -18,8 +18,7 @@ Each report includes the following fields:
 
 1. Focus on the 'report' field of both reports. Compare them and identify the most important differences or notable similarities.
 2. Determine whether they refer to the same core event, even if the wording or some other fields in the reports differ.
-3. If the CVEs differ, search on the web for their meaning with two different queries and evaluate whether the confusion \
+3. If the CVEs differ and both are real CVEs, search on the web for their meaning with two different queries and evaluate whether the confusion \
   of the agent is understandable. Report both their meanings and explain the differences.
-
-
+Note: If the agent left the CVE unspecified or inserted a random code, you can ignore point 3.
 """

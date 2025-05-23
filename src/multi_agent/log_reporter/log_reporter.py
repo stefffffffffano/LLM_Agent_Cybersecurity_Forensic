@@ -6,7 +6,7 @@ from langchain_core.runnables import RunnableConfig
 
 from multi_agent.common.global_state import State_global
 from multi_agent.log_reporter.prompts import LOG_REPORTER_PROMPT
-from multi_agent.common.configuration import Configuration
+from configuration import Configuration
 from multi_agent.log_reporter.concatenate_logs import concatenate_logs
 from multi_agent.common.utils import split_model_and_provider
 
