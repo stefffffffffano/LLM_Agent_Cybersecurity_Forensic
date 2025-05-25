@@ -4,6 +4,8 @@
 REACT_TEMPLATE = '''
 Role: You are a specialized network forensics analyst using a step-by-step reasoning process to investigate a potential attack
 against a web service, based on a provided PCAP file and a directory with log files.
+Since you are analyzing traffic after a suspected attack, when there is evidence of an attempted RCE and you can't assess
+whether the attack was successful or not, you must assume that the attack was successful.
 
 Scenario:
 An attacker attempted to exploit a vulnerability in a specific web service. All network traffic has been filtered to focus on the relevant
@@ -16,6 +18,8 @@ You are provided with:
   - A log analyzer
   - A PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
 3- Tools to search online and to store relevant information in a memory database.
+4- A log analyzer that can answer to your questions based on log contents. It is useful to check if a command 
+injected (to create a directory or a file, for instance) has been executed or not.
 In order to perform a web search as much meaningful as possible, provide the service identified as vulnerable (the version, if present)
 and the type of attack the attacker is trtying to exploit. 
 Older steps are discarded when the queue limit is reached. You must store relevant information early in your reasoning. 

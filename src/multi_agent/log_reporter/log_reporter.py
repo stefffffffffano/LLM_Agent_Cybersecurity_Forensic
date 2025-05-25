@@ -5,7 +5,7 @@ from langchain_core.runnables import RunnableConfig
 
 
 from multi_agent.common.global_state import State_global
-from multi_agent.log_reporter.prompts import LOG_REPORTER_PROMPT
+from multi_agent.log_reporter.prompts import LOG_REPORTER_PROMPT, LOG_REPORTER_PROMPT_WITH_TASK
 from configuration import Configuration
 from multi_agent.log_reporter.concatenate_logs import concatenate_logs
 from multi_agent.common.utils import split_model_and_provider
@@ -21,8 +21,13 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
 
     log_content = concatenate_logs(state.log_dir) #content of the logs
     # Final prompt for the log reporter
-    system_prompt = LOG_REPORTER_PROMPT.format(
-        log_content = log_content)
+    if(state.next_step == "log_reporter"): #when there is a task to be executed
+        system_prompt = LOG_REPORTER_PROMPT_WITH_TASK.format(
+            log_content = log_content,
+            task = state.task)
+    else:
+        system_prompt = LOG_REPORTER_PROMPT.format(
+            log_content = log_content)
 
 
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
@@ -55,6 +60,7 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
             "event_id": state.event_id,
             "inputTokens": input_token_count,
             "outputTokens": output_token_count,
+            "next_step": "main_agent" if state.next_step == "log_reporter" else "pcap_flows_reporter"
     }
 
 

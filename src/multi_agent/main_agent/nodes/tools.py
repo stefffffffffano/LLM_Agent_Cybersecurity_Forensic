@@ -140,7 +140,22 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
                         f"Skipped call(s): {skipped_calls_content}",
                 "tool_call_id": web_calls[0]["id"]  
             })
+
+
+    #Handles log_analyzer calls, where the task is specified in the args 
+    log_analyzer_calls = [tc for tc in tool_calls if tc["name"] == "log_analyzer"]
+    if log_analyzer_calls:
+        if len(log_analyzer_calls) > 1:
+            raise ValueError("log_analyzer tool called more than once in the same step.")
+        task = log_analyzer_calls[0]["args"].get("task", "")
         
+        return {
+            "steps": state.steps - 1, #Counting already decremented here
+            "next_step": "log_reporter", #Next step is log_reporter
+            "task": task, #Task to be executed by the log_reporter
+        }
+
+
     return {
         "messages": results,
         "steps": state.steps - 1,

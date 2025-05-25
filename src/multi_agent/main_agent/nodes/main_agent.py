@@ -126,6 +126,7 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
             "length_exceeded": length_exceeded,
             "steps": state.steps,
             "event_id": state.event_id,
+            "next_step": ""
         }
 
     if not length_exceeded:
@@ -139,5 +140,6 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
             "steps": state.steps - 1,
             "done": length_exceeded,
             "inputTokens": input_token_count,
-            "outputTokens": output_token_count
+            "outputTokens": output_token_count,
+            "next_step": "" # Reset it if the previous step was log_reporter
     }

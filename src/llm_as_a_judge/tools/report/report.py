@@ -26,7 +26,7 @@ judgeEvaluationFormatter = Tool(
     name="judge_evaluation_formatter",
     description="""
         Format the final evaluation report after comparing the agent's findings with the ground truth.
-
+    
         Arguments:
         - differences_summary: A concise but informative explanation of the main differences or similarities between the agent's report and the ground truth.
         - similarity_scale: A discrete label describing the level of semantic alignment between the two reports. Must be one of the following:
