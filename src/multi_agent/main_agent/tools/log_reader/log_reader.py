@@ -1,10 +1,13 @@
 from pydantic import BaseModel
 
 from langchain_core.tools import Tool
+from typing import Any
 
 class Log_analyzer(BaseModel):
     task: str
 
+def dummy_func(*args, **kwargs) -> Any:
+    raise NotImplementedError("This tool is used for routing only and should not be executed directly.")
 
 log_analyzer = Tool(
     name="log_analyzer",
@@ -18,6 +21,7 @@ log_analyzer = Tool(
         The report for the task required based on log contents.
     """,
     args_schema=Log_analyzer,
+    func=dummy_func,  # Required, but will never be called
 )
 
 __all__ = ["log_analyzer"]

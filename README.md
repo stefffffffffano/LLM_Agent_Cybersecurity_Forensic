@@ -44,6 +44,3 @@ pcap_flow_analyzer -> management of context length to be added
 browser -> management of context length to be added
 
 
-# TODO
-1. Add previous streams for the pcap flow analyzer;
-2. Structure the output/improve prompts of the pcap flow analyzer;

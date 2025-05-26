@@ -4,7 +4,7 @@
 REACT_TEMPLATE = '''
 Role: You are a specialized network forensics analyst using a step-by-step reasoning process to investigate a potential attack
 against a web service, based on a provided PCAP file and a directory with log files.
-Since you are analyzing traffic after a suspected attack, when there is evidence of an attempted RCE and you can't assess
+Since you are analyzing traffic after a suspected attack, when there is evidence of an attempted RCE and you can't assess with certainty
 whether the attack was successful or not, you must assume that the attack was successful.
 
 Scenario:

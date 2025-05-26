@@ -48,9 +48,10 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
                 config=config,
                 pcap_path=state.pcap_path,
                 stream_number=stream_number,
+                current_report=final_report,
+                current_stream=line
             )
             stream_number += 1
-            print(f"Report from the tcp stream analyzer:\n{report}\n")
             tcp_report = f"Report from the tcp stream analyzer:\n{report}\n"
             input_token_count += input_tokens
             output_token_count += output_tokens
