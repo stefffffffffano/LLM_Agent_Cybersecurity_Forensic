@@ -25,6 +25,7 @@ Here is the log content:
 Your answer should be a full report with the characteristics described above.
 Write it in this format:
 Report of the log analysis done by the log reporter: <your_report>
+IMPORTANT: do not make assumptions on the possible CVE code.
 '''
 
 LOG_REPORTER_PROMPT_WITH_TASK    = '''
@@ -43,4 +44,6 @@ Here is the log content:
 {log_content}
 
 Here is the task assigned by the forensic analyst: {task}
+
+IMPORTANT: do not make assumptions on the possible CVE code.
 '''

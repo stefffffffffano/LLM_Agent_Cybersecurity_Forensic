@@ -150,6 +150,7 @@ async def tools(state: State_global, config: RunnableConfig, *, store: BaseStore
         task = log_analyzer_calls[0]["args"].get("task", "")
         
         return {
+            "messages": results,
             "steps": state.steps - 1, #Counting already decremented here
             "next_step": "log_reporter", #Next step is log_reporter
             "task": task, #Task to be executed by the log_reporter

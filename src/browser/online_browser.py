@@ -111,7 +111,7 @@ class Context_generator:
 
         return documents
 
-    def summarize_with_llm(self, content: str, query: str, character_limit: int = 2000,max_chars: int = 400000) -> str:
+    def summarize_with_llm(self, content: str, query: str, character_limit: int = 600,max_chars: int = 400000) -> str:
         if self.research == "CVE":
             prompt = (
                 f"You are an AI assistant tasked with summarizing content relevant to '{query}' for a forensic analyst\
@@ -313,6 +313,8 @@ web_quick_search = Tool(
     or training knowledge. You can call this tool only once per step.
     Args:
         query: The search query. 
+    IMPORTANT: Do not report a CVE code in the search query, just report the service name (with the version, if possible) and the type of 
+    attack exploited, if you know it.
     """,
     args_schema=WebQuickSearchArgs,
     func=web_quick_search_func
