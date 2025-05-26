@@ -9,7 +9,7 @@ class  Pcap_flow_output(TypedDict):
 
     service: Annotated[str, ..., "The service involved (a list if more than one) and, if possible, the version of the service"]
     malicious_activities: Annotated[Optional[str], None, "Malicious/suspicious activities found in the flow and the service they involve"]
-    relevant_events: Annotated[str, ..., "That are the IP addresses involved doing in this tcp flow? Report relevant events and their meaning. \
+    relevant_events: Annotated[str, ..., "What are the IP addresses involved doing in this tcp flow? Report relevant events and their meaning. \
                                If needed, direct quotations can be added"]
     attack_success: Annotated[Optional[str], None, "Report wheter an attack in this flow (or in a previous flow) was successful or not. \
                               Report relevant details related to the attack."]

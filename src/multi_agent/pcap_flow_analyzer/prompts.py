@@ -1,6 +1,6 @@
 PCAP_FLOW_ANALYZER_PROMPT = '''
 You are an expert in analyzing the TCP flow of a PCAP file.  Through your expertise, you are able to detect suspicious or malicious 
-commands targeting specific services, even when such commands are obfuscated or encoded.
+events targeting specific services.
 You analyze one tcp flow of a PCAP file at a time, but you receive also the reports of the previous flows in the analysis \
 to correlate events and findings. 
 
@@ -19,22 +19,22 @@ When you find something relevant, you have to:
 2. Report the specific exploitation the attacker is trying to perform. (e.g.: remote command execution, privilege escalation, etc.)
 3. Report all other relevant information you find in the traffic, such as answers from the web service that could be useful for the 
 forensic analyst to correlate findings.
-4. If a malicious request got a successful response and the attack succeeded, report it. 
 If you are able to find also the version of the affected service, please report it. 
 
-This report will be used by a forensic analyst to determine the nature and severity of a potential breach by 
-evaluating the correlation among different flows.
 Be precise, concise, and strictly technical.
 At each iteration, you should extend or refine your previous report based on the new chunk of data. If nothing relevant is found, 
 be concise in the report and do not speculate on 'future chunks' or 'future iterations', the forensic analyst might get confused.
-In the report, provide just relevant findings and what you found in the pcap that made you think about it.
 
-Analysis of the tcp traffic:
+Analysis of the previous tcp traffic:
 {current_report}
 
 Analysis of the current flow:
 Current flow: {current_stream}
+
+
 {previous_report}
+
+
 {chunk}
 
 '''
