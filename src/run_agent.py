@@ -122,7 +122,7 @@ async def run_forensic_example(
     event_id: int,
     pcap_path: str,
     log_dir: str,
-    max_steps: int = 25,
+    max_steps: int = 20,
     strategy: str = "LLM_summary", #or chuncking
 ):
     #Initial state
@@ -165,6 +165,7 @@ async def main():
     os.makedirs("log_steps", exist_ok=True) #trace agent's steps
 
     for i, game in enumerate(pcaps):
+        i,game = 19,pcaps[19]
         paths = get_artifact_paths(game)
         store = init_store()
         graph = build_graph(store)
@@ -187,7 +188,7 @@ async def main():
         )
 
         with open("result.txt", "a", encoding="utf-8") as f:
-            f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {25-steps}\n\n")
+            f.write(f"[Task {i}]\n{answer}\n\nNumber of steps: {20-steps}\n\n")
             f.write(f"Input tokens written: {inTokens}, output tokens: {outTokens}\n\n\n")
 
         if done:
@@ -212,6 +213,7 @@ async def main():
             # Riga = atteso (0 = falso, 1 = vero), Colonna = predetto
             confusion_matrix_vulnerable[int(is_vulnerable)][int(pred_vulnerable)] += 1
             confusion_matrix_success[int(is_success)][int(pred_success)] += 1
+            break
     #At the end, print statistics
     print("Statistics:")
     print(f"Percentage of identified CVE: {counters[0]/len(pcaps)*100:.2f}%")

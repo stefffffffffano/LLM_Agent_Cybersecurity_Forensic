@@ -75,41 +75,36 @@ class Context_generator:
     def get_web_search_results(self, query):
         print('Searching with Google API...')
         documents = []
-        start = 1
 
-        while len(documents) < self.n_documents_per_source:
-            params = {
-                'q': query,
-                'key': self.google_api_key,
-                'cx': self.google_cse_id,
-                'start': start,
-            }
-            try:
-                response = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=10)
-                response.raise_for_status()
-                results = response.json()
-            except Exception as e:
-                if self.verbose:
-                    print(f"[GOOGLE SEARCH ERROR] {e}")
+        params = {
+            'q': query,
+            'key': self.google_api_key,
+            'cx': self.google_cse_id,
+            'start': 1,  # Only one page (first 10 results)
+        }
+
+        try:
+            response = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=10)
+            response.raise_for_status()
+            results = response.json()
+        except Exception as e:
+            if self.verbose:
+                print(f"[GOOGLE SEARCH ERROR] {e}")
+            return []
+
+        items = results.get("items", [])
+        for item in tqdm(items, disable=not self.verbose, leave=False):
+            url = item.get("link")
+            if not url:
+                continue
+            doc = self.extract_and_clean_content(url)
+            if doc:
+                documents.append((url, doc))
+            if len(documents) >= self.n_documents_per_source:
                 break
-
-            items = results.get("items", [])
-            if not items:
-                break
-
-            for item in tqdm(items, disable=not self.verbose,leave=False):
-                url = item.get("link")
-                if not url:
-                    continue
-                doc = self.extract_and_clean_content(url)
-                if doc:
-                    documents.append((url, doc))
-                if len(documents) >= self.n_documents_per_source:
-                    break
-
-            start += 10
 
         return documents
+
 
     def summarize_with_llm(self, content: str, query: str, character_limit: int = 600,max_chars: int = 400000) -> str:
         if self.research == "CVE":
@@ -287,11 +282,9 @@ class WebQuickSearchArgs(BaseModel):
 def web_quick_search_func(
     query: str,
     llm_model: object,
-    research: str = "CVE", #It could be CVE or tshark based on which agent is calling it (the prompt changes) 
-    strategy: str = "LLM_summary", #It could be LLM_summary or chuncking
-) -> str:
-    inCount = 0
-    outCount = 0
+    research: str = "CVE",  # It could be CVE or tshark based on which agent is calling it (the prompt changes)
+    strategy: str = "LLM_summary",  # It could be LLM_summary or chunking
+) -> tuple[str, int, int]:
     try:
         rag_model = Context_generator(
             llm=llm_model,
@@ -300,10 +293,20 @@ def web_quick_search_func(
             research=research,
             strategy=strategy,
         )
-        (response,inCount,outCount) = rag_model.invoke(query)
+        result = rag_model.invoke(query)
+
+        # Manage returned values
+        if isinstance(result, tuple) and len(result) == 3:
+            response, inCount, outCount = result
+        else:
+            response = result
+            inCount, outCount = 0, 0
     except Exception as e:
         response = f"An error occurred during the web search: {str(e)}"
-    return (response,inCount,outCount)
+        inCount, outCount = 0, 0
+
+    return (response, inCount, outCount)
+
 
 # Tool used for binding
 web_quick_search = Tool(
@@ -313,8 +316,10 @@ web_quick_search = Tool(
     or training knowledge. You can call this tool only once per step.
     Args:
         query: The search query. 
-    IMPORTANT: Do not report a CVE code in the search query, just report the service name (with the version, if possible) and the type of 
+    IMPORTANT: 
+    -Do not report a CVE code in the search query, just report the service name (with the version, if possible) and the type of 
     attack exploited, if you know it.
+    - Do not iterate repating the same or similar queries many times, as this will not improve the results.
     """,
     args_schema=WebQuickSearchArgs,
     func=web_quick_search_func

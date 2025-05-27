@@ -42,4 +42,8 @@ Pcap summary: {pcap_content}
 
 
 Queue of steps: {queue}
+
+IMPORTANT:
+- Do not call the log_analyzer and the web_search tools in the same step, and don't search on the web for the same or similar queries many times.
+Repeat the web search only if it refers to another service or a different attack.
 '''
