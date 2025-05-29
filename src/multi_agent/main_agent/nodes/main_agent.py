@@ -10,11 +10,10 @@ from multi_agent.main_agent.tools.memory import upsert_memory
 from browser import web_quick_search
 from multi_agent.main_agent.tools.pcap import generate_summary 
 from multi_agent.main_agent.tools.report import finalAnswerFormatter
-from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert
 from multi_agent.common.global_state import State_global
 from configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
-from multi_agent.main_agent.prompts import REACT_TEMPLATE
+from multi_agent.main_agent.prompts import SYSTEM_PROMPT, USER_PROMPT
 from multi_agent.main_agent.tools.log_reader import log_analyzer
 
 
@@ -29,15 +28,9 @@ class PromptDebugHandler(BaseCallbackHandler):
         print("=============================================================\n")
 
 
-
-async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseStore) -> dict:
+async def main_agent(state: State_global, config: RunnableConfig, *, store: BaseStore) -> dict:
     """
     Main graph node: calls the LLM with the current state. It manages the context window and the memory.
-    Context window is divided into three sections following MEMGPT approach: system messages, working
-    context (memories) and FIFO queue of messages. Dimensions are checked by counting tokens. 
-
-    Based on the context, the LLM may decide to call tools or not.
-    Description of tools is provided when they are bounded to the LLM itself in json format.
     """
 
     configurable = Configuration.from_runnable_config(config)
@@ -46,13 +39,13 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
 
     assert store is not None, "Store not injected!"
 
-    # FIFO messages (limited by token budget)
+    # --- FIFO messages ---
     pcap_content = generate_summary(state.pcap_path)
-    #pcap_content = ListFrames().run(state.pcap_path)
-    MAX_FIFO_TOKENS -= count_tokens(pcap_content) #Subtract the tokens used by the pcap content
+    MAX_FIFO_TOKENS -= count_tokens(pcap_content)
     fifo_token_counter = 0
     fifo_messages_to_be_included = 0
-    for m in reversed(state.messages):  # reversed to collect latest messages
+
+    for m in reversed(state.messages):
         tok = count_tokens(m)
         if fifo_token_counter + tok < MAX_FIFO_TOKENS:
             fifo_token_counter += tok
@@ -62,13 +55,17 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
 
     fifo_messages = state.messages[-fifo_messages_to_be_included:]
 
-    # Semantic memory (working context)
+    queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
+    queue_str = "\n".join(queue_lines)
+
+    # --- Semantic memory ---
     recent_messages = state.messages[-3:]
     search_query = " ".join([m.content for m in recent_messages if hasattr(m, "content")])
     results = await store.asearch("memories", query=search_query, limit=10)
 
     working_context_token_counter = 0
     working_context = []
+
     for mem in results:
         content = mem.value.get("content", "")
         context = mem.value.get("context", "")
@@ -79,7 +76,8 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
             working_context_token_counter += tok
         else:
             break
-    newline='\n'
+
+    newline = '\n'
     if working_context:
         memories_str = f"""
         You are provided with contextual memories retrieved from past interactions.
@@ -91,39 +89,40 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
         """
     else:
         memories_str = ""
-    
-    # FIFO as string->messages are counted to give a context of the flow to the LLM 
-    queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
-    queue_str = "\n".join(queue_lines)
 
-    # Final prompt
-    system_prompt = REACT_TEMPLATE.format(
+    # --- Prompt construction ---
+    user_prompt = USER_PROMPT.format(
         pcap_content=pcap_content,
         memories=memories_str,
         queue=queue_str
     )
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
+    system_prompt = SYSTEM_PROMPT.strip()
+    if state.steps in (2, 3):
+        system_prompt += "\n\nWARNING: You are not allowed to reason anymore. Provide the final report based on the available information."
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ]
+
+    #LLM call
+    llm = init_chat_model(**split_model_and_provider(configurable.model), temperature=0.0, timeout=200)
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search, finalAnswerFormatter, log_analyzer])
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
-    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,finalAnswerFormatter,log_analyzer])#,file_reader,frameDataExtractor,tshark_expert])
-    #When it's the last iteration, concatenate a message saying that it has to provide an 
-    #answer
-    if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
-        system_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
-    messages = [{"role": "system", "content": system_prompt}]
+
     length_exceeded = False
-    
+
     try:
         msg = await llm_with_tools.ainvoke(messages, config=debug_config)
     except BadRequestError as e:
-        #The input prompt is too long->specific for gpt
         length_exceeded = True
         print(f"Error: {e}")
         msg = {"role": "assistant", "content": f"Error: {e}"}
     except Exception as e:
-        #general exception for other errors or models
         final_msg = f"An unexpected error occurred: {str(e)}"
-        return {"messages": [{"role": "system", "content": final_msg}],
+        return {
+            "messages": [{"role": "system", "content": final_msg}],
             "length_exceeded": length_exceeded,
             "steps": state.steps,
             "event_id": state.event_id,
@@ -137,10 +136,14 @@ async def main_agent(state: State_global, config: RunnableConfig,*,store:BaseSto
         input_token_count = 0
         output_token_count = 0
 
-    return {"messages": [msg],
-            "steps": state.steps - 1,
-            "done": length_exceeded,
-            "inputTokens": input_token_count,
-            "outputTokens": output_token_count,
-            "next_step": "" # Reset it if the previous step was log_reporter
+    return {
+        "messages": [msg],
+        "steps": state.steps - 1,
+        "done": length_exceeded,
+        "inputTokens": input_token_count,
+        "outputTokens": output_token_count,
+        "next_step": ""
     }
+
+
+__all__ = ["main_agent"]

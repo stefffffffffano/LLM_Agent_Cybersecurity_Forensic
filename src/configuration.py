@@ -60,5 +60,7 @@ class Configuration:
             values["max_fifo_tokens"] = int(values["max_fifo_tokens"])
         if "max_working_context_tokens" in values and isinstance(values["max_working_context_tokens"], str):
             values["max_working_context_tokens"] = int(values["max_working_context_tokens"])
+        if "context_window_size" in values and isinstance(values["context_window_size"], str):
+            values["context_window_size"] = int(values["context_window_size"])
 
         return cls(**{k: v for k, v in values.items() if v is not None})

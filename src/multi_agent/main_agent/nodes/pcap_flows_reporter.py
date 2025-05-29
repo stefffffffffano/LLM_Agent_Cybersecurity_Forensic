@@ -51,7 +51,7 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
                 config=config,
                 pcap_path=state.pcap_path,
                 stream_number=stream_number,
-                current_report=final_report,
+                previous_tcp_traffic=final_report,
                 current_stream=line,
                 cotext_window_size= context_window_size
             )
