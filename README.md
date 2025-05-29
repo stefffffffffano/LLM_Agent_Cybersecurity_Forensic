@@ -36,11 +36,21 @@ The LLM should return three outputs:
 
 
 # TODO: 
-# Verify that everything adapts to the context length that you can set through the .env file
+# Piano di lavoro
 
-llm_as_a_judge already manages the context length
-main_agent manages context length
-pcap_flow_analyzer -> management of context length to be added
-browser -> management of context length to be added
+- Rifare tutti i grafici seguendo i consigli -> token_count e steps mostrano le 3 esecuzioni, failing events alla fine della heat map e colonne riordinate; <- done
+- Gestire context length in pcap_flow_analyzer e browser; <-done
+- Cambiare browser in modo che non usi embeddings, tornare singolo risultato; <- done
+
+- Gestire tutti i file in cui si prendono i prompt, bisogna dividere in system e user !!!!; 
+  - Bisogna rivedere main_agent, pcap_flow_analyzer,log_reporter e llm_as_a_judge
+- Rivedere tutti i prompt -> riprendi slide consigli dall'ultima riunione;
+
+
+- Valutare la possibilità che l'agente non risponda solo true/false, ma anche un don't know per attack success (?);
+- Strutturare il report dell'agente (?) -> la parte in formato str in cui descrive che cosa è successo;
+
+
+- Valutare come integrare Ollama.
 
 

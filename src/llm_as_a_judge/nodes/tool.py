@@ -37,7 +37,7 @@ async def tools(state: State, config: RunnableConfig):
         query_used = first_web_call["args"].get("query", "unknown")
         
         # In this case we consider only LLM summary as strategy, chunking not considered
-        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, research="judge")
+        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, research="judge",context_window_size= configurable.context_window_size)
         input_tokens_count += inCount
         output_tokens_count += outCount 
         response_with_query = (

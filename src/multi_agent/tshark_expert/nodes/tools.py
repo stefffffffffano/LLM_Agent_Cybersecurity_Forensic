@@ -35,7 +35,7 @@ def tools(state: State_tshark_expert,config: RunnableConfig,) -> dict:
         llm = init_chat_model(**split_model_and_provider(configurable.model),timeout=100)
         query_used = first_web_call["args"].get("query", "unknown")
         
-        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, research="tshark", strategy=state.strategy)
+        (response,inCount,outCount) = web_quick_search_func(**first_web_call["args"], llm_model=llm, research="tshark", strategy=state.strategy,context_window_size= configurable.context_window_size)
         input_tokens_count += inCount
         output_tokens_count += outCount 
         response_with_query = (

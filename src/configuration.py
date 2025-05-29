@@ -19,19 +19,26 @@ class Configuration:
     )
 
     max_fifo_tokens: int = field(
-    default=int(os.getenv("MAX_FIFO_TOKENS", "6000")),
+    default=int(os.getenv("MAX_FIFO_TOKENS", "110000")),
         metadata={
             "description": "Maximum number of tokens allowed in the FIFO message queue before flushing."
         }
     )
 
     max_working_context_tokens: int = field(
-        default=int(os.getenv("MAX_WORKING_CONTEXT_TOKENS", "1500")),
+        default=int(os.getenv("MAX_WORKING_CONTEXT_TOKENS", "5000")),
         metadata={
             "description": "Maximum number of tokens allowed in the working context."
         }
     )
 
+    context_window_size: int = field(
+        default=int(os.getenv("CONTEXT_WINDOW_SIZE", "8192")),
+        metadata={
+            "description": "Size of the context window for the language model. "
+            "This is the maximum number of input tokens that can be processed in a single request."
+        }
+    )
 
     @classmethod
     def from_runnable_config(

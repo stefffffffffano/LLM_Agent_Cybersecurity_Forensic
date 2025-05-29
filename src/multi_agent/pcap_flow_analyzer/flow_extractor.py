@@ -3,7 +3,7 @@ from typing import List
 from multi_agent.common.utils import count_tokens
 import tiktoken
 
-def get_flow(pcap_file: str, stream: int) -> List[str]:
+def get_flow(pcap_file: str, stream: int,context_window_size) -> List[str]:
     """
     Executes the tshark command required to extract the flow from a pcap file.
     The flow is extracted using the follow TCP command and is returned as a list of strings.
@@ -14,9 +14,12 @@ def get_flow(pcap_file: str, stream: int) -> List[str]:
 
     raw_text = result.stdout
     total_tokens = count_tokens(raw_text)
-
+    #The number of tokens in which the text is split is computed as a proportion of the context window size
+    #The maximum has to be 75% of the context window size, while the overlap is 10% of the max size
+    max_tokens = int(context_window_size * 0.75)
+    overlap = int(max_tokens * 0.1)
     if total_tokens > 50000:
-        return split_text_by_tokens(raw_text, max_tokens=50000,overlap=10000)
+        return split_text_by_tokens(raw_text, max_tokens=max_tokens,overlap=overlap)
     else:
         return [raw_text]
 

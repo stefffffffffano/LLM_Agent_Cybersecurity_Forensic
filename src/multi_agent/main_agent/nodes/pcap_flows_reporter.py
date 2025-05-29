@@ -4,7 +4,7 @@ from multi_agent.common.global_state import State_global
 from multi_agent.main_agent.tools.pcap import generate_summary
 from multi_agent.pcap_flow_analyzer import pcap_flow_analyzer
 from multi_agent.main_agent.tools.pcap.tls_streams import get_tls_streams
-
+from configuration import Configuration
 
 async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> dict:
     """
@@ -23,6 +23,9 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
     # Get a set containing the tcp streams that contain tls traffic
     tls_streams = get_tls_streams(state.pcap_path)
 
+    #retrieve context window size from the configuration
+    configurable = Configuration.from_runnable_config(config)
+    context_window_size = configurable.context_window_size
     # Identify the lines that contain flow rows (i.e., between header and footer)
     flow_lines = []
     for line in tshark_lines:
@@ -49,7 +52,8 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
                 pcap_path=state.pcap_path,
                 stream_number=stream_number,
                 current_report=final_report,
-                current_stream=line
+                current_stream=line,
+                cotext_window_size= context_window_size
             )
             stream_number += 1
             tcp_report = f"Report from the tcp stream analyzer:\n{report}\n"

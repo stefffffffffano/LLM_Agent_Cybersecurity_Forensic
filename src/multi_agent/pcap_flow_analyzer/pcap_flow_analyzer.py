@@ -13,7 +13,7 @@ from multi_agent.pcap_flow_analyzer.output_format import Pcap_flow_output,format
 
 
 
-async def pcap_flow_analyzer(config: RunnableConfig,pcap_path:str,stream_number:int,current_report:str,current_stream:str) -> Tuple[str, int, int]:
+async def pcap_flow_analyzer(config: RunnableConfig,pcap_path:str,stream_number:int,current_report:str,current_stream:str,context_window_size:int) -> Tuple[str, int, int]:
     """
     This function gets all the chuncks from the tcp flow of a stram of a pcap file and produces a report
     using an LLM that iteratively refines the report with each chunk if the output of the tshark command
@@ -26,7 +26,7 @@ async def pcap_flow_analyzer(config: RunnableConfig,pcap_path:str,stream_number:
     output_token_count = 0
     configurable = Configuration.from_runnable_config(config)
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200).with_structured_output(Pcap_flow_output)
-    chuncks = get_flow(pcap_path,stream_number)
+    chuncks = get_flow(pcap_path,stream_number,context_window_size)
     
     for i, chunk in enumerate(chuncks):
         if i == 0:
