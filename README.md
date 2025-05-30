@@ -35,20 +35,6 @@ The LLM should return three outputs:
 | **Strongly disagree** | The reports describe completely unrelated issues, with no meaningful semantic alignment. Likely a misclassification or confusion. |
 
 
-# TODO: 
-# Piano di lavoro 28/05/2025
-
-- Rifare tutti i grafici seguendo i consigli -> token_count e steps mostrano le 3 esecuzioni, failing events alla fine della heat map e colonne riordinate; <- done
-- Gestire context length in pcap_flow_analyzer e browser; <-done
-- Cambiare browser in modo che non usi embeddings, tornare singolo risultato; <- done
-- Gestire tutti i file in cui si prendono i prompt, bisogna dividere in system e user !!!!; <-done
-  - Bisogna rivedere main_agent, pcap_flow_analyzer,log_reporter e llm_as_a_judge <-done
-- Rivedere tutti i prompt -> riprendi slide consigli dall'ultima riunione; <- done
-- Valutare come integrare Ollama <- done  
-  
-  
-- Valutare la possibilità che l'agente non risponda solo true/false, ma anche un don't know per attack success (?);
-- Strutturare il report dell'agente (?) -> la parte in formato str in cui descrive che cosa è successo;
 
 
 
