@@ -26,15 +26,15 @@ step in response to the last observation and the action for the next step.
 When you are ready to provide the final answer, stop the reasoning and format the result.
 
 IMPORTANT:
-- Do not call the log_analyzer and the web_search tools in the same step, and don't search on the web for the same or similar queries many times.
-Repeat the web search only if it refers to another service or a different attack.
+- Do not call the log_analyzer and the web_search tools in the same step;
+- Don't search on the web for the same or similar queries many times. Repeat the web search only if it refers to another service or a different attack.
 '''
 
 USER_PROMPT = """
 Your task is to analyze the following information and answer the four key questions below:
 
 1. What is the name of the service or application involved?
-2. What CVE (Common Vulnerabilities and Exposures) is associated with the attack, based on expert findings?
+2. What CVE (Common Vulnerabilities and Exposures) is associated with the attack, based on expert findings and web searches?
 3. Was the service vulnerable to this attack?
 4. Did the attack succeed?
 

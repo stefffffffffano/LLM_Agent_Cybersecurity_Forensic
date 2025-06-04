@@ -7,6 +7,7 @@ import numpy as np
 
 from langgraph.store.memory import InMemoryStore
 from langchain.embeddings import init_embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 
 from multi_agent.main_agent.graph import build_graph 
@@ -14,7 +15,6 @@ from multi_agent.common.global_state import State_global
 
 load_dotenv()
 
-# Final report returned when the agent did not provide an answer in the limited number of steps
 NOT_GIVEN_ANSWER = """
 FINAL REPORT:
 No answer given by the agent.
@@ -24,32 +24,32 @@ Affected Service: unknown
 Is Service Vulnerable: unknwon
 Attack succeeded: unknwon
 """
-
+EXECUTION = os.getenv("EXECUTION_MODE", "API")
 
 def calculate_f1_mcc(conf_matrix):
     num_classes = conf_matrix.shape[0]
     f1_scores = []
-    
+
     for i in range(num_classes):
         TP = conf_matrix[i, i]
         FP = conf_matrix[:, i].sum() - TP
         FN = conf_matrix[i, :].sum() - TP
         TN = conf_matrix.sum() - (TP + FP + FN)
-        
+
         precision = TP / (TP + FP) if (TP + FP) != 0 else 0
-        recall    = TP / (TP + FN) if (TP + FN) != 0 else 0
+        recall = TP / (TP + FN) if (TP + FN) != 0 else 0
         f1 = (2 * precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
         f1_scores.append(f1)
-    
+
     f1_macro = np.mean(f1_scores)
-    
+
     t_sum = conf_matrix.sum(axis=1)
     p_sum = conf_matrix.sum(axis=0)
     n = conf_matrix.sum()
-    
+
     c = np.trace(conf_matrix)
     s = sum(t_sum[i] * p_sum[i] for i in range(num_classes))
-    
+
     mcc_numerator = c * n - s
     mcc_denominator = np.sqrt((n**2 - (p_sum**2).sum()) * (n**2 - (t_sum**2).sum()))
     mcc = mcc_numerator / mcc_denominator if mcc_denominator != 0 else 0
@@ -73,19 +73,27 @@ def get_occurrences(input_string, start_substring='', end_substring='\n'):
             return matches[0].strip() if matches else "No Answer"
     except Exception:
         return "No Answer"
-    
+
 def load_data():
     with open('data/tasks/data.json', 'r') as file: 
         games = json.loads(file.read())
     return games['tasks']
 
 def init_store() -> InMemoryStore:
-    return InMemoryStore(
-        index={
-            "embed": init_embeddings("openai:text-embedding-3-small"),
-            "dims": 1536,
-        }
-    )
+    if EXECUTION == "LOCAL":
+        return InMemoryStore(
+            index={
+                "embed": HuggingFaceEmbeddings(model_name="BAAI/bge-small-en"),
+                "dims": 384,
+            }
+        )
+    else:
+        return InMemoryStore(
+            index={
+                "embed": init_embeddings("openai:text-embedding-3-small"),
+                "dims": 1536,
+            }
+        )
 
 def get_artifact_paths(entry: dict) -> dict:
     event_id = entry["event"]
@@ -120,21 +128,21 @@ async def run_forensic_example(
             "recursion_limit": 100,
         }
     )
-    
+
     answer = state["messages"][-1]
     done = state["done"]
-    
+
     with open(f"log_steps/steps_event{event_id}.txt", "w", encoding="utf-8") as f:
         f.write(f"[Task {event_id}]\n")
         for i, message in enumerate(state["messages"]):
             f.write(f"Step {i+1}: {message.content}\n")
-    
+
     return (done, answer.content, state["steps"], state["inputTokens"], state["outputTokens"])
 
 async def main():
     pcaps = load_data()
     counters = [0] * 4  # CVE, service name, vulnerable, attack success
-    unknown_counts = [0] * 4  # Count unknowns for the same fields
+    unknown_counts = [0] * 4
     confusion_matrix_vulnerable = np.zeros((2, 2), dtype=int)
     confusion_matrix_success = np.zeros((2, 2), dtype=int)
 
@@ -142,9 +150,10 @@ async def main():
         f.write("")
 
     os.makedirs("log_steps", exist_ok=True)
+    total_tested = 18
 
-    for i, game in enumerate(pcaps):
-        i, game = 19, pcaps[19]  # Debug: run only 1 case
+    for i in range(total_tested):
+        game = pcaps[i] 
         paths = get_artifact_paths(game)
         store = init_store()
         graph = build_graph(store)
@@ -186,26 +195,33 @@ async def main():
             for j, a in enumerate(answers):
                 if a.lower().strip() == "unknown":
                     unknown_counts[j] += 1
+                elif j in (2, 3) and a.lower().strip() in ("true", "false"):
+                    pred = a.lower().strip() == "true"
+                    expected = expected_answer[j] == True
+                    if pred == expected:
+                        counters[j] += 1
                 elif correct[j]:
                     counters[j] += 1
 
-            # Update confusion matrices only if answer has been given by the agent
             if answers[2].lower().strip() in ("true", "false"):
                 pred_vuln = answers[2].lower().strip() == "true"
                 confusion_matrix_vulnerable[int(is_vulnerable)][int(pred_vuln)] += 1
             if answers[3].lower().strip() in ("true", "false"):
                 pred_succ = answers[3].lower().strip() == "true"
                 confusion_matrix_success[int(is_success)][int(pred_succ)] += 1
-            break
 
-    total = len(pcaps)
-    print("Statistics:")
-    print(f"Identified CVE: {counters[0]}/{total} ({counters[0]/total*100:.2f}%)")
-    print(f"Identified Service: {counters[1]}/{total} ({counters[1]/total*100:.2f}%)")
-    print(f"Identified Vulnerable: {counters[2]}/{total} ({counters[2]/total*100:.2f}%)")
-    print(f"Identified Attack Success: {counters[3]}/{total} ({counters[3]/total*100:.2f}%)")
-    
-    print("\nCoverage (non-unknown answers):")
+    total = total_tested
+    print("Accuracy (over provided answers only):")
+    labels = ["CVE", "Service", "Vulnerable", "Success"]
+    for i, label in enumerate(labels):
+        known = total - unknown_counts[i]
+        correct = counters[i]
+        if known == 0:
+            print(f"{label}: No answers provided.")
+        else:
+            print(f"{label}: {correct}/{known} ({correct/known*100:.2f}%)")
+
+    print("\nCoverage (provided answers, excluding 'unknown'):")
     labels = ["CVE", "Service", "Vulnerable", "Success"]
     for i, label in enumerate(labels):
         known = total - unknown_counts[i]
@@ -216,7 +232,6 @@ async def main():
     print(f"\nF1_macro Vulnerable: {f1_macro_vuln:.2f}, MCC: {mcc_vuln:.2f}")
     print(f"F1_macro Attack Success: {f1_macro_succ:.2f}, MCC: {mcc_succ:.2f}")
     print("Finished running all tasks.")
-    
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -53,7 +53,7 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
                 stream_number=stream_number,
                 previous_tcp_traffic=final_report,
                 current_stream=line,
-                cotext_window_size= context_window_size
+                context_window_size= context_window_size
             )
             stream_number += 1
             tcp_report = f"Report from the tcp stream analyzer:\n{report}\n"

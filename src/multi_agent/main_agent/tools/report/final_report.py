@@ -11,7 +11,7 @@ class ThreeStateBool(str, Enum):
     unknown = "unknown"
 
 
-class FinalAnswerArgs(BaseModel):
+class FinalAnswerArgs(BaseModel): 
     detailed_report: str = Field(..., description="The detailed report of the attack.")
     cve_identifier: str = Field("unknown", description="The CVE identifier, or 'unknown' if you are not confident about the answer.")
     affected_service: str = Field("unknown", description="The name of the affected service, or 'unknown' if you are not confident about the answer.")
@@ -42,7 +42,7 @@ finalAnswerFormatter = Tool(
     If any of the fields is unknown or cannot be confidently determined, use 'unknown'.
 
     Args:
-        detailed_report: The detailed report of the attack.
+        detailed_report: summarize the requests sent by the attacker, the attack type and all relevant evidence collected about the attack exploitation/success. 
         cve_identifier: The CVE identifier (or 'unknown').
         affected_service: The affected service name (or 'unknown').
         successfull_attack: Whether the attack was successful: true, false or unknown.

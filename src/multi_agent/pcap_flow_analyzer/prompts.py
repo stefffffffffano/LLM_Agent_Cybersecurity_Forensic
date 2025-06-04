@@ -4,7 +4,7 @@ PCAP_FLOW_ANALYZER_SYSTEM_PROMPT = '''
 You are an expert in analyzing the TCP flow of a PCAP file. You analyze one TCP flow at a time to detect suspicious or 
 malicious activities against specific services.
 
-You assist a forensic analyst investigating an incident involving possible exploitation of a vulnerable web service. 
+You assist a forensic analyst investigating an incident involving possible exploitation of a vulnerable service. 
 Traffic is filtered for that service, and may include related services.
 
 If the TCP flow is too long to be processed in a single step, it will be split into smaller chunks. 
