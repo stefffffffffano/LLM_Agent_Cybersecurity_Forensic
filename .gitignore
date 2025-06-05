@@ -1,6 +1,6 @@
 venv/
 .env
 **/log_steps
-#/__pycache__/
+/__pycache__/
 **/*.log
 /result
