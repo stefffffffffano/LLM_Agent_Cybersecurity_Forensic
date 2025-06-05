@@ -94,15 +94,16 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
 
     # Final prompts
     system_prompt = SYSTEM_PROMPT.strip()
-    #When it's the last iteration, concatenate a message saying that it has to provide an answer
-    if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
-        system_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
     
     user_prompt = USER_PROMPT.format(
         pcap_content=pcap_content,
         memories=memories_str,
         queue=queue_str
     )
+    
+    #When it's the last iteration, concatenate a message saying that it has to provide an answer
+    if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
+        user_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
 
     messages = [
         {"role": "system", "content": system_prompt},
