@@ -7,7 +7,6 @@ from langchain_core.runnables import RunnableConfig
 from agent.utils import split_model_and_provider
 from agent.tools.memory import upsert_memory_func
 from agent.tools.browser import web_quick_search_func
-from agent.tools.log_reader import file_reader_func
 from agent.tools.pcap import frameDataExtractor_func
 from agent.tools.report import finalAnswerFormatter_func
 from agent.state import State
@@ -24,6 +23,9 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
     """
     tool_calls = state.messages[-1].tool_calls
     done = False
+
+    input_token_count = state.inputTokens
+    output_token_count = state.outputTokens
 
     if not tool_calls:
         raise ValueError("No tool calls found.")
@@ -53,11 +55,14 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         llm = init_chat_model(**split_model_and_provider(configurable.model))
         query_used = first_web_call["args"].get("query", "unknown")
         
-        response = web_quick_search_func(**first_web_call["args"], llm_model=llm)
+        response,input_tokens,output_tokens = web_quick_search_func(**first_web_call["args"], llm_model=llm)
         response_with_query = (
             f"Search result for query: '{query_used}'\n{response}"
         )
         
+        input_token_count += input_tokens
+        output_token_count += output_tokens
+
         results.append({
             "role": "tool",
             "content": response_with_query,
@@ -75,22 +80,6 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
                 "tool_call_id": web_calls[1]["id"]  
             })
 
-    """
-    #Handles file reading      
-    log_reader_calls = [tc for tc in tool_calls if tc["name"] == "log_reader"]
-    if len(log_reader_calls) > 1:
-        raise(ValueError('Log reading called more than once'))
-    log_reader_call = log_reader_calls[0] if log_reader_calls else None
-    if log_reader_calls:
-        file_path = state.log_path
-        file_content = file_reader_func(file_path)
-        results.extend(
-            {
-                "role": "tool",
-                "content": f"Content of the log file: {file_content}",
-                "tool_call_id": log_reader_call["id"],
-            })
-    """
     # Handles frame data extraction -> the LLM passes one single argument: frame_number
     frame_extractor_calls = [tc for tc in tool_calls if tc["name"] == "frame_data_extractor"]
 
@@ -130,7 +119,9 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
     return {
         "messages": results,
         "steps": state.steps - 1,
-        "done": done
+        "done": done,
+        "inputTokens": input_token_count,
+        "outputTokens": output_token_count,
     }
 
 
