@@ -20,6 +20,8 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
     Allows multiple tool calls, but only one `web_quick_search` per step.
     If more than one `web_quick_search` is requested, only the first is executed,
     and an informative message is returned.
+    Web calls and tshark_expert calls are mutually exclusive,
+    meaning if one is called, the other is skipped (web calls are skipped)
     """
     tool_calls = state.messages[-1].tool_calls
     done = False
@@ -56,11 +58,14 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         llm = init_chat_model(**split_model_and_provider(configurable.model))
         query_used = first_web_call["args"].get("query", "unknown")
         
-        response = web_quick_search_func(**first_web_call["args"], llm_model=llm)
+        response,intokens,outtokens = web_quick_search_func(**first_web_call["args"], llm_model=llm)
         response_with_query = (
             f"Search result for query: '{query_used}'\n{response}"
         )
         
+        input_tokens_count += intokens
+        output_tokens_count += outtokens
+
         results.append({
             "role": "tool",
             "content": response_with_query,
@@ -98,7 +103,6 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         ])
 
     # Handle tshark_expert tool
-    
     if tshark_calls:
         #Just consider the first call to the tshark expert, and skip the others
         first_tshark_call = tshark_calls[0]
