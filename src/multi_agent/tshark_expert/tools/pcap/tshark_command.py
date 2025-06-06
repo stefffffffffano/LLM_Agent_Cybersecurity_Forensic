@@ -41,7 +41,14 @@ def commandExecutor_func(tshark_command: str, pcap_file: str) -> str:
         if count_tokens(out) > 70000:
             out = "Output too long, please refine your command using additional tshark options like -Y filters."
     except subprocess.CalledProcessError as e:
-        out = f"Error: {e}\n{e.stderr}"
+        stderr = e.stderr.strip()
+        # Remove the first line that contains the entire command (plus the name of the file)
+        stderr_lines = stderr.splitlines()
+        filtered_lines = [
+            line for line in stderr_lines
+            if not line.startswith("Command")  
+        ]
+        out = "Error executing tshark command.\n" + ("\n".join(filtered_lines) or "No further details.")
 
     if len(out.strip()) == 0:
         out = "No output found for the given command."

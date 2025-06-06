@@ -32,7 +32,7 @@ def tshark_expert_func(
         pcap_path=pcap_path,
         task=task,
         messages=[],
-        steps=15,  # Default maximum number of steps
+        steps=10,  # Default maximum number of steps
     )
 
     # Assign a unique thread ID for the session
@@ -77,24 +77,27 @@ tshark_expert = Tool(
     description="""
     A specialized sub-agent for executing tshark commands on PCAP files.
     Input requirements:
-    - A precise technical goal (e.g., extract fields, decode payloads, filter sessions,extract TCP traffic on port x).
-    This has to be provided in the form:
-    Description of the analysis objective: <description>
+    - A precise technical goal (e.g., extract fields, follow a tcp flow, filter sessions,extract TCP traffic on port x).
+        This has to be provided in the form:
+        Description of the analysis objective: <description>
+    - Output: 
+        -A brief report of the analysis, focusing on command executed;
+        -The executed tshark command;
+        -The output of the command (if any).
 
     Behavior:
     - The Tshark Expert attempts to execute a tshark command to accomplish the task assigned.
     - The tshark expert has no memory of previously assigned tasks, so give it some context.
-    - The tshark expert has no knowledge of CVEs, exploits or vulnerabilities. Do not ask it to identify them.
+    - The tshark expert has no knowledge of CVEs, exploits or vulnerabilities. 
     - If the command is malformed or the output is not useful, it tries to autonomously correct or adjust the query.
     - If the analysis fails to complete after adjustments, it returns an error message.
     Guidelines for using the tshark_expert:
-    - Provide clear, high-level objectives in your request (e.g., "Extract HTTP requests and their headers", "Find all TCP retransmissions").
-    - If the task is related to a specific CVE, you must translate the CVE impact into a network behavior or observable pattern (e.g., "Look for signs of remote code execution attempts").
-    - Avoid asking the tshark_expert to identify CVEs, exploits, vulnerabilities, or application-specific logic, he doesn’t know about those details.
-    - The sub-agent expects technical goals (such as "extract fields", "filter packets matching condition X") expressed in network analysis terms.
+    - Provide clear, high-level objectives in your request (e.g., "Extract HTTP requests and their headers", etc.).
+    - If the task is related to a specific CVE, you must translate the CVE impact into a network behavior or observable pattern.
+    
     Important:
-    - This agent can optimize tshark commands but cannot independently infer complex forensic conclusions (e.g., exploitation detection must be guided by specific data extraction instructions).
-    - DO NOT ASK FOR SIGN OF EXPLOITATION OF SPECIFIC SERVICES OR CVES, THE SUBAGENT IS ONLY AN EXPERT IN TSHARK COMMANDS. DOESN'T KNOW ABOUT CVES.
+    - This agent can optimize tshark commands but cannot independently infer complex forensic conclusions.
+    - DO NOT ASK FOR SIGN OF EXPLOITATION OF SPECIFIC SERVICES OR CVES, THE SUBAGENT IS ONLY AN EXPERT IN TSHARK COMMANDS.
     """,
     args_schema=TsharkExpertArgs,
     func=tshark_expert_func,

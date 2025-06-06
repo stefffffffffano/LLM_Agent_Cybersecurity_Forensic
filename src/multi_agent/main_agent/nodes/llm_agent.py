@@ -15,7 +15,7 @@ from multi_agent.main_agent.tools.tshark_expert_tool import tshark_expert
 from multi_agent.common.main_agent_state import State
 from multi_agent.common.configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
-
+from multi_agent.main_agent.prompts import SYSTEM_PROMPT, USER_PROMPT
 
 class PromptDebugHandler(BaseCallbackHandler):
     """
@@ -96,24 +96,26 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     queue_str = "\n".join(queue_lines)
 
     # Final prompt
-    system_prompt = configurable.react_template.format(
+    system_prompt = SYSTEM_PROMPT.strip()
+    user_prompt = USER_PROMPT.format(
         pcap_content=pcap_content,
         memories=memories_str,
         queue=queue_str
     )
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=20)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=200)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
-    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,tshark_expert,finalAnswerFormatter])#,file_reader,frameDataExtractor])
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,tshark_expert,finalAnswerFormatter])
     #When it's the last iteration, concatenate a message saying that it has to provide an 
     #answer
     if state.steps == 2 or state.steps==3: #1 step this iteration, 1 for tools: 2 in total
-        system_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
-    messages = [{"role": "system", "content": system_prompt}]
+        user_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the report with the information you gathered so far."
+    messages = [{"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}]
     length_exceeded = False
     
     try:
-        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=20) #10s timeout
+        msg = await asyncio.wait_for(llm_with_tools.ainvoke(messages, config=debug_config), timeout=200) 
     except asyncio.TimeoutError:
         print("TimeoutError: LLM call took too long!")
         return {"messages": [], #No message is added
@@ -127,13 +129,10 @@ async def main_agent(state: State, config: RunnableConfig,*,store:BaseStore) -> 
     if not length_exceeded:
         input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
         output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
-    else:
-        input_token_count = 0
-        output_token_count = 0
 
     return {"messages": [msg],
             "steps": state.steps - 1,
             "done": length_exceeded,
-            "inputTokens": input_token_count,
-            "outputTokens": output_token_count
+            "inputTokens": input_token_count if not length_exceeded else 0,
+            "outputTokens": output_token_count if not length_exceeded else 0,
             }

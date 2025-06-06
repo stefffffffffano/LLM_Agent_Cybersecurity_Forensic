@@ -13,6 +13,8 @@ from multi_agent.tshark_expert.tools.pcap import commandExecutor
 from multi_agent.tshark_expert.tools.tshark_manual import manualSearch
 from multi_agent.tshark_expert.tools.report import finalAnswerFormatter
 from multi_agent.main_agent.tools.pcap import generate_summary
+from multi_agent.tshark_expert.prompts import SYSTEM_PROMPT, USER_PROMPT
+
 
 MAX_TOKENS = 120000
  
@@ -26,7 +28,6 @@ class PromptDebugHandler(BaseCallbackHandler):
         for i, prompt in enumerate(prompts):
             print(f"--- Prompt {i+1} ---\n{prompt}\n")
         print("=============================================================\n")
-
 
 
 def tshark_expert(state: State, config: RunnableConfig) -> dict:
@@ -48,14 +49,19 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     queue_lines = [f"Message number {i+1}: {m.content}" for i, m in enumerate(fifo_messages)]
     queue_str = "\n".join(queue_lines)
 
-    sys = configurable.tshark_expert_template.format(
+    system_prompt = SYSTEM_PROMPT.strip()
+
+    user_prompt = USER_PROMPT.format(
         pcap_content=generate_summary(state.pcap_path),
         task=state.task,
         steps=queue_str
     )
+    
     if state.steps == 2 or state.steps == 3:
-        sys += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the answer with the information you gathered so far."
-    message =  [{"role": "system", "content": sys}]
+        user_prompt += "\nWARNING: You are not allowed to explore the PCAP anymore, you have to provide the answer with the information you gathered so far."
+    message =  [{"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}]
+    
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     #Define the LLM with the model and the provider, temperature=0 to reduce randomness
     llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,request_timeout=30)
@@ -78,12 +84,10 @@ def tshark_expert(state: State, config: RunnableConfig) -> dict:
     if not length_exceeded:
         input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
         output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)
-    else:
-        input_token_count = 0
-        output_token_count = 0
+    
     return {"messages": [msg],
             "steps": state.steps-1,
             "error": length_exceeded,
-            "inputTokens" : input_token_count,
-            "outputTokens": output_token_count
+            "inputTokens" : input_token_count if not length_exceeded else 0,
+            "outputTokens": output_token_count if not length_exceeded else 0,
             }

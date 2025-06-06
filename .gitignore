@@ -1,5 +1,5 @@
 venv/
 .env
-#**/log_steps
-#**/subagent_logs
-#**/__pycache__
+#**/log_steps/
+#**/subagent_logs/
+**/__pycache__/
