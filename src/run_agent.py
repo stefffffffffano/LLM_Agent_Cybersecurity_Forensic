@@ -105,31 +105,27 @@ def init_store() -> InMemoryStore:
     )
 
 def get_artifact_paths(entry: dict) -> dict:
-    """
-    Given a task entry from data.json, returns string paths to the associated log and pcap files.
-    """
     event_id = entry["event"]
     event_pcap_files = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.pcap')]
-    #Just get the first one for now
-    event_log_file = [f for f in os.listdir(f'data/raw/eventID_{event_id}') if f.endswith('.log')][0]
     base_dir = f'data/raw/eventID_{event_id}'
     return {
-        "log_path": base_dir + "/" + event_log_file,
+        "log_dir": base_dir + "/",
         "pcap_path": base_dir + "/" + event_pcap_files[0],
     }
+
 
 
 async def run_forensic_example(
     graph,
     event_id: int,
     pcap_path: str,
-    log_path: str,
+    log_dir: str,
     max_steps: int = 25
 ):
     #Initial state
     state = State(
         pcap_path=pcap_path,
-        log_path=log_path,
+        log_dir=log_dir,
         messages=[],  
         steps=max_steps,
         event_id=event_id,
@@ -183,7 +179,7 @@ async def main():
             event_id=i,
             graph=graph,
             pcap_path=paths["pcap_path"],
-            log_path=paths["log_path"],
+            log_dir=paths["log_dir"],
         )
 
         with open("result.txt", "a", encoding="utf-8") as f:

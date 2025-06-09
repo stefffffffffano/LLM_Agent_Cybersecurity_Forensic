@@ -16,6 +16,8 @@ you tcp flows to give you an overview of the traffic that has to be analyzed mor
 The PCAP file is filtered on the traffic of the service of interest.
 You have access to a specialized sub-agent, the "tshark_expert", whose role is to assist you 
 in analyzing network traffic through the execution of tshark commands.
+You are also provided with a forensic report produced by a log analyzer that analyzed system logs filtered on the 
+service of interest. 
 
 The tshark_expert can be called to execute an high level analysis on the pcap file, but it has no 
 knowlege of CVEs, vulnerabilities or exploits. Specify in the task every step in human language, 
