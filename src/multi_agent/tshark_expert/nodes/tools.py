@@ -51,8 +51,6 @@ def tools(state: State) -> dict:
 
     #Handles final answer formatter
     final_answer_calls = [tc for tc in tool_calls if tc["name"] == "final_answer_formatter"]
-    if(len(final_answer_calls) > 1):
-        raise ValueError("Only one final answer formatter call is allowed.")
     final_answer_call = final_answer_calls[0] if final_answer_calls else None
     if final_answer_calls:
         final_answer_content = finalAnswerFormatter_func(**final_answer_call["args"],pcap_file=state.pcap_path)
