@@ -5,4 +5,3 @@ venv/
 **/log_steps/
 **/result**
 **/__pycache__/
-**/*.log
