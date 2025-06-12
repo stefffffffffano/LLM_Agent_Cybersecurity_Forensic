@@ -14,7 +14,7 @@ from multi_agent.common.global_state import State_global
 from configuration import Configuration
 from multi_agent.common.utils import count_tokens, split_model_and_provider
 from multi_agent.main_agent.prompts import SYSTEM_PROMPT, USER_PROMPT
-from multi_agent.main_agent.tools.log_reader import log_analyzer
+
 
 
 class PromptDebugHandler(BaseCallbackHandler):
@@ -108,7 +108,7 @@ async def main_agent(state: State_global, config: RunnableConfig, *, store: Base
 
     #LLM call
     llm = init_chat_model(**split_model_and_provider(configurable.model), temperature=0.0, timeout=200)
-    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search, finalAnswerFormatter, log_analyzer])
+    llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search, finalAnswerFormatter])
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
 
     length_exceeded = False
@@ -126,7 +126,6 @@ async def main_agent(state: State_global, config: RunnableConfig, *, store: Base
             "length_exceeded": length_exceeded,
             "steps": state.steps,
             "event_id": state.event_id,
-            "next_step": ""
         }
 
     if not length_exceeded:
@@ -142,7 +141,6 @@ async def main_agent(state: State_global, config: RunnableConfig, *, store: Base
         "done": length_exceeded,
         "inputTokens": input_token_count,
         "outputTokens": output_token_count,
-        "next_step": ""
     }
 
 

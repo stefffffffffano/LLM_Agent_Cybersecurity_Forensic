@@ -19,10 +19,10 @@ NOT_GIVEN_ANSWER = """
 FINAL REPORT:
 No answer given by the agent.
 REPORT SUMMARY:
-Identified CVE: unknown
-Affected Service: unknown
-Is Service Vulnerable: unknwon
-Attack succeeded: unknwon
+Identified CVE: -
+Affected Service: -
+Is Service Vulnerable: -
+Attack succeeded: -
 """
 EXECUTION = os.getenv("EXECUTION_MODE", "API")
 
@@ -139,30 +139,28 @@ async def run_forensic_example(
 
     return (done, answer.content, state["steps"], state["inputTokens"], state["outputTokens"])
 
+
 async def main():
     pcaps = load_data()
     counters = [0] * 4  # CVE, service name, vulnerable, attack success
-    unknown_counts = [0] * 4
     confusion_matrix_vulnerable = np.zeros((2, 2), dtype=int)
     confusion_matrix_success = np.zeros((2, 2), dtype=int)
 
     with open("result.txt", "w") as f:
         f.write("")
 
-    os.makedirs("log_steps", exist_ok=True)
-    total_tested = 18
+    os.makedirs("log_steps", exist_ok=True) #trace agent's steps
 
-    for i in range(total_tested):
-        game = pcaps[i] 
+    for i, game in enumerate(pcaps):
         paths = get_artifact_paths(game)
         store = init_store()
         graph = build_graph(store)
 
         expected_answer = [
-            game["cve"],
-            game["service"],
-            game["vulnerable"],
-            game["success"],
+            game["cve"],       # index 0
+            game["service"],   # index 1
+            game["vulnerable"],# index 2
+            game["success"],   # index 3
         ]
 
         is_vulnerable = game["vulnerable"]
@@ -183,55 +181,40 @@ async def main():
             f.write(f"Input tokens written: {inTokens}, output tokens: {outTokens}\n\n\n")
 
         if done:
+            # Extract answers from the formatted response
             answers = [
                 get_occurrences(answer, "Identified CVE: "),
                 get_occurrences(answer, "Affected Service: "),
-                get_occurrences(answer, "Is Service Vulnerable: "),
-                get_occurrences(answer, "Attack succeeded: "),
+                get_occurrences(answer, "Is Service Vulnerable: "),   # boolean string
+                get_occurrences(answer, "Attack succeeded: "),        # boolean string
             ]
 
+            # Check correctness and update counters
             correct = check_correctness(answers, expected_answer)
-
-            for j, a in enumerate(answers):
-                if a.lower().strip() == "unknown":
-                    unknown_counts[j] += 1
-                elif j in (2, 3) and a.lower().strip() in ("true", "false"):
-                    pred = a.lower().strip() == "true"
-                    expected = expected_answer[j] == True
-                    if pred == expected:
-                        counters[j] += 1
-                elif correct[j]:
+            for j, is_correct in enumerate(correct):
+                if is_correct:
                     counters[j] += 1
 
-            if answers[2].lower().strip() in ("true", "false"):
-                pred_vuln = answers[2].lower().strip() == "true"
-                confusion_matrix_vulnerable[int(is_vulnerable)][int(pred_vuln)] += 1
-            if answers[3].lower().strip() in ("true", "false"):
-                pred_succ = answers[3].lower().strip() == "true"
-                confusion_matrix_success[int(is_success)][int(pred_succ)] += 1
+            # Update confusion matrices
+            pred_vulnerable = answers[2].lower() == "true"
+            pred_success = answers[3].lower() == "true"
 
-    total = total_tested
-    print("Accuracy (over provided answers only):")
-    labels = ["CVE", "Service", "Vulnerable", "Success"]
-    for i, label in enumerate(labels):
-        known = total - unknown_counts[i]
-        correct = counters[i]
-        if known == 0:
-            print(f"{label}: No answers provided.")
-        else:
-            print(f"{label}: {correct}/{known} ({correct/known*100:.2f}%)")
+            # Riga = atteso (0 = falso, 1 = vero), Colonna = predetto
+            confusion_matrix_vulnerable[int(is_vulnerable)][int(pred_vulnerable)] += 1
+            confusion_matrix_success[int(is_success)][int(pred_success)] += 1
 
-    print("\nCoverage (provided answers, excluding 'unknown'):")
-    labels = ["CVE", "Service", "Vulnerable", "Success"]
-    for i, label in enumerate(labels):
-        known = total - unknown_counts[i]
-        print(f"{label}: {known}/{total} ({known/total*100:.2f}%)")
-
-    f1_macro_vuln, mcc_vuln = calculate_f1_mcc(confusion_matrix_vulnerable)
-    f1_macro_succ, mcc_succ = calculate_f1_mcc(confusion_matrix_success)
-    print(f"\nF1_macro Vulnerable: {f1_macro_vuln:.2f}, MCC: {mcc_vuln:.2f}")
-    print(f"F1_macro Attack Success: {f1_macro_succ:.2f}, MCC: {mcc_succ:.2f}")
+    #At the end, print statistics
+    print("Statistics:")
+    print(f"Percentage of identified CVE: {counters[0]/len(pcaps)*100:.2f}%")
+    print(f"Percentage of identified affected service: {counters[1]/len(pcaps)*100:.2f}%")
+    print(f"Percentage of identified vulnerability: {counters[2]/len(pcaps)*100:.2f}%")
+    print(f"Percentage of identified attack success: {counters[3]/len(pcaps)*100:.2f}%")
+    f1_macro_vulnerable, mcc_vulnerable = calculate_f1_mcc(confusion_matrix_vulnerable)
+    f1_macro_success, mcc_success = calculate_f1_mcc(confusion_matrix_success)
+    print(f"f1_macro for vulnerability: {f1_macro_vulnerable:.2f}, MCC: {mcc_vulnerable:.2f}")
+    print(f"f1_macro for attack success: {f1_macro_success:.2f}, MCC: {mcc_success:.2f}")
     print("Finished running all tasks.")
+    
 
 if __name__ == "__main__":
     asyncio.run(main())

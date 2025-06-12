@@ -8,10 +8,8 @@ from configuration import Configuration
 from multi_agent.log_reporter.concatenate_logs import concatenate_logs
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.log_reporter.prompts import (
-    LOG_REPORTER_SYSTEM_PROMPT_NO_TASK,
-    LOG_REPORTER_SYSTEM_PROMPT_WITH_TASK,
+    LOG_REPORTER_SYSTEM_PROMPT,
     LOG_REPORTER_USER_PROMPT,
-    LOG_REPORTER_USER_PROMPT_WITH_TASK,
 )
 
 
@@ -28,18 +26,10 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
 
     log_content = concatenate_logs(state.log_dir)
 
-    # Prompt construction
-    if state.next_step == "log_reporter" and state.task:
-        system_prompt = LOG_REPORTER_SYSTEM_PROMPT_WITH_TASK.strip()
-        user_prompt = LOG_REPORTER_USER_PROMPT_WITH_TASK.format(
-            log_content=log_content,
-            task=state.task
-        )
-    else:
-        system_prompt = LOG_REPORTER_SYSTEM_PROMPT_NO_TASK.strip()
-        user_prompt = LOG_REPORTER_USER_PROMPT.format(
-            log_content=log_content
-        )
+    system_prompt = LOG_REPORTER_SYSTEM_PROMPT.strip()
+    user_prompt = LOG_REPORTER_USER_PROMPT.format(
+        log_content=log_content
+    )
 
     llm = init_chat_model(
         **split_model_and_provider(configurable.model),
@@ -78,7 +68,6 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
         "event_id": state.event_id,
         "inputTokens": input_token_count,
         "outputTokens": output_token_count,
-        "next_step": "main_agent" if state.next_step == "log_reporter" else "pcap_flows_reporter"
     }
 
 

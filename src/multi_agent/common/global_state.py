@@ -20,5 +20,3 @@ class State_global:
     inputTokens: int = 0 #counter for the input tokens
     outputTokens: int = 0 #counter for the output tokens
     strategy: str = "LLM_summary" #Strategy used for the web search
-    next_step: str = "" #Next step to be executed by the agent when routing goes to log_reporter
-    task: str = "" #Task to be executed by the log_reporter when the main agent calls it

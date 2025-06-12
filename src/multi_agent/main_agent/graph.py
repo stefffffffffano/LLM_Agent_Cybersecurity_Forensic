@@ -41,7 +41,7 @@ def build_graph(store: BaseStore) -> StateGraph:
     builder.add_conditional_edges(
     "tools",
     route_message,
-    {"main_agent": "main_agent", "log_reporter":"log_reporter",END: END}
+    {"main_agent": "main_agent",END: END}
     )
 
     return builder.compile(checkpointer=memory, store=store)
