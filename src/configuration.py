@@ -40,6 +40,13 @@ class Configuration:
         }
     )
 
+    tokens_budget: int = field(
+        default=int(os.getenv("TOKENS_BUDGET", "400000")),
+        metadata={
+            "description": "Total number of tokens available (as input) for the pcap flow analyzer."
+        }
+    )
+
     @classmethod
     def from_runnable_config(
         cls, config: Optional[RunnableConfig] = None
