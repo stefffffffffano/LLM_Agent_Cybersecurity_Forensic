@@ -23,11 +23,7 @@ def build_graph(store: BaseStore) -> StateGraph:
 
     builder.add_edge(START, "log_reporter")
     #builder.add_edge("log_reporter", "pcap_flows_reporter")
-    builder.add_conditional_edges(
-        "log_reporter",
-        route_message,
-        {"pcap_flows_reporter": "pcap_flows_reporter", "main_agent": "main_agent"},
-    )
+    builder.add_edge("log_reporter", "pcap_flows_reporter")
     builder.add_edge("pcap_flows_reporter", "main_agent")
 
     builder.add_conditional_edges(

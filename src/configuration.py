@@ -69,5 +69,6 @@ class Configuration:
             values["max_working_context_tokens"] = int(values["max_working_context_tokens"])
         if "context_window_size" in values and isinstance(values["context_window_size"], str):
             values["context_window_size"] = int(values["context_window_size"])
-
+        if "tokens_budget" in values and isinstance(values["tokens_budget"], str):
+            values["tokens_budget"] = int(values["tokens_budget"])
         return cls(**{k: v for k, v in values.items() if v is not None})
