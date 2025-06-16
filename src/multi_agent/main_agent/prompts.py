@@ -21,9 +21,6 @@ To perform effective web searches, always specify the affected service and versi
 By thinking in a step by step manner, provide only one single reasoning 
 step in response to the last observation and the action for the next step.
 When you are ready to provide the final answer, stop the reasoning and format the result.
-
-IMPORTANT:
-- Don't search on the web for the same or similar queries many times. Repeat the web search only if it refers to another service or a different attack.
 '''
 
 USER_PROMPT = """
@@ -39,4 +36,9 @@ Pcap flows analysis: {pcap_content}
 {memories}
 
 Queue of steps: {queue}
+
+
+
+IMPORTANT:
+- Don't search on the web for the same or similar queries many times. Repeat the web search only if it refers to another service or a different attack.
 """

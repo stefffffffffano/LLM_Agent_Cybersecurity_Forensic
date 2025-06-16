@@ -35,13 +35,13 @@ async def pcap_flow_analyzer(
     configurable = Configuration.from_runnable_config(config)
     llm = init_chat_model(
         **split_model_and_provider(configurable.model),
-        temperature=0.0,
+        #temperature=0.0,
         timeout=200
     ).with_structured_output(Pcap_flow_output)
 
     flow_text = get_flow(pcap_path, stream_number)
 
-    if allocation_size > total_size or total_size>context_window_size:
+    if total_size > allocation_size  or total_size > context_window_size:
         chunk = truncate_flow(flow_text, allocation_size, context_window_size)
     else:
         chunk = flow_text

@@ -33,7 +33,7 @@ async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
 
     llm = init_chat_model(
         **split_model_and_provider(configurable.model),
-        temperature=0.0,
+        #temperature=0.0,
         timeout=200
     )
 
