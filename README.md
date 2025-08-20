@@ -63,6 +63,24 @@ pip install -r requirements.txt
 
 ---
 
+##  Wireshark / TShark Dependency
+
+This project requires the command-line tool **TShark** to analyze `.pcap` files.
+
+TShark is part of the [Wireshark](https://www.wireshark.org/) network analysis suite and must be **installed and accessible via the system `PATH`**.
+
+###  Installation Instructions
+
+1. **Download Wireshark** from the official site:  
+  https://www.wireshark.org/download.html
+
+2. During installation:
+   -  **Enable the option to install `TShark`**
+   -  **Select the option to add Wireshark to the system `PATH` or do it manually once it has been installed**
+
+---
+
+
 ### 2. Configure Environment Variables
 
 From the `src/` folder:
