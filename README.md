@@ -105,7 +105,7 @@ At the end, it prints performance metrics (e.g., accuracy) to `stdout` and to th
 
 ---
 
-## 📊 Output Artifacts
+## Output Artifacts
 
 - `results/run[n]/log_steps/`: One file per event, detailing internal reasoning and tool calls
 - `results/run[n]/result.txt`: Final report for each event (e.g., predicted CVE, vulnerable status)
@@ -121,8 +121,8 @@ The benchmark is designed to evaluate the agent’s ability to perform forensic 
 - **Assess whether the service is vulnerable**
 - **Assess whetger the attack was successful**
 - **Generate a concise report**
-
-# How to specify model and provider
+---
+## How to specify model and provider
 
 To configure the model and provider, set the appropriate variable in your `.env` file.
 
@@ -139,3 +139,5 @@ Use the provider name followed by a `/` and the model identifier. Examples:
 
 Specify the provider name first, then append the model identifier in the same format as before. Example:
  -together/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
+
+---
