@@ -17,17 +17,13 @@ def build_graph(store: BaseStore) -> StateGraph:
 
     builder.add_node("main_agent", main_agent)
     builder.add_node("tools", tools)
-    builder.add_node("log_reporter", log_reporter)
+    #builder.add_node("log_reporter", log_reporter)
     builder.add_node("pcap_flows_reporter", pcap_flows_reporter)
 
 
-    builder.add_edge(START, "log_reporter")
+    #builder.add_edge(START, "log_reporter")
     #builder.add_edge("log_reporter", "pcap_flows_reporter")
-    builder.add_conditional_edges(
-        "log_reporter",
-        route_message,
-        {"pcap_flows_reporter": "pcap_flows_reporter", "main_agent": "main_agent"},
-    )
+    builder.add_edge(START, "pcap_flows_reporter")
     builder.add_edge("pcap_flows_reporter", "main_agent")
 
     builder.add_conditional_edges(
@@ -41,7 +37,7 @@ def build_graph(store: BaseStore) -> StateGraph:
     builder.add_conditional_edges(
     "tools",
     route_message,
-    {"main_agent": "main_agent", "log_reporter":"log_reporter",END: END}
+    {"main_agent": "main_agent",END: END}
     )
 
     return builder.compile(checkpointer=memory, store=store)

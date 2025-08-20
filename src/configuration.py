@@ -18,27 +18,36 @@ class Configuration:
         },
     )
 
-    max_fifo_tokens: int = field(
-    default=int(os.getenv("MAX_FIFO_TOKENS", "110000")),
-        metadata={
-            "description": "Maximum number of tokens allowed in the FIFO message queue before flushing."
-        }
-    )
-
-    max_working_context_tokens: int = field(
-        default=int(os.getenv("MAX_WORKING_CONTEXT_TOKENS", "5000")),
-        metadata={
-            "description": "Maximum number of tokens allowed in the working context."
-        }
-    )
-
     context_window_size: int = field(
-        default=int(os.getenv("CONTEXT_WINDOW_SIZE", "8192")),
+        default=int(os.getenv("CONTEXT_WINDOW_SIZE", "128000")),
         metadata={
             "description": "Size of the context window for the language model. "
             "This is the maximum number of input tokens that can be processed in a single request."
         }
     )
+
+    number_of_events: int = field(
+        default=int(os.getenv("NUMBER_OF_EVENTS", "20")),
+        metadata={
+            "description": "Number of events in the benchmark "
+            "This is the number of events to be processed by the agent."
+        }
+    )
+
+    tokens_budget: int = field(
+        default=int(os.getenv("TOKENS_BUDGET", "400000")),
+        metadata={
+            "description": "Total number of tokens available (as input) for the pcap flow analyzer."
+        }
+    )
+
+    # Derived fields: not initialized directly
+    max_fifo_tokens: int = field(init=False)
+    max_working_context_tokens: int = field(init=False)
+
+    def __post_init__(self):
+        self.max_fifo_tokens = int(0.92 * self.context_window_size)
+        self.max_working_context_tokens = int(0.04 * self.context_window_size)
 
     @classmethod
     def from_runnable_config(
@@ -54,13 +63,12 @@ class Configuration:
             if f.init
         }
 
-
-         # cast to integer 
-        if "max_fifo_tokens" in values and isinstance(values["max_fifo_tokens"], str):
-            values["max_fifo_tokens"] = int(values["max_fifo_tokens"])
-        if "max_working_context_tokens" in values and isinstance(values["max_working_context_tokens"], str):
-            values["max_working_context_tokens"] = int(values["max_working_context_tokens"])
+        # Cast to int where needed
         if "context_window_size" in values and isinstance(values["context_window_size"], str):
             values["context_window_size"] = int(values["context_window_size"])
+        if "tokens_budget" in values and isinstance(values["tokens_budget"], str):
+            values["tokens_budget"] = int(values["tokens_budget"])
+        if "number_of_events" in values and isinstance(values["number_of_events"],str):
+            values["number_of_events"] = int(values["number_of_events"])
 
         return cls(**{k: v for k, v in values.items() if v is not None})

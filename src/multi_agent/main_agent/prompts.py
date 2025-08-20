@@ -11,23 +11,14 @@ focus on the relevant service. The service may or may not be vulnerable, and the
 
 You are provided with:
 1- A FIFO queue containing the most recent reasoning steps. Store relevant information early in your reasoning, because the queue has a limited size.
-2- Two forensic reports from:
-  - A log analyzer
-  - A PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
+2- A forensic report from a PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
 3- Tools to search online and to store relevant information in a memory database.
-4- A log analyzer that can answer to your questions based on log contents. Ask for a specific question when you notice an attempt of RCE.
 
-Logs may provide information about an executed command, but are not enough to make conclusions if nothing is found. In that case, trust more
-the analysis of the tcp flows.
 To perform effective web searches, always specify the affected service and version (if known) and the identified attack type.
 
 By thinking in a step by step manner, provide only one single reasoning 
 step in response to the last observation and the action for the next step.
 When you are ready to provide the final answer, stop the reasoning and format the result.
-
-IMPORTANT:
-- Do not call the log_analyzer and the web_search tools in the same step;
-- Don't search on the web for the same or similar queries many times. Repeat the web search only if it refers to another service or a different attack.
 '''
 
 USER_PROMPT = """
@@ -43,4 +34,9 @@ Pcap flows analysis: {pcap_content}
 {memories}
 
 Queue of steps: {queue}
+
+
+
+IMPORTANT:
+- Don't search on the web for the same or similar queries many times. Repeat the web search only if it refers to another service or a different attack.
 """

@@ -9,6 +9,16 @@ from langchain_core.tools import Tool
 from .chunking_utils import ChunkingHandler
 from .summarization_utils import SummarizationHandler
 
+
+def get_google_keys():
+    return sorted(
+        [(k, v) for k, v in os.environ.items() if k.startswith("GOOGLE_API_KEY_")],
+        key=lambda x: int(x[0].split("_")[-1])
+    )
+
+
+
+
 class Context_generator:
     def __init__(self, llm, research="CVE", strategy="LLM_summary", embedder="openai", n_documents_per_source=10, context_length=5,context_window_size=8192, verbose=False):
         self.llm = llm
@@ -20,11 +30,12 @@ class Context_generator:
         self.chunker = ChunkingHandler(embedder=embedder, verbose=verbose)
         self.summarizer = SummarizationHandler(llm, research=research, verbose=verbose,context_window_size=context_window_size)
 
-        self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        self.google_keys = [v for _, v in get_google_keys()]
         self.google_cse_id = os.getenv("GOOGLE_CSE_ID")
+        self.current_key_index = 0
 
-        if not self.google_api_key or not self.google_cse_id:
-            raise ValueError("GOOGLE_API_KEY and GOOGLE_CSE_ID must be set as environment variables.")
+        if not self.google_keys or not self.google_cse_id:
+            raise ValueError("At least one GOOGLE_API_KEY and GOOGLE_CSE_ID must be set as environment variables.")
 
     def is_text_clean(self, text):
         try:
@@ -47,24 +58,48 @@ class Context_generator:
         except:
             return None
 
+
     def get_web_search_results(self, query):
         print("Searching with Google API...")
-        documents = []
-        params = {'q': query, 'key': self.google_api_key, 'cx': self.google_cse_id, 'start': 1}
-        try:
-            response = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=10)
-            results = response.json().get("items", [])
-        except:
-            return []
 
-        for item in tqdm(results, disable=not self.verbose, leave=False):
-            url = item.get("link")
-            doc = self.extract_and_clean_content(url)
-            if url and doc:
-                documents.append((url, doc))
-            if len(documents) >= self.n_documents_per_source:
-                break
-        return documents
+        documents = []
+        start_index = 1
+        max_retries = len(self.google_keys)
+
+        while self.current_key_index < len(self.google_keys) and max_retries > 0:
+            api_key = self.google_keys[self.current_key_index]
+            params = {'q': query, 'key': api_key, 'cx': self.google_cse_id, 'start': start_index}
+
+            try:
+                response = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=10)
+                if response.status_code == 200:
+                    results = response.json().get("items", [])
+                    for item in tqdm(results, disable=not self.verbose, leave=False):
+                        url = item.get("link")
+                        doc = self.extract_and_clean_content(url)
+                        if url and doc:
+                            documents.append((url, doc))
+                        if len(documents) >= self.n_documents_per_source:
+                            break
+                    return documents
+
+                elif response.status_code in [403, 429]:
+                    print(f"API key #{self.current_key_index+1} exhausted or invalid. Trying next key...")
+                    self.current_key_index += 1
+                    max_retries -= 1
+                    continue
+                else:
+                    print(f"Google API returned status {response.status_code}. Skipping...")
+                    break
+
+            except Exception as e:
+                print(f"Error with API key #{self.current_key_index+1}: {str(e)}")
+                self.current_key_index += 1
+                max_retries -= 1
+                continue
+
+        print("All API keys failed or exhausted.")
+        return []
 
     def invoke(self, query):
         print("Query:", query)

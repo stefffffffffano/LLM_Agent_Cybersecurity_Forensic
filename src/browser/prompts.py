@@ -27,6 +27,7 @@ FINAL_CVE_AGGREGATION_PROMPT = (
     "Do not repeat redundant information or statements that are not relevant for a forensic expert trying to identify CVEs. "
     ". Report all CVEs with their description in the format: "
     "'CVE-XXXX-YYYY: Description of the CVE and its relevance to the service/application under analysis.'"
+    "IMPORTANT: Do not include suggested actions for the forensic analyst, just report CVEs and their details."
 )
 
 TSHARK_SUMMARY_PROMPT = (
