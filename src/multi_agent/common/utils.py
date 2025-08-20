@@ -1,6 +1,7 @@
 """Utility functions used in our graph."""
 import tiktoken
 import subprocess
+from typing import Optional
 
 # This encoding is used for token counting by most of the providers
 encoding = tiktoken.get_encoding("cl100k_base")
@@ -85,4 +86,59 @@ def get_flow(pcap_file: str, stream: int) -> str:
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     raw_text = result.stdout
+    return raw_text 
+
+def is_empty_follow_block(text: str) -> bool:
+    return len(text.strip().split('\n')) <= 6
+
+def concatenate_subflows(pcap_file:str,stream:int)->Optional[str]:
+    subflows = []
+    key_file_path = '/'.join(pcap_file.split("/")[:-1]) + "/sslkeylogfile.txt" 
+    i = 0
+    while True:
+        cmd = [
+            "tshark", 
+            "-r", pcap_file, 
+            "-q", 
+            "-z", f"follow,http2,ascii,{stream},{i}", 
+            "-o", f"tls.keylog_file:{key_file_path}"
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        raw_text = result.stdout.strip()
+        if  is_empty_follow_block(raw_text):
+            break
+        i+=1
+        subflows.append(raw_text + '\n')
+
+    if len(subflows) == 0:
+        return None    
+    return ''.join(subflows)
+        
+
+def get_flow_web_browsing(pcap_file: str, stream: int) -> Optional[str]:
+    """
+    Executes the tshark command required to extract the flow from a pcap file.
+    The flow is extracted using the follow TCP command and is returned as a list of strings.
+        """
+    
+    key_file_path = '/'.join(pcap_file.split("/")[:-1]) + "/sslkeylogfile.txt"  
+
+    cmd = [
+    "tshark", 
+    "-r", pcap_file, 
+    "-q", 
+    "-z", f"follow,http,ascii,{stream}", 
+    "-o", f"tls.keylog_file:{key_file_path}"
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+
+    raw_text = result.stdout
+
+    if  is_empty_follow_block(raw_text):
+        subflows_text = concatenate_subflows(pcap_file,stream)
+        if not subflows_text:
+            return None
+        else:
+            return subflows_text
     return raw_text 

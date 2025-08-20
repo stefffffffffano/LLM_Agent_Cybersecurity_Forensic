@@ -1,6 +1,7 @@
 from langchain_core.runnables import RunnableConfig
 from typing import List, Tuple
 import numpy as np
+import os
 
 from multi_agent.common.global_state import State_global
 from multi_agent.main_agent.tools.pcap import generate_summary
@@ -62,17 +63,22 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
     for each tcp flow (that does not containt tls traffic), calls the tcp flow analyzer 
     to get a report of the flow.
     Finally, it returns a report for each flow concatenating results.
+
+    If we are analysing traffic related to normal web browsing, we still consider tls traffic
     """
     input_token_count = state.inputTokens
     output_token_count = state.outputTokens
     final_report = ""
 
+    browsing = os.getenv("DATASET", "").strip().lower() == "web_browsing_events"
     # This is the full tshark output, already formatted
     tshark_output = generate_summary(state.pcap_path)
     tshark_lines = tshark_output.strip().splitlines()
     # Get a set containing the tcp streams that contain tls traffic
-    tls_streams = get_tls_streams(state.pcap_path)
-
+    if not browsing: 
+        tls_streams = get_tls_streams(state.pcap_path)
+    else:
+        tls_streams = set()
     #retrieve context window size from the configuration
     configurable = Configuration.from_runnable_config(config)
     tokens_budget = configurable.tokens_budget

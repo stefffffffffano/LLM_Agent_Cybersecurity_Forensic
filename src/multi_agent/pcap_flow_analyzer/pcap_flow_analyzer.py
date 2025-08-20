@@ -1,12 +1,12 @@
 from openai import BadRequestError
-import time 
+import os
 from typing import Tuple
 
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 
 from configuration import Configuration
-from multi_agent.common.utils import get_flow,truncate_flow
+from multi_agent.common.utils import get_flow,truncate_flow,get_flow_web_browsing
 from multi_agent.common.utils import split_model_and_provider, count_tokens
 from multi_agent.pcap_flow_analyzer.output_format import Pcap_flow_output, format_pcap_flow_output
 from multi_agent.pcap_flow_analyzer.prompts import (
@@ -40,7 +40,14 @@ async def pcap_flow_analyzer(
         timeout=200
     )
 
-    flow_text = get_flow(pcap_path, stream_number)
+    if allocation_size > 0:
+        if os.getenv("DATASET", "").strip().lower() == "web_browsing_events":
+            flow_text = get_flow_web_browsing(pcap_path,stream_number)
+        else:
+            flow_text = get_flow(pcap_path, stream_number)
+    else:
+        return ("There are no data in this tcp flow", 0, 0)
+
 
     if total_size > allocation_size  or total_size > context_window_size:
         chunk = truncate_flow(flow_text, allocation_size, context_window_size)
@@ -61,7 +68,7 @@ async def pcap_flow_analyzer(
     try:
         response = await llm.ainvoke(messages)
     except BadRequestError as e:
-        print("❌ BadRequestError:", e)
+        print("BadRequestError:", e)
         return ("Error: report of this flow couldn't be generated.", 0, 0)
     except Exception as e:
         return ("Error: an unexpected error occurred", 0, 0)

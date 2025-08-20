@@ -24,6 +24,9 @@ data/
 |   │   └── eventID_<n>/
 |   └── tasks/
 |       └── data.json
+└── web_browsing_traffic/
+|   ├── raw/
+|   │   └── eventID_<n>/     # Events related to non malicious traffic, no ground truth required
 |
 ├── src/
 │   ├── run_agent.py         # Entry point to execute the agent
@@ -84,12 +87,10 @@ Save the file before proceeding.
 
 Run the following command from the `src/` directory:
 
+#### Executing one of the two benchmarks (CFA or test set):
+
 ```bash
 python run_agent.py
-```
-Otherwise run:
-```bash
-python run_agent_no_gt.py
 ```
 
 The script will:
@@ -102,6 +103,19 @@ The script will:
   - Append results to `results/run[n]/result.txt`
 
 At the end, it prints performance metrics (e.g., accuracy) to `stdout` and to the file `results/run[n]/result.txt` for each execution.
+
+#### Testing the agent on non-malicious traffic
+
+The folder `data/web_browsing_traffic` contains data from normal web browsing, with no malicious activity involved. Although the agent is prompted with a bias toward detecting malicious behavior (as defined in the benchmark), we also evaluated it on this benign scenario.
+
+To run the test, simply execute:
+
+```bash
+python run_agent_web_events.py
+```
+
+The final output will be the same reported before without perfornance metrics, as there is no ground truth in this case, since there is no malicious activity. In the file in `data/web_browsing_traffic/gt.txt` there is, for each event, the corresponding event that we were browsing when collecting data. Because the traffic is TLS-encrypted, the corresponding decryption key is also provided for each event, enabling the agent to analyze the content in an automatic manner.
+
 
 ---
 
