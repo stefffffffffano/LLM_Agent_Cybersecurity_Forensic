@@ -33,8 +33,7 @@ project-root/
 │   ├── configuration.py                 # Reads environment variables and agent settings
 │   ├── multi_agent/                     # Contains the code for all the agents
 │   ├── browser/                         # Code related to the web search tool
-│   ├── .env_example                     # Example of environmental variables file
-│   ├── results/                         # Folder containing the results (logs and reports) for each run
+│   └── .env_example                     # Example of environmental variables file
 │
 ├── requirements.txt                     # Python dependencies
 ├── results/                             # Results folder containing logs and reports for each rn (for each execution on the benchmark)
