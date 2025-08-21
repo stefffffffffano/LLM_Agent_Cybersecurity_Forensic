@@ -4,6 +4,8 @@ import uuid
 import json
 import os
 import numpy as np
+from pathlib import Path
+import shutil
 
 from langgraph.store.memory import InMemoryStore
 from langchain.embeddings import init_embeddings
@@ -13,20 +15,14 @@ from dotenv import load_dotenv
 from multi_agent.main_agent.graph import build_graph 
 from multi_agent.common.global_state import State_global
 
+
 load_dotenv()
-
-NOT_GIVEN_ANSWER = """
-FINAL REPORT:
-No answer given by the agent.
-REPORT SUMMARY:
-Identified CVE: -
-Affected Service: -
-Is Service Vulnerable: -
-Attack succeeded: -
-"""
-
 EXECUTION = os.getenv("EXECUTION_MODE", "API")
 
+
+BASE_DIR = Path(__file__).resolve().parent
+RESULTS_BASE_DIR = BASE_DIR.parent / "results"
+RESULTS_BASE_DIR.mkdir(parents=True, exist_ok=True)
 
 def get_dataset() -> str:
     dataset_map = {
@@ -39,8 +35,9 @@ def get_dataset() -> str:
     except KeyError:
         raise ValueError(f"Unknown dataset '{dataset}'. Allowed values: {list(dataset_map)}")
 
-GROUNDTRUTH_DIR = os.path.join("..", "data", get_dataset(), "tasks","data.json")
-DATA_DIR = os.path.join("..", "data", get_dataset(), "raw")
+DATASET_DIR = BASE_DIR.parent / "data" / get_dataset()
+GROUNDTRUTH_FILE = DATASET_DIR / "tasks" / "data.json"
+RAW_DIR = DATASET_DIR / "raw"
 
 def get_number_of_executions(default: int = 3) -> int:
     raw = os.getenv("NUMBER_OF_EXECUTIONS", str(default))
@@ -55,6 +52,15 @@ def get_number_of_executions(default: int = 3) -> int:
 
 NUMBER_OF_EXECUTIONS = get_number_of_executions()
 
+NOT_GIVEN_ANSWER = """
+FINAL REPORT:
+No answer given by the agent.
+REPORT SUMMARY:
+Identified CVE: -
+Affected Service: -
+Is Service Vulnerable: -
+Attack succeeded: -
+"""
 
 def calculate_f1_mcc(conf_matrix):
     num_classes = conf_matrix.shape[0]
@@ -108,8 +114,8 @@ def get_occurrences(input_string, start_substring='', end_substring='\n'):
 
 
 def load_data():
-    with open(GROUNDTRUTH_DIR, 'r') as file: 
-        games = json.loads(file.read())
+    with open(GROUNDTRUTH_FILE, 'r') as file: 
+        games = json.load(file)
     return games['tasks']
 
 
@@ -132,11 +138,13 @@ def init_store() -> InMemoryStore:
 
 def get_artifact_paths(entry: dict) -> dict:
     event_id = entry["event"]
-    event_pcap_files = [f for f in os.listdir(f'{DATA_DIR}/eventID_{event_id}') if f.endswith('.pcap')]
-    base_dir = f'{DATA_DIR}/eventID_{event_id}'
+    event_dir = RAW_DIR / f"eventID_{event_id}"
+    pcap_files = list(event_dir.glob("*.pcap"))
+    if not pcap_files:
+        raise FileNotFoundError(f"No .pcap found in {event_dir}")
     return {
-        "log_dir": base_dir + "/",
-        "pcap_path": base_dir + "/" + event_pcap_files[0],
+        "log_dir": str(event_dir),
+        "pcap_path": str(pcap_files[0]),
     }
 
 
@@ -152,7 +160,7 @@ async def run_forensic_example(
     state = State_global(
         pcap_path=pcap_path,
         log_dir=log_dir,
-        messages=[],  
+        messages=[],
         steps=max_steps,
         event_id=event_id,
         strategy=strategy,
@@ -169,11 +177,10 @@ async def run_forensic_example(
     answer = state["messages"][-1]
     done = state["done"]
 
-    # --- write per-step log into results/run{n}/log_steps/ ---
-    steps_dir = os.path.join("results", f"run{execution_number}", "log_steps")
-    os.makedirs(steps_dir, exist_ok=True)
-    steps_path = os.path.join(steps_dir, f"steps_event{event_id}.txt")
-    with open(steps_path, "w", encoding="utf-8") as f:
+    steps_dir = RESULTS_BASE_DIR / f"run{execution_number}" / "log_steps"
+    steps_dir.mkdir(parents=True, exist_ok=True)
+    steps_path = steps_dir / f"steps_event{event_id}.txt"
+    with steps_path.open("w", encoding="utf-8") as f:
         f.write(f"[Task {event_id}]\n")
         for i, message in enumerate(state["messages"]):
             f.write(f"Step {i+1}: {message.content}\n")
@@ -182,19 +189,21 @@ async def run_forensic_example(
 
 
 async def main():
+    if RESULTS_BASE_DIR.exists() and RESULTS_BASE_DIR.is_dir():
+        shutil.rmtree(RESULTS_BASE_DIR)
+    RESULTS_BASE_DIR.mkdir(parents=True, exist_ok=True)
     pcaps = load_data()
 
-    for execution_number in range(NUMBER_OF_EXECUTIONS):
-        run_idx = execution_number + 1
-        run_dir = os.path.join("results", f"run{run_idx}")
-        os.makedirs(run_dir, exist_ok=True)
-        result_file = os.path.join(run_dir, "result.txt")
+    for execution_number in range(1, NUMBER_OF_EXECUTIONS + 1):
+        run_dir = RESULTS_BASE_DIR / f"run{execution_number}"
+        run_dir.mkdir(parents=True, exist_ok=True)
+        result_file = run_dir / "result.txt"
 
         counters = [0] * 4
         confusion_matrix_vulnerable = np.zeros((2, 2), dtype=int)
         confusion_matrix_success = np.zeros((2, 2), dtype=int)
 
-        with open(result_file, "w", encoding="utf-8") as f:
+        with result_file.open("w", encoding="utf-8") as f:
             for i, game in enumerate(pcaps):
                 paths = get_artifact_paths(game)
                 store = init_store()
@@ -211,9 +220,9 @@ async def main():
                 is_success = game["success"]
 
                 done, answer, steps, inTokens, outTokens = await run_forensic_example(
-                    execution_number=run_idx,
-                    event_id=i,
                     graph=graph,
+                    execution_number=execution_number,
+                    event_id=i,
                     pcap_path=paths["pcap_path"],
                     log_dir=paths["log_dir"],
                 )
@@ -243,12 +252,12 @@ async def main():
                     confusion_matrix_vulnerable[int(is_vulnerable)][int(pred_vulnerable)] += 1
                     confusion_matrix_success[int(is_success)][int(pred_success)] += 1
 
-            f.write("\n\n\n")
-            f.write("Statistics:\n")
+            f.write("\n\n\nStatistics:\n")
             f.write(f"Percentage of identified CVE: {counters[0]/len(pcaps)*100:.2f}%\n")
             f.write(f"Percentage of identified affected service: {counters[1]/len(pcaps)*100:.2f}%\n")
             f.write(f"Percentage of identified vulnerability: {counters[2]/len(pcaps)*100:.2f}%\n")
             f.write(f"Percentage of identified attack success: {counters[3]/len(pcaps)*100:.2f}%\n")
+
             f1_macro_vulnerable, mcc_vulnerable = calculate_f1_mcc(confusion_matrix_vulnerable)
             f1_macro_success, mcc_success = calculate_f1_mcc(confusion_matrix_success)
             f.write(f"f1_macro for vulnerability: {f1_macro_vulnerable:.2f}, MCC: {mcc_vulnerable:.2f}\n")
