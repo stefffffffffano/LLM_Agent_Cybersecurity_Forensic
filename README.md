@@ -11,20 +11,19 @@ The current version represent the ***Tshark expert***. The system is provided wi
 
 ```
 project-root/
-data/
+├── data/
+│   └── CFA-benchmark/
+│       ├── raw/
+│       │   └── eventID_<n>/
+│       └── tasks/
+│           └── data.json
 │
-├── CFA-benchmark/
-│   ├── raw/
-│   │   └── eventID_<n>/
-│   └── tasks/
-│       └── data.json
-|
 ├── src/
 │   ├── run_agent.py         # Entry point to execute the agent
 │   ├── multi_agent/         # Contains the code for all the agents
 │   ├── browser/             # Code related to the web search tool
 │   └── .env_example         # Example of environmental variables file
-|
+│
 ├── requirements.txt         # Python dependencies
 ├── results/                 # Folder containing the results (logs and reports) for each run
 └── README.md                # Instructions on how to execute the agent
@@ -85,7 +84,6 @@ Edit `.env` and fill in the necessary variables:
 - LLM provider and model name. There is a specific section in the following detailing how to provide model and provider
 - API keys (e.g., OpenAI, Google Custom Search, etc.). Remind that the OpenAI Key is always required, even if another LLM is used, because It is used to produce embeddings
 - Context window (default 128K), depends on the LLM used 
-- Dataset: CFA or test. By specifying the former, CFA-bench with its 20 events is executed, otherwise it is executed the more recent set of 10 events created as test set. The latter contains only events related to vulnerabilities discovered in 2025
 - Number of executions: specify how many iterations on the benchmark
 
 Save the file before proceeding.
@@ -129,7 +127,7 @@ The benchmark is designed to evaluate the agent’s ability to perform forensic 
 - **Determine the affected service**
 - **Detect the correct CVE ID**, if applicable
 - **Assess whether the service is vulnerable**
-- **Assess whetger the attack was successful**
+- **Assess whether the attack was successful**
 - **Generate a concise report**
 ---
 ## How to specify model and provider
