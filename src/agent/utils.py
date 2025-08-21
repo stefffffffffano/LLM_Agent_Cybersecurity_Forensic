@@ -1,21 +1,19 @@
 """Utility functions used in our graph."""
 import tiktoken
 
-def split_model_and_provider(fully_specified_name: str) -> dict:
-    if "/" in fully_specified_name:
-        provider, model = fully_specified_name.split("/", maxsplit=1)
+def split_model_and_provider(full_name: str) -> dict:
+    
+    if "/" in full_name:
+        if len(full_name.split("/")) > 2:
+            provider,model = full_name.split("/")[0], "/".join(full_name.split("/")[1:])  
+        else: 
+            provider,model = full_name.split("/", maxsplit=1)
     else:
         # Default fallback
         provider = "openai"
-        model = fully_specified_name
+        model = "gpt-4o"
 
-    # Return params based on provider
-    if provider == "openai":
-        return {"model": model}
-    elif provider == "anthropic":
-        return {"model": model, "provider": "anthropic"}
-    else:
-        raise ValueError(f"Unsupported provider: {provider}")
+    return {"model": model,"model_provider":provider}
 
 
 

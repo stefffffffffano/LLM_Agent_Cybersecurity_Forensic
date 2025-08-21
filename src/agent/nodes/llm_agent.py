@@ -110,7 +110,7 @@ async def call_model(state: State, config: RunnableConfig,*,store:BaseStore) -> 
         {"role": "user", "content": user_prompt}
     ]
 
-    llm = init_chat_model(**split_model_and_provider(configurable.model),temperature=0.0,timeout=100)
+    llm = init_chat_model(**split_model_and_provider(configurable.model),timeout=100)
     debug_config = RunnableConfig(callbacks=[PromptDebugHandler()])
     llm_with_tools = llm.bind_tools([upsert_memory, web_quick_search,frameDataExtractor,finalAnswerFormatter])
     
