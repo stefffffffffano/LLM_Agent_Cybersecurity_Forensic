@@ -3,7 +3,7 @@
 This project implements a LangGraph-based AI agent capable of performing autonomous forensic analysis on network events captured in `.pcap` files.  
 Given a benchmark dataset, the agent detects vulnerabilities (e.g., CVEs), identifies affected services, and produces structured reports. 
 
-The current version represent the ***Context-injected Analyst*** that does not include log analysis in the flow of execution. The system first analyses each tcp flow through a PCAP_flows_analyzer, then instantiates an agent to loop on findings, make research online and provide a final report with all findings related to the forensic task. 
+The current version represent the ***Flow reporter*** that does not include log analysis in the flow of execution. The system first analyses each tcp flow through a PCAP_flows_analyzer, then instantiates an agent to loop on findings, make research online and provide a final report with all findings related to the forensic task. 
 
 ---
 
