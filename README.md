@@ -11,32 +11,35 @@ The current version represent the ***Flow reporter*** that does not include log 
 
 ```
 project-root/
-data/
+├── data/                                # Dataset folder
+│   ├── CFA-benchmark/                   # CFA dataset
+│   │   ├── raw/                         # Raw PCAPs and logs
+│   │   │   └── eventID_<n>/             # One folder per forensic challenge
+│   │   └── tasks/                       # Tasks metadata
+│   │       └── data.json                # JSON file containing all tasks
+│   │
+│   ├── TestSet_benchmark/              # Test set for evaluation
+│   │   ├── raw/                         # Raw PCAPs and logs
+│   │   │   └── eventID_<n>/             # One folder per forensic challenge
+│   │   └── tasks/                       # Tasks metadata
+│   │       └── data.json                # JSON file containing all tasks
+│   │
+│   └── web_browsing_traffic/           # Non-malicious traffic samples
+│       ├── raw/                         # Raw PCAPs
+│       │   └── eventID_<n>/             # Events related to non malicious traffic, no ground truth required
 │
-├── CFA-benchmark/
-│   ├── raw/
-│   │   └── eventID_<n>/
-│   └── tasks/
-│       └── data.json
+├── src/                                 # Source code
+│   ├── run_agent.py                     # Entry point to execute the agent
+│   ├── configuration.py                 # Reads environment variables and agent settings
+│   ├── multi_agent/                     # Contains the code for all the agents
+│   ├── browser/                         # Code related to the web search tool
+│   ├── .env_example                     # Example of environmental variables file
+│   ├── results/                         # Folder containing the results (logs and reports) for each run
 │
-└── TestSet_benchmark/
-|   ├── raw/
-|   │   └── eventID_<n>/
-|   └── tasks/
-|       └── data.json
-└── web_browsing_traffic/
-|   ├── raw/
-|   │   └── eventID_<n>/     # Events related to non malicious traffic, no ground truth required
-|
-├── src/
-│   ├── run_agent.py         # Entry point to execute the agent
-│   ├── configuration.py     # Reads environment variables and agent settings
-│   ├── multi_agent/         # Contains the code for all the agents
-│   ├── browser/             # Code related to the web search tool
-│   ├── .env_example         # Example of environmental variables file
-|   ├── results/             # Folder containing the results (logs and reports) for each run
-├── requirements.txt         # Python dependencies
-└── README.md                # Instructions on how to execute the agent
+├── requirements.txt                     # Python dependencies
+├── results/                             # Results folder containing logs and reports for each rn (for each execution on the benchmark)
+└── README.md                            # Instructions on how to execute the agent
+
 ```
 
 ---
@@ -151,7 +154,7 @@ The benchmark is designed to evaluate the agent’s ability to perform forensic 
 - **Determine the affected service**
 - **Detect the correct CVE ID**, if applicable
 - **Assess whether the service is vulnerable**
-- **Assess whetger the attack was successful**
+- **Assess whether the attack was successful**
 - **Generate a concise report**
 ---
 ## How to specify model and provider
