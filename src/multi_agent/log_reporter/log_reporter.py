@@ -3,17 +3,17 @@ from openai import BadRequestError
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 
-from multi_agent.common.main_agent_state import State
-from multi_agent.common.configuration import Configuration
+from multi_agent.common.global_state import State_global
+from configuration import Configuration
 from multi_agent.log_reporter.concatenate_logs import concatenate_logs
 from multi_agent.common.utils import split_model_and_provider
 from multi_agent.log_reporter.prompts import (
-    LOG_REPORTER_SYSTEM_PROMPT_NO_TASK,
+    LOG_REPORTER_SYSTEM_PROMPT,
     LOG_REPORTER_USER_PROMPT,
 )
 
 
-async def log_reporter(state: State, config: RunnableConfig) -> dict:
+async def log_reporter(state: State_global, config: RunnableConfig) -> dict:
     """
     Log reporter agent that generates a report based on the logs provided.
     The report is then used by the main_agent in the following steps of the analysis.
@@ -26,14 +26,14 @@ async def log_reporter(state: State, config: RunnableConfig) -> dict:
 
     log_content = concatenate_logs(state.log_dir)
 
-    system_prompt = LOG_REPORTER_SYSTEM_PROMPT_NO_TASK.strip()
+    system_prompt = LOG_REPORTER_SYSTEM_PROMPT.strip()
     user_prompt = LOG_REPORTER_USER_PROMPT.format(
         log_content=log_content
     )
 
     llm = init_chat_model(
         **split_model_and_provider(configurable.model),
-        temperature=0.0,
+        #temperature=0.0,
         timeout=200
     )
 

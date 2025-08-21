@@ -16,6 +16,7 @@ def tshark_expert_func(
     pcap_path: str,
     event_id: int,
     call_number: int,
+    run_number: int,
 ) -> str:
     """
     Run a forensic analysis on a given PCAP file based on a specified task.
@@ -45,7 +46,7 @@ def tshark_expert_func(
     )
      
     # Save the conversation logs
-    log_dir = f"subagent_logs/event_{event_id}"
+    log_dir = f"../results/run{run_number}/subagent_logs/event_{event_id}"
     os.makedirs(log_dir, exist_ok=True)
     log_file_path = os.path.join(log_dir, f"subagent_call_{call_number}.txt")
 
