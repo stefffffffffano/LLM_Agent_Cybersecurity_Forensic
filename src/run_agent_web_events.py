@@ -31,7 +31,7 @@ EXECUTION = os.getenv("EXECUTION_MODE", "API")
 os.environ["DATASET"] = "web_browsing_events"
 
 
-RESULTS_DIR = "results"
+RESULTS_DIR = "../results"
 LOG_STEPS_DIR = os.path.join(RESULTS_DIR, "log_steps")
 RESULTS_FILE = os.path.join(RESULTS_DIR, "result.txt")
 
