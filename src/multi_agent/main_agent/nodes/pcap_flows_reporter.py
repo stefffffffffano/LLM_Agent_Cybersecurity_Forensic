@@ -1,13 +1,14 @@
 from langchain_core.runnables import RunnableConfig
 from typing import List, Tuple
 import numpy as np
+import os
 
 from multi_agent.common.global_state import State_global
 from multi_agent.main_agent.tools.pcap import generate_summary
 from multi_agent.pcap_flow_analyzer import pcap_flow_analyzer
 from multi_agent.main_agent.tools.pcap.tls_streams import get_tls_streams
 from configuration import Configuration
-from multi_agent.common.utils import count_tokens, count_flows,get_flow
+from multi_agent.common.utils import count_tokens, count_flows,get_flow,get_flow_web_browsing
 
 
 def sqrt_token_allocation(flows, budget):
@@ -33,7 +34,7 @@ def sqrt_token_allocation(flows, budget):
 
     return redistribute_residual(tokens_array, bounded_allocations.copy(), budget)
 
-def tokens_budget_vector(pcap_path:str,tokens_budget:int,discarded_flows:set)->Tuple[List[int],List[int]]:
+def tokens_budget_vector(pcap_path:str,tokens_budget:int,discarded_flows:set,browsing:bool)->Tuple[List[int],List[int]]:
     """
     This function takes the pcap path and tokens budget as input and returns a vector of 
     floats representing the tokens budget (input prompt) for each tcp flow analyzed.
@@ -43,8 +44,11 @@ def tokens_budget_vector(pcap_path:str,tokens_budget:int,discarded_flows:set)->T
     flows = []
     for j in range(number_of_flows):
         if j not in discarded_flows:
-            flow = get_flow(pcap_path, j)
-            flow_tokens = count_tokens(flow)
+            if not browsing:
+                flow = get_flow(pcap_path, j)
+            else:
+                flow = get_flow_web_browsing(pcap_path,j)
+            flow_tokens = count_tokens(flow) if flow is not None else 0
             flows.append(flow_tokens)
         else:
             flows.append(0)
@@ -62,17 +66,22 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
     for each tcp flow (that does not containt tls traffic), calls the tcp flow analyzer 
     to get a report of the flow.
     Finally, it returns a report for each flow concatenating results.
+
+    If we are analysing traffic related to normal web browsing, we still consider tls traffic
     """
     input_token_count = state.inputTokens
     output_token_count = state.outputTokens
     final_report = ""
 
+    browsing = os.getenv("DATASET", "").strip().lower() == "web_browsing_events"
     # This is the full tshark output, already formatted
     tshark_output = generate_summary(state.pcap_path)
     tshark_lines = tshark_output.strip().splitlines()
     # Get a set containing the tcp streams that contain tls traffic
-    tls_streams = get_tls_streams(state.pcap_path)
-
+    if not browsing: 
+        tls_streams = get_tls_streams(state.pcap_path)
+    else:
+        tls_streams = set()
     #retrieve context window size from the configuration
     configurable = Configuration.from_runnable_config(config)
     tokens_budget = configurable.tokens_budget
@@ -80,7 +89,8 @@ async def pcap_flows_reporter(state: State_global, config: RunnableConfig) -> di
     allocations,flows = tokens_budget_vector(
         pcap_path=state.pcap_path,
         tokens_budget=tokens_budget,
-        discarded_flows=tls_streams
+        discarded_flows=tls_streams,
+        browsing = browsing
     )
     
     context_window_size = configurable.context_window_size

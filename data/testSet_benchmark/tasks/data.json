@@ -1,0 +1,114 @@
+{
+"tasks": [
+{
+"event": "0",
+"report": "",
+"cve": "CVE-2025-32433",
+"service": "erlang/OTP",
+"success": true,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "1",
+"report": "",
+"cve": "CVE-2025-32433",
+"service": "erlang/OTP",
+"success": false,
+"vulnerable": false,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "2",
+"report": "",
+"cve": "CVE-2025-30208",
+"service": "vite",
+"success": true,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "3",
+"report": "",
+"cve": "CVE-2025-30208",
+"service": "vite",
+"success": false,
+"vulnerable": false,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "4",
+"report": "",
+"cve": "CVE-2025-29927",
+"service": "Next.js",
+"success": true,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "5",
+"report": "",
+"cve": "CVE-2025-29927",
+"service": "Next.js",
+"success": false,
+"vulnerable": false,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "6",
+"report": "",
+"cve": "CVE-2025-3248",
+"service": "langflow",
+"success": true,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "7",
+"report": "",
+"cve": "CVE-2025-3248",
+"service": "langflow",
+"success": true,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "8",
+"report": "",
+"cve": "CVE-2025-3248",
+"service": "langflow",
+"success": false,
+"vulnerable": false,
+"pcap_ref": [
+"TBD"
+]
+},
+{
+"event": "9",
+"report": "",
+"cve": "CVE-2025-24813",
+"service": "tomcat",
+"success": false,
+"vulnerable": true,
+"pcap_ref": [
+"TBD"
+]
+}
+]
+}

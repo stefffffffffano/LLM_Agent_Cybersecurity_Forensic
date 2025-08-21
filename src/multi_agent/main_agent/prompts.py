@@ -11,9 +11,7 @@ focus on the relevant service. The service may or may not be vulnerable, and the
 
 You are provided with:
 1- A FIFO queue containing the most recent reasoning steps. Store relevant information early in your reasoning, because the queue has a limited size.
-2- Two forensic reports from:
-  - A log analyzer
-  - A PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
+2- A forensic report from a PCAP flow analyzer, which analyzed each tcp flow in the PCAP file indipendently.
 3- Tools to search online and to store relevant information in a memory database.
 
 To perform effective web searches, always specify the affected service and version (if known) and the identified attack type.

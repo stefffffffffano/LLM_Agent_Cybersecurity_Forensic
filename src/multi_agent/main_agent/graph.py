@@ -22,7 +22,6 @@ def build_graph(store: BaseStore) -> StateGraph:
 
 
     builder.add_edge(START, "log_reporter")
-    #builder.add_edge("log_reporter", "pcap_flows_reporter")
     builder.add_edge("log_reporter", "pcap_flows_reporter")
     builder.add_edge("pcap_flows_reporter", "main_agent")
 

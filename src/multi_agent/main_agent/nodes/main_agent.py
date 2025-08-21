@@ -1,4 +1,5 @@
 from typing import Any
+import time
 from openai import BadRequestError 
 
 from langgraph.store.base import BaseStore
@@ -99,7 +100,7 @@ async def main_agent(state: State_global, config: RunnableConfig, *, store: Base
 
     system_prompt = SYSTEM_PROMPT.strip()
     if state.steps in (2, 3):
-        system_prompt += "\n\nWARNING: You are not allowed to reason anymore. Provide the final report based on the available information."
+        user_prompt += "\n\nWARNING: You are not allowed to reason anymore. Provide the final report based on the available information."
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -129,7 +130,7 @@ async def main_agent(state: State_global, config: RunnableConfig, *, store: Base
             "steps": state.steps,
             "event_id": state.event_id,
         }
-
+    
     if not length_exceeded:
         input_token_count = state.inputTokens + msg.response_metadata.get("token_usage", {}).get("prompt_tokens", 0)
         output_token_count = state.outputTokens + msg.response_metadata.get("token_usage", {}).get("completion_tokens", 0)

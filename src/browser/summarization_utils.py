@@ -1,4 +1,5 @@
 import json
+import time
 from langchain_core.messages import HumanMessage
 from typing import Dict, Optional, Tuple
 
@@ -14,7 +15,7 @@ class SummarizationHandler:
 
     def summarize(self, content: str, query: str, character_limit=800,max_chars = 20000 ) -> Tuple[Optional[str], int, int]:
         #Adjust max_chars based on context_window_size
-        max_chars=int((80000*(128000/self.context_window_size))) 
+        max_chars=min(int((60000*(self.context_window_size/128000))),60000)
         if self.research == "CVE":
             prompt = CVE_SUMMARY_PROMPT.format(query=query, character_limit=character_limit)
         elif self.research == "judge":
