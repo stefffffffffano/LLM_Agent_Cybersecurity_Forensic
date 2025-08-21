@@ -18,5 +18,6 @@ class State:
     done: bool = False #Flag to indicate if the agent has finished its task providing an answer
     event_id: int #Event ID for the task
     call_number: int = 0 #Number of calls to the subagent
+    run_number: int = 1 #The current run over the benchmark
     inputTokens: int = 0
     outputTokens: int = 0

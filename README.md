@@ -25,7 +25,8 @@ project-root/
 │   └── .env_example         # Example of environmental variables file
 │
 ├── requirements.txt         # Python dependencies
-├── results/                 # Folder containing the results (logs and reports) for each run
+├── results/                 # Folder containing the results (logs for the agent and the subagent
+|                            # and reports) for each run
 └── README.md                # Instructions on how to execute the agent
 ```
 

@@ -111,7 +111,7 @@ async def tools(state: State, config: RunnableConfig, *, store: BaseStore):
         if not state.pcap_path:
                 result_content = "Error: No PCAP file available for Tshark Expert analysis."
         else:
-            (result_content,inTokens,outTokens) = tshark_expert_func(task=task_input, pcap_path=state.pcap_path,event_id=state.event_id, call_number=state.call_number)
+            (result_content,inTokens,outTokens) = tshark_expert_func(task=task_input, pcap_path=state.pcap_path,event_id=state.event_id, call_number=state.call_number,run_number=state.run_number)
             results.append({
                 "role": "tool",
                 "content": result_content,

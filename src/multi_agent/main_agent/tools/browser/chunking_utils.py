@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List
 from openai import OpenAI
-from sentence_transformers import SentenceTransformer
+
 
 class ChunkingHandler:
     def __init__(self, embedder="openai", batch_size=100, verbose=False):
@@ -11,7 +11,7 @@ class ChunkingHandler:
         self.embedding_model = None
 
         if embedder != "openai":
-            self.embedding_model = SentenceTransformer(embedder)
+            raise RuntimeError("Sentence Transformer not supported")
 
     def chunk_text(self, text: str, window_size=512, step_size=256) -> List[str]:
         return [
