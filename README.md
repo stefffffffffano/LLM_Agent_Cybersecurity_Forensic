@@ -162,3 +162,10 @@ Specify the provider name first, then append the model identifier in the same fo
  -together/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
 
 ---
+
+## Warning  
+
+Some benchmark events may be highly token-intensive. Analyzing partial network traces often requires providing a large amount of input tokens.
+Make sure that your plan and tier (for whichever model you use) support a sufficiently high tokens-per-minute rate to run the evaluation. 
+
+---
