@@ -175,3 +175,27 @@ Specify the provider name first, then append the model identifier in the same fo
  -together/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8
 
 ---
+
+## Warning  
+
+Some benchmark events may be highly token-intensive. Analyzing partial network traces often requires providing a large amount of input tokens.
+Make sure that your plan and tier (for whichever model you use) support a sufficiently high tokens-per-minute rate to run the evaluation. 
+
+---
+
+## How to switch architecture  
+
+We have designed and experimented with **five different agent architectures**, each exploring a distinct input and analysis workflow.  
+All architectures are available in this repository, organized into separate Git branches:  
+
+- **main** → *Flow Reporter*: a lightweight pipeline that generates forensic reports directly from network flows.  
+- **single_agent** → *Single-Agent Baseline*: a minimal architecture where a single agent handles the full forensic analysis.
+- **tshark_expert** → *Tshark Expert*: a multi-agent setup focused on executing arbitrary `tshark` commands to extract insights from PCAP traces.  
+- **tshark_expert_plus_logs** → *Tshark Expert + Logs*: an extended version that combines `tshark`-based analysis with system log inspection for richer context.  
+- **flow_reporter_plus_logs** → *Pipeline of Agents*: a multi-agent pipeline where three specialized agents collaborate sequentially, combining flow analysis, log inspection, and forensic reasoning for more accurate CVE identification.  
+
+Each branch represents a step in our exploration of how **different coordination strategies (single-agent vs. multi-agent pipelines)** impact performance, accuracy, and token efficiency when applied to **cybersecurity forensic tasks**.  
+
+Each architecture can be tested by simply switching to the corresponding branch and following the instructions in each README. 
+
+---
